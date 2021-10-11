@@ -1,0 +1,35 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    line-height: 24px;
+    overflow-x: hidden;
+}
+
+.product__cfc {
+    display: flex;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 24%;
+    padding: 5px 36px;
+    transition: 1s;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.product__card:hover .product__cfc{
+    display: flex;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 26%;
+    padding: 5px 36px;
+    transition: 1s;
+    visibility: visible;
+    opacity: 1;
+}
