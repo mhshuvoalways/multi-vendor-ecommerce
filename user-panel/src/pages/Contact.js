@@ -1,11 +1,13 @@
 import React from "react";
 import Navigation from "../components/Navigation";
+import ContactForm from "../components/Contact";
 import Footer from "../components/Footer";
 
 const Contact = () => {
   return (
     <div>
-      <Navigation />I am a contact page
+      <Navigation />
+      <ContactForm />
       <Footer />
     </div>
   );

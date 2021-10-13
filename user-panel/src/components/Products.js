@@ -14,11 +14,9 @@ const Products = () => {
   };
 
   return (
-    <div className="w-11/12 m-auto mt-28">
-      <p className="text-4xl mb-1 text-center">DAILY DEALS!</p>
-      <p className="border-double border-4 border-purple-600 w-60 m-auto mb-10"></p>
+    <div className="w-11/12 m-auto">
       <div className="flex gap-8 flex-wrap md:justify-between justify-around">
-        <div className="w-60 rounded shadow-lg product__card relative">
+        <div className="w-64 rounded shadow-lg product__card relative">
           <Link to="/details">
             <img
               className="w-full cursor-pointer"
@@ -74,7 +72,7 @@ const Products = () => {
             </ul>
           </div>
         </div>
-        <div className="w-60 rounded shadow-lg product__card relative">
+        <div className="w-64 rounded shadow-lg product__card relative">
           <Link to="/details">
             <img
               className="w-full cursor-pointer"
@@ -130,7 +128,7 @@ const Products = () => {
             </ul>
           </div>
         </div>
-        <div className="w-60 rounded shadow-lg product__card relative">
+        <div className="w-64 rounded shadow-lg product__card relative">
           <Link to="/details">
             <img
               className="w-full cursor-pointer"
@@ -186,7 +184,7 @@ const Products = () => {
             </ul>
           </div>
         </div>
-        <div className="w-60 rounded shadow-lg product__card relative">
+        <div className="w-64 rounded shadow-lg product__card relative">
           <Link to="/details">
             <img
               className="w-full cursor-pointer"
@@ -242,7 +240,7 @@ const Products = () => {
             </ul>
           </div>
         </div>
-        <div className="w-60 rounded shadow-lg product__card relative">
+        <div className="w-64 rounded shadow-lg product__card relative">
           <Link to="/details">
             <img
               className="w-full cursor-pointer"
@@ -298,7 +296,7 @@ const Products = () => {
             </ul>
           </div>
         </div>
-        <div className="w-60 rounded shadow-lg product__card relative">
+        <div className="w-64 rounded shadow-lg product__card relative">
           <Link to="/details">
             <img
               className="w-full cursor-pointer"
@@ -354,7 +352,7 @@ const Products = () => {
             </ul>
           </div>
         </div>
-        <div className="w-60 rounded shadow-lg product__card relative">
+        <div className="w-64 rounded shadow-lg product__card relative">
           <Link to="/details">
             <img
               className="w-full cursor-pointer"
@@ -410,7 +408,7 @@ const Products = () => {
             </ul>
           </div>
         </div>
-        <div className="w-60 rounded shadow-lg product__card relative">
+        <div className="w-64 rounded shadow-lg product__card relative">
           <Link to="/details">
             <img
               className="w-full cursor-pointer"

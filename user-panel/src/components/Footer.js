@@ -30,7 +30,7 @@ const Footer = () => {
             <li className="mt-3">
               <input
                 type="email"
-                className="px-2 py-1 placeholder-gray-400 text-gray-600 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
+                className="px-2 py-1 placeholder-gray-400 text-gray-600 max-w-xs bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
               />
             </li>
             <li className="mt-3">

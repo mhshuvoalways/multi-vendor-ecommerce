@@ -1,4 +1,5 @@
 const Product = require("../Model/Product");
+const User = require("../Model/User");
 const serverError = require("../utils/ServerError");
 const cloudinary = require("cloudinary");
 
@@ -12,34 +13,46 @@ const addProduct = (req, res) => {
     inCart,
     inWish,
   } = req.body;
-  cloudinary.v2.uploader.upload(
-    req.file.path,
-    { public_id: "ecommerce-app/products/" + req.file.filename },
-    function (err, result) {
-      if (err) {
-        serverError(res);
-      } else {
-        const product = {
-          name,
-          category,
-          regularPrice,
-          salePrice,
-          description,
-          inCart,
-          inWish,
-          image: result.url,
-        };
-        new Product(product)
-          .save()
-          .then((response) => {
-            res.status(200).json(response);
-          })
-          .catch(() => {
+
+  const { email } = req.user;
+  User.findOne({ email })
+    .then((response) => {
+      cloudinary.v2.uploader.upload(
+        req.file.path,
+        { public_id: "ecommerce-app/products/" + req.file.filename },
+        function (err, result) {
+          if (err) {
             serverError(res);
-          });
-      }
-    }
-  );
+          } else {
+            const product = {
+              author: {
+                authorId: response._id,
+                email: response.email,
+              },
+              name,
+              category,
+              regularPrice,
+              salePrice,
+              description,
+              inCart,
+              inWish,
+              image: result.url,
+            };
+            new Product(product)
+              .save()
+              .then((response) => {
+                res.status(200).json(response);
+              })
+              .catch(() => {
+                serverError(res);
+              });
+          }
+        }
+      );
+    })
+    .catch(() => {
+      serverError(res);
+    });
 };
 
 const getProduct = (req, res) => {

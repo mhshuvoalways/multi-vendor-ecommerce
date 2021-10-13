@@ -3,16 +3,17 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const serverError = require("../utils/serverError");
 const {
+  adminRegisterValidation,
   registerValidation,
   loginValidation,
 } = require("../middlewares/userValidation");
 
-const adminRegister = (req, res) => {
+const adminRegister = (_req, res) => {
   const name = process.env.adminName;
   const email = process.env.adminEmail;
   const phone = process.env.adminPhone;
   const password = process.env.adminPassword;
-  const validation = registerValidation({ name, email, phone, password });
+  const validation = adminRegisterValidation({ name, email, phone, password });
   if (validation.isValid) {
     User.findOne({ email })
       .then((response) => {
@@ -56,41 +57,53 @@ const adminRegister = (req, res) => {
 };
 
 const register = (req, res) => {
-  const { name, email, phone, password, role } = req.body;
-  const validation = registerValidation({ name, email, phone, password });
-  if (validation.isValid) {
-    User.findOne({ email })
-      .then((response) => {
-        if (!response) {
-          bcrypt.hash(password, 10, function (err, hash) {
-            if (err) {
-              serverError(res);
-            } else {
-              const user = { name, email, phone, password: hash, role };
-              new User(user)
-                .save()
-                .then((response) => {
-                  res.status(200).json({
-                    message: "Register successful",
-                    response,
-                  });
-                })
-                .catch(() => {
-                  serverError(res);
-                });
-            }
-          });
-        } else {
-          res.status(400).json({
-            message: "User already exists",
-          });
-        }
-      })
-      .catch(() => {
-        serverError(res);
-      });
+  const { name, email, phone, password, role, recaptch, agree } = req.body;
+  const validation = registerValidation({
+    name,
+    email,
+    phone,
+    password,
+    agree,
+  });
+  if (process.env.adminEmail === email) {
+    res.status(400).json({
+      message: "You can't use admin mail",
+    });
   } else {
-    res.status(400).json(validation.error);
+    if (validation.isValid) {
+      User.findOne({ email })
+        .then((response) => {
+          if (!response) {
+            bcrypt.hash(password, 10, function (err, hash) {
+              if (err) {
+                serverError(res);
+              } else {
+                const user = { name, email, phone, password: hash, role };
+                new User(user)
+                  .save()
+                  .then((response) => {
+                    res.status(200).json({
+                      message: "Register successful",
+                      response,
+                    });
+                  })
+                  .catch(() => {
+                    serverError(res);
+                  });
+              }
+            });
+          } else {
+            res.status(400).json({
+              message: "User already exists",
+            });
+          }
+        })
+        .catch(() => {
+          serverError(res);
+        });
+    } else {
+      res.status(400).json(validation.error);
+    }
   }
 };
 

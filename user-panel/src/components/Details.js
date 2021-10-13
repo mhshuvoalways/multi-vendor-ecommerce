@@ -5,8 +5,8 @@ import Slider from "../assets/images/products/products.jpg";
 const Details = () => {
   return (
     <div className="w-11/12 m-auto my-20 md:flex gap-20">
-      <div className="w-full" >
-        <img src={Slider} alt=""/>
+      <div className="w-full">
+        <img src={Slider} alt="" />
       </div>
       <div className="my-10 md:my-0">
         <p className="mb-2 text-3xl">The Coldest Sunset</p>

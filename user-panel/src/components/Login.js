@@ -1,38 +1,81 @@
-import React from "react";
-import { Link } from "@reach/router";
+import React, { useState, useEffect } from "react";
+import { Link, navigate } from "@reach/router";
+import { useDispatch } from "react-redux";
+import { adminRegister, userLogin } from "../store/actions/userAction";
+
+const ActiveLink = (props) => (
+  <Link
+    {...props}
+    getProps={({ isCurrent }) => {
+      return {
+        className: isCurrent && "text-purple-600",
+      };
+    }}
+  />
+);
 
 const Login = () => {
+  const [state, setState] = useState({
+    email: "",
+    password: "",
+  });
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(adminRegister());
+  }, [dispatch]);
+
+  const onChange = (event) => {
+    setState({
+      ...state,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    const { email, password } = state;
+    dispatch(userLogin({ email, password }, navigate));
+    setState({
+      email: "",
+      password: "",
+    });
+  };
+
   return (
-    <div className="mt-16 max-w-xl m-auto">
+    <div className="mt-12 max-w-sm m-auto">
       <div className="flex justify-center mb-5">
-        <Link to="/register">
-          <button className="hover:text-purple-600 py-2 mt-5 w-60 text-2xl font-bold">
-            Register
-          </button>
-        </Link>
-        <Link to="/login">
-          <button className="hover:text-purple-600 py-2 mt-5 w-60 text-2xl font-bold">
-            Login
-          </button>
-        </Link>
+        <ActiveLink to="/register">
+          <button className="py-2 mt-5 text-2xl font-bold">Register</button>
+        </ActiveLink>
+        <p className="py-2 mt-5 text-2xl mx-2">|</p>
+        <ActiveLink to="/login">
+          <button className="py-2 mt-5 text-2xl font-bold">Login</button>
+        </ActiveLink>
       </div>
-      <form>
-        <div className="p-4 shadow-md rounded-md text-left px-28 py-10">
+      <form onSubmit={onSubmit}>
+        <div className="shadow-md rounded-md text-left p-10">
           <label className="block">
             <span className="text-gray-700">EMAIL</span>
             <input
-              type="text"
+              type="email"
               placeholder="Enter Your Email"
               className="p-2 my-1 placeholder-gray-400 text-gray-600 w-full bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
+              name="email"
+              onChange={onChange}
+              value={state.email}
             />
           </label>
-
           <label className="block">
             <span className="text-gray-700">PASSWORD</span>
             <input
-              type="text"
-              placeholder="Enter Your Name"
+              type="password"
+              placeholder="Enter Your Password"
               className="p-2 my-1 placeholder-gray-400 text-gray-600 w-full bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
+              name="password"
+              onChange={onChange}
+              value={state.password}
             />
           </label>
           <div className="flex mt-6 justify-between">
@@ -41,7 +84,9 @@ const Login = () => {
               <span className="ml-2">Remember me</span>
             </label>
             <label>
-              <span className="ml-2">Forgot Password?</span>
+              <span className="ml-2 cursor-pointer hover:text-purple-500">
+                Forgot Password?
+              </span>
             </label>
           </div>
           <button className="bg-purple-600 text-white py-2 mt-5 w-full hover:bg-gray-900">

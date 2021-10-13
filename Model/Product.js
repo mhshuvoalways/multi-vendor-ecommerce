@@ -3,29 +3,34 @@ const { Schema, model } = mongoose;
 
 const productSchema = new Schema(
   {
+    author: {
+      authorId: {
+        type: Schema.Types.ObjectId,
+        ref: "user",
+      },
+      email: String,
+    },
     name: {
       type: String,
-      
+      trim: true,
     },
     category: {
       type: String,
-    
     },
     image: {
       type: String,
-    
     },
     regularPrice: {
       type: Number,
-    
+      trim: true,
     },
     salePrice: {
       type: Number,
-    
+      trim: true,
     },
     description: {
       type: String,
-    
+      trim: true,
     },
     stockStatus: {
       type: Boolean,
@@ -38,6 +43,10 @@ const productSchema = new Schema(
     inWish: {
       type: Boolean,
       default: false,
+    },
+    attributes: {
+      sizes: String,
+      colors: String,
     },
   },
   {
