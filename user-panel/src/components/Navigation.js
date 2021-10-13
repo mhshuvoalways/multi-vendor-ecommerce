@@ -2,7 +2,8 @@
 import React, { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
-import { Link, useParams } from "@reach/router";
+import { Link } from "@reach/router";
+import CartPopUp from "./CartPopUp";
 import Cart from "../assets/images/icons/cart.png";
 import Favorite from "../assets/images/icons/favorite.png";
 
@@ -11,9 +12,6 @@ function classNames(...classes) {
 }
 
 export default function Navigation() {
-  const params = useParams();
-  console.log(params);
-
   const navigation = [
     { name: "Home", href: "/", current: false },
     { name: "Shop", href: "/shop", current: false },
@@ -65,8 +63,32 @@ export default function Navigation() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-10">
-                <img src={Favorite} alt="" className="px-3 cursor-pointer" />
-                <img src={Cart} alt="" className="px-3 cursor-pointer" />
+                <img src={Favorite} alt="" className="px-3" />
+                {/* Start cart */}
+                <Menu as="div" className="relative mt-1">
+                  <div>
+                    <Menu.Button>
+                      <span className="sr-only">Open user menu</span>
+                      <img src={Cart} alt="" className="px-3" />
+                    </Menu.Button>
+                  </div>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items className="origin-top-right absolute right-0 mt-4 w-80 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Item>
+                        <CartPopUp />
+                      </Menu.Item>
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
+                {/* End cart */}
                 {/* Profile dropdown */}
                 <Menu as="div" className="ml-3 relative">
                   <div>
@@ -88,43 +110,30 @@ export default function Navigation() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="origin-top-right absolute right-0 mt-4 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            to="/"
+                            to="/register"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}
                           >
-                            Your Profile
+                            Register
                           </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            to="/"
+                            to="/login"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}
                           >
-                            Settings
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Sign out
+                            Login
                           </Link>
                         )}
                       </Menu.Item>

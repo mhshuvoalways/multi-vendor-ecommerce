@@ -4,7 +4,7 @@ import Slider from "../assets/images/products/products.jpg";
 
 const Details = () => {
   return (
-    <div className="w-4/5 m-auto my-20 md:flex gap-20">
+    <div className="w-11/12 m-auto my-20 md:flex gap-20">
       <div className="w-full" >
         <img src={Slider} alt=""/>
       </div>
