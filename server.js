@@ -10,7 +10,7 @@ const userRouter = require("./routers/userRouter");
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 cloudinary();
 
 // if (process.env.NODE_ENV === "production") {
@@ -20,8 +20,8 @@ cloudinary();
 //   });
 // }
 
-app.use("/user", userRouter);
-app.use("/product", productRouter);
+// app.use("/user", userRouter);
+// app.use("/product", productRouter);
 
 app.get("/", (req, res) => {
   res.send("A MERN stack ecommerce app");
