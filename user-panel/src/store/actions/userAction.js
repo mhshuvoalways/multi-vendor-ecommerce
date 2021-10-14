@@ -98,3 +98,15 @@ export const isAuthenticate = () => (dispatch) => {
     });
   }
 };
+
+export const logout = (navigate) => (dispatch) => {
+  dispatch({
+    type: Types.LOGOUT_USER,
+    payload: {
+      isAuthenticate: false,
+    },
+  });
+  setAuthToken(null);
+  localStorage.removeItem("token");
+  navigate("/login");
+};

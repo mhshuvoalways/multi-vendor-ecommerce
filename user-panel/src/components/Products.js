@@ -15,7 +15,7 @@ const Products = () => {
 
   return (
     <div className="w-11/12 m-auto">
-      <div className="flex gap-8 flex-wrap md:justify-between justify-around">
+      <div className="flex gap-8 flex-wrap justify-center">
         <div className="w-64 rounded shadow-lg product__card relative">
           <Link to="/details">
             <img

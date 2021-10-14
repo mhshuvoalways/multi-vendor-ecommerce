@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "@reach/router";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useDispatch } from "react-redux";
-import { userRegister } from "../store/actions/userAction";
+import { userRegister } from "../../store/actions/userAction";
 
 const ActiveLink = (props) => (
   <Link

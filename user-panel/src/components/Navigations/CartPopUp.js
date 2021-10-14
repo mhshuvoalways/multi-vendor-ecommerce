@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "@reach/router";
-import Product from "../assets/images/products/products.jpg";
-import Clear from "../assets/images/icons/clear.png";
+import Product from "../../assets/images/products/products.jpg";
+import Clear from "../../assets/images/icons/clear.png";
 
 const CartPopUp = () => {
   return (

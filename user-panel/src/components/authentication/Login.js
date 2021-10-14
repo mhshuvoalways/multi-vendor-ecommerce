@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, navigate } from "@reach/router";
 import { useDispatch } from "react-redux";
-import { adminRegister, userLogin } from "../store/actions/userAction";
+import { adminRegister, userLogin } from "../../store/actions/userAction";
 
 const ActiveLink = (props) => (
   <Link

@@ -4,8 +4,8 @@ import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Link } from "@reach/router";
 import CartPopUp from "./CartPopUp";
 import AccountPopUp from "./AccountPopUp";
-import Cart from "../assets/images/icons/cart.png";
-import Favorite from "../assets/images/icons/favorite.png";
+import Cart from "../../assets/images/icons/cart.png";
+import Favorite from "../../assets/images/icons/favorite.png";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

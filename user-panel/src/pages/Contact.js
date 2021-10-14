@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "../components/Navigation";
+import Navigation from "../components/Navigations/Navigation";
 import ContactForm from "../components/Contact";
 import Footer from "../components/Footer";
 

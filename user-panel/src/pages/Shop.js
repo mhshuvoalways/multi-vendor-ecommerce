@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navigation from "../components/Navigation";
+import Navigation from "../components/Navigations/Navigation";
 import Filter from "../components/Filter";
 import Products from "../components/Products";
 import Footer from "../components/Footer";

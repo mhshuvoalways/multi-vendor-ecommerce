@@ -43,6 +43,13 @@ const userReudcer = (state = init, action) => {
         isAuthenticate: action.payload.isAuthenticate,
       };
     }
+    case Types.LOGOUT_USER: {
+      return {
+        isAuthenticate: action.payload.isAuthenticate,
+        user: {},
+        error: null,
+      };
+    }
     default:
       return state;
   }

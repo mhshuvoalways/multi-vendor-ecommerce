@@ -1,8 +1,10 @@
 import React, { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { Link } from "@reach/router";
-import { useSelector } from "react-redux";
-import Favorite from "../assets/images/icons/favorite.png";
+import { Link, navigate } from "@reach/router";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../store/actions/userAction";
+
+import Favorite from "../../assets/images/icons/favorite.png";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -10,8 +12,7 @@ function classNames(...classes) {
 
 const AccountPopUp = () => {
   const userState = useSelector((state) => state.userReducer);
-  console.log(userState);
-
+  const dispatch = useDispatch();
   return (
     <Menu as="div" className="ml-3 relative">
       <div>
@@ -35,27 +36,27 @@ const AccountPopUp = () => {
               <Menu.Item>
                 {({ active }) => (
                   <Link
-                    to="/dashboard"
+                    to="/my-account"
                     className={classNames(
                       active ? "bg-gray-100" : "",
                       "block px-4 py-2 text-sm text-gray-700"
                     )}
                   >
-                    Dashboard
+                    My Account
                   </Link>
                 )}
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <Link
-                    to="/logout"
+                  <p
                     className={classNames(
-                      active ? "bg-gray-100" : "",
+                      active ? "bg-gray-100 cursor-pointer" : "",
                       "block px-4 py-2 text-sm text-gray-700"
                     )}
+                    onClick={() => dispatch(logout(navigate))}
                   >
                     Logout
-                  </Link>
+                  </p>
                 )}
               </Menu.Item>
             </div>

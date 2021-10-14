@@ -1,6 +1,6 @@
 import React from "react";
-import Navigation from "../components/Navigation";
-import RegisterComponent from "../components/Register";
+import Navigation from "../components/Navigations/Navigation";
+import RegisterComponent from "../components/authentication/Register";
 import Footer from "../components/Footer";
 
 const Register = () => {
