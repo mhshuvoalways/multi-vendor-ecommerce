@@ -2,10 +2,12 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-const db = require("./config/db");
+// const db = require("./config/db");
 const cloudinary = require("./config/cloudinary");
-const productRouter = require("./routers/productRouter");
-const userRouter = require("./routers/userRouter");
+// const productRouter = require("./routers/productRouter");
+// const userRouter = require("./routers/userRouter");
+const mongoose = require("mongoose");
+const port = process.env.PORT || 5000;
 
 const app = express();
 app.use(express.json());
@@ -27,4 +29,13 @@ app.get("/", (req, res) => {
   res.send("A MERN stack ecommerce app");
 });
 
-db(app);
+mongoose
+.connect(process.env.MONGODB_URL)
+.then(() => {
+  app.listen(port, () => {
+    console.log(`App listening at : ${port}`);
+  });
+})
+.catch(() => {
+  console.log("Server error occurred");
+});
