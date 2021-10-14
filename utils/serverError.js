@@ -1,5 +1,5 @@
 module.exports = serverError = (res) => {
-  return res.status(500).json({
+  res.status(500).json({
     message: "Server error occurred",
   });
 };
