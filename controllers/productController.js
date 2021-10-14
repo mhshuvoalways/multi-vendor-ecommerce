@@ -1,5 +1,6 @@
 const Product = require("../Model/Product");
 const User = require("../Model/User");
+const serverError = require("../utils/ServerError");
 const cloudinary = require("cloudinary");
 
 const addProduct = (req, res) => {
@@ -21,7 +22,7 @@ const addProduct = (req, res) => {
         { public_id: "ecommerce-app/products/" + req.file.filename },
         function (err, result) {
           if (err) {
-            console.log("err")
+            serverError(res);
           } else {
             const product = {
               author: {
@@ -43,14 +44,14 @@ const addProduct = (req, res) => {
                 res.status(200).json(response);
               })
               .catch(() => {
-                console.log("err")
+                serverError(res);
               });
           }
         }
       );
     })
     .catch(() => {
-      console.log("err")
+      serverError(res);
     });
 };
 
@@ -60,7 +61,7 @@ const getProduct = (req, res) => {
       res.status(200).json(response);
     })
     .catch(() => {
-      console.log("err")
+      serverError(res);
     });
 };
 
@@ -91,7 +92,7 @@ const updateProduct = (req, res) => {
       res.status(200).json(response);
     })
     .catch(() => {
-      console.log("err")
+      serverError(res);
     });
 };
 
@@ -102,7 +103,7 @@ const deleteProduct = (req, res) => {
       res.status(200).json(response);
     })
     .catch(() => {
-      console.log("err")
+      serverError(res);
     });
 };
 
