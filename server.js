@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const morgan = require("morgan");
 const cloudinary = require("./config/cloudinary");
-const productRouter = require("./routers/productRouter");
-const userRouter = require("./routers/userRouter");
+// const productRouter = require("./routers/productRouter");
+// const userRouter = require("./routers/userRouter");
 const port = process.env.PORT || 5000;
 
 const app = express();
@@ -21,8 +21,8 @@ cloudinary();
 //   });
 // }
 
-app.use("/user", userRouter);
-app.use("/product", productRouter);
+// app.use("/user", userRouter);
+// app.use("/product", productRouter);
 
 app.get("/", (req, res) => {
   res.send("A MERN stack ecommerce app");
