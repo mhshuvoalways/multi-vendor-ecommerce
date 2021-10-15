@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navigation from "../components/Navigations/Navigation";
+import Navigation from "../components/navigations/Navigation";
 import Filter from "../components/Filter";
 import Products from "../components/Products";
 import Footer from "../components/Footer";
@@ -29,7 +29,7 @@ const Shop = () => {
           >
             {state.filter ? "- Filter" : "+ Filter"}
           </p>
-          <p>Showing 15 of 144 result</p>
+          <p>Showing 8 of 25 result</p>
         </div>
         {state.filter && <Filter />}
         <Products />

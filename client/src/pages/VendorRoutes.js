@@ -1,17 +1,17 @@
 import React from "react";
 import Navigation from "../components/navigations/Navigation";
-import AccountRoutes from "../components/my-account/AccountRoutes";
-import WelcomeMsg from "../components/my-account/WelcomeMsg";
+import VendorRoutesCompo from "../components/dashboard/VendorRoutes";
+import Dashboard from "../components/dashboard/Dashboard";
 import Footer from "../components/Footer";
 
-const MyAccount = () => {
+const VendorRoutes = () => {
   return (
     <div>
       <Navigation />
       <div className="w-4/5 m-auto mt-20 bg-gray-200 py-16 flex gap-5 flex-wrap justify-center">
-        <AccountRoutes />
+        <VendorRoutesCompo />
         <div className="w-8/12">
-          <WelcomeMsg />
+          <Dashboard />
         </div>
       </div>
       <Footer />
@@ -19,4 +19,4 @@ const MyAccount = () => {
   );
 };
 
-export default MyAccount;
+export default VendorRoutes;

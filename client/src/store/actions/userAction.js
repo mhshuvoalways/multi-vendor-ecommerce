@@ -1,6 +1,6 @@
 import * as Types from "../constants/UserTypes";
 import setAuthToken from "../../utils/setAuthToken";
-import axios from "axios";
+import axios from "../../utils/axios";
 import jwt_decode from "jwt-decode";
 
 export const adminRegister = () => (dispatch) => {

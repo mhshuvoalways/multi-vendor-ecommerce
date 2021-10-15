@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "../components/Navigations/Navigation";
+import Navigation from "../components/navigations/Navigation";
 import Banner from "../components/Banner";
 import SomeInfo from "../components/SomeInfo";
 import Products from "../components/Products";

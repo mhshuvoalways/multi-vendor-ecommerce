@@ -13,13 +13,6 @@ app.use(cors());
 app.use(morgan("dev"));
 cloudinary();
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
-
 app.use("/user", userRouter);
 app.use("/product", productRouter);
 
