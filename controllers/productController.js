@@ -1,6 +1,7 @@
 const Product = require("../Model/Product");
 const User = require("../Model/User");
 const cloudinary = require("cloudinary");
+const serverError = require("../utils/serverError");
 
 const addProduct = (req, res) => {
   const {
@@ -21,9 +22,7 @@ const addProduct = (req, res) => {
         { public_id: "ecommerce-app/products/" + req.file.filename },
         function (err, result) {
           if (err) {
-            res.status(500).json({
-              message: "Server error occurred",
-            });
+            serverError(res);
           } else {
             const product = {
               author: {
@@ -45,18 +44,14 @@ const addProduct = (req, res) => {
                 res.status(200).json(response);
               })
               .catch(() => {
-                res.status(500).json({
-                  message: "Server error occurred",
-                });
+                serverError(res);
               });
           }
         }
       );
     })
     .catch(() => {
-      res.status(500).json({
-        message: "Server error occurred",
-      });
+      serverError(res);
     });
 };
 
@@ -66,9 +61,7 @@ const getProduct = (req, res) => {
       res.status(200).json(response);
     })
     .catch(() => {
-      res.status(500).json({
-        message: "Server error occurred",
-      });
+      serverError(res);
     });
 };
 
@@ -99,9 +92,7 @@ const updateProduct = (req, res) => {
       res.status(200).json(response);
     })
     .catch(() => {
-      res.status(500).json({
-        message: "Server error occurred",
-      });
+      serverError(res);
     });
 };
 
@@ -112,9 +103,7 @@ const deleteProduct = (req, res) => {
       res.status(200).json(response);
     })
     .catch(() => {
-      res.status(500).json({
-        message: "Server error occurred",
-      });
+      serverError(res);
     });
 };
 
