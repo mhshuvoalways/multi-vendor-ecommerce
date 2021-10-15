@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "../components/navigations/Navigation";
+import Navigation from "../components/Navigations/Navigation";
 import VendorRoutesCompo from "../components/dashboard/VendorRoutes";
 import VendorProducts from "../components/dashboard/VendorProducts";
 import Footer from "../components/Footer";

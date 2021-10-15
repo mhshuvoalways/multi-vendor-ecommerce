@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "../components/navigations/Navigation";
+import Navigation from "../components/Navigations/Navigation";
 import AccountRoutes from "../components/my-account/AccountRoutes";
 import AccountDetails from "../components/my-account/AccountDetails";
 import Footer from "../components/Footer";
