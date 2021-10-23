@@ -15,6 +15,7 @@
   "author": "Mahamudul Hasan Shuvo",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.23.0",
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.27.0",
     "cors": "^2.8.5",
@@ -26,6 +27,7 @@
     "multer": "^1.4.3"
   },
   "devDependencies": {
+    "chalk": "^4.1.2",
     "nodemon": "^2.0.13"
   }
 }

@@ -1,32 +1,27 @@
-import React, { useState } from "react";
-import { Link } from "@reach/router";
+import React, { useState, useEffect } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useDispatch } from "react-redux";
-import { userRegister } from "../../store/actions/userAction";
-
-const ActiveLink = (props) => (
-  <Link
-    {...props}
-    getProps={({ isCurrent }) => {
-      return {
-        className: isCurrent && "text-purple-600",
-      };
-    }}
-  />
-);
+import { adminRegister, userRegister } from "../../store/actions/userAction";
+import ActiveLink from "../ActiveLink";
 
 const Register = () => {
   const [state, setState] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     phone: "",
     email: "",
     password: "",
     recaptch: "",
+    storeName: "",
     role: "customer",
     agree: true,
   });
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(adminRegister());
+  }, [dispatch]);
 
   const onChange = (event) => {
     setState({
@@ -58,18 +53,38 @@ const Register = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const { name, phone, email, password, recaptch, role, agree } = state;
+    const {
+      firstName,
+      lastName,
+      phone,
+      email,
+      password,
+      storeName,
+      recaptch,
+      role,
+      agree,
+    } = state;
     dispatch(
-      userRegister({ name, phone, email, password, recaptch, role, agree })
+      userRegister({
+        firstName,
+        lastName,
+        phone,
+        email,
+        password,
+        storeName,
+        recaptch,
+        role,
+        agree,
+      })
     );
-    setState({
-      name: "",
-      phone: "",
-      email: "",
-      password: "",
-      role: "customer",
-      agree: true,
-    });
+    // setState({
+    //   name: "",
+    //   phone: "",
+    //   email: "",
+    //   password: "",
+    //   role: "customer",
+    //   agree: true,
+    // });
   };
 
   return (
@@ -85,28 +100,6 @@ const Register = () => {
       </div>
       <form onSubmit={onSubmit}>
         <div className="shadow-md rounded-md text-left p-10">
-          <label className="block">
-            <span className="text-gray-700">NAME</span>
-            <input
-              type="text"
-              placeholder="Enter Your Name"
-              className="p-2 my-1 placeholder-gray-400 text-gray-600 w-full bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
-              name="name"
-              onChange={onChange}
-              value={state.name}
-            />
-          </label>
-          <label className="block">
-            <span className="text-gray-700">PHONE</span>
-            <input
-              type="phone"
-              placeholder="Enter Your Phone"
-              className="p-2 my-1 placeholder-gray-400 text-gray-600 w-full bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
-              name="phone"
-              onChange={onChange}
-              value={state.phone}
-            />
-          </label>
           <label className="block">
             <span className="text-gray-700">EMAIL</span>
             <input
@@ -129,6 +122,54 @@ const Register = () => {
               value={state.password}
             />
           </label>
+          {state.role === "vendor" && (
+            <div>
+              <label className="block">
+                <span className="text-gray-700">FIRST NAME</span>
+                <input
+                  type="text"
+                  placeholder="Enter Your First Name"
+                  className="p-2 my-1 placeholder-gray-400 text-gray-600 w-full bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
+                  name="firstName"
+                  onChange={onChange}
+                  value={state.firstName}
+                />
+              </label>
+              <label className="block">
+                <span className="text-gray-700">LAST NAME</span>
+                <input
+                  type="text"
+                  placeholder="Enter Your Last Name"
+                  className="p-2 my-1 placeholder-gray-400 text-gray-600 w-full bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
+                  name="lastName"
+                  onChange={onChange}
+                  value={state.lastName}
+                />
+              </label>
+              <label className="block">
+                <span className="text-gray-700">PHONE</span>
+                <input
+                  type="phone"
+                  placeholder="Enter Your Phone"
+                  className="p-2 my-1 placeholder-gray-400 text-gray-600 w-full bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
+                  name="phone"
+                  onChange={onChange}
+                  value={state.phone}
+                />
+              </label>
+              <label className="block">
+                <span className="text-gray-700">STORE</span>
+                <input
+                  type="text"
+                  placeholder="Enter Your Store Name"
+                  className="p-2 my-1 placeholder-gray-400 text-gray-600 w-full bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
+                  name="storeName"
+                  onChange={onChange}
+                  value={state.storeName}
+                />
+              </label>
+            </div>
+          )}
           <label className="block">
             <span className="text-gray-700">RECAPTCHA</span>
             <div className="my-1">

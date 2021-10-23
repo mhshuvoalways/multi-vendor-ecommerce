@@ -8,45 +8,81 @@ const productSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "user",
       },
-      email: String,
+      storeName: {
+        type: String,
+        required: true,
+      },
     },
     name: {
       type: String,
       trim: true,
+      required: true,
+      max: 20,
     },
     category: {
       type: String,
+      required: true,
     },
-    image: {
-      type: String,
-    },
+    image: [
+      {
+        url: {
+          type: String,
+          required: true,
+        },
+        public_id: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
     regularPrice: {
       type: Number,
       trim: true,
     },
     salePrice: {
       type: Number,
-      trim: true,
+      required: true,
     },
     description: {
       type: String,
-      trim: true,
+      required: true,
+      min: 10,
+    },
+    attributes: {
+      sizes: String,
+      colors: String,
+    },
+    tags: [
+      {
+        _id: {
+          type: String,
+          required: true,
+        },
+        name: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+    reviews: {
+      type: Schema.Types.ObjectId,
+      ref: "review",
     },
     stockStatus: {
       type: Boolean,
       default: true,
     },
     inCart: {
+      cartId: {
+        type: Schema.Types.ObjectId,
+        ref: "incart",
+      },
       type: Boolean,
       default: false,
     },
     inWish: {
       type: Boolean,
       default: false,
-    },
-    attributes: {
-      sizes: String,
-      colors: String,
     },
   },
   {

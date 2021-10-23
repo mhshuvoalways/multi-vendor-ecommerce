@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "@reach/router";
+import { useSelector, useDispatch } from "react-redux";
+import { getMyAccount, logout } from "../../store/actions/userAction";
 
 const WelcomeMsg = () => {
+  const dispatch = useDispatch();
+  const userReducer = useSelector((store) => store.userReducer);
+
+  useEffect(() => {
+    dispatch(getMyAccount());
+  }, [dispatch]);
+
   return (
     <div className="shadow-md rounded-md p-5">
       <p>
-        Hello Shuvo (not Shuvo?
-        <span className="cursor-pointer underline text-purple-500">
+        Hello {userReducer.user.username} (not {userReducer.user.username}?
+        <span
+          className="cursor-pointer underline text-purple-500"
+          onClick={() => dispatch(logout())}
+        >
           {" "}
           Logout
         </span>

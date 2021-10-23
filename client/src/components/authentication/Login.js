@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, navigate } from "@reach/router";
 import { useDispatch } from "react-redux";
 import { adminRegister, userLogin } from "../../store/actions/userAction";
-
-const ActiveLink = (props) => (
-  <Link
-    {...props}
-    getProps={({ isCurrent }) => {
-      return {
-        className: isCurrent && "text-purple-600",
-      };
-    }}
-  />
-);
+import ActiveLink from "../ActiveLink";
 
 const Login = () => {
   const [state, setState] = useState({
@@ -36,7 +25,7 @@ const Login = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     const { email, password } = state;
-    dispatch(userLogin({ email, password }, navigate));
+    dispatch(userLogin({ email, password }));
     setState({
       email: "",
       password: "",

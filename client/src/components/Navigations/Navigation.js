@@ -12,7 +12,6 @@ function classNames(...classes) {
 }
 
 export default function Navigation() {
-  
   const navigation = [
     { name: "Home", href: "/", current: false },
     { name: "Shop", href: "/shop", current: false },

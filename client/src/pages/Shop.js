@@ -15,9 +15,15 @@ const Shop = () => {
     <div>
       <Navigation />
       <div className="mt-5">
-        <p className="text-4xl mb-5 py-8 text-center bg-gray-50">
-          ALL PRODUCTS
-        </p>
+        <nav class="bg-gray-100 py-6 rounded mb-10">
+          <ol class="flex justify-center">
+            <li>HOME</li>
+            <li>
+              <span class="mx-2">/</span>
+            </li>
+            <li>SHOP</li>
+          </ol>
+        </nav>
         <div className="flex justify-between w-11/12 m-auto mb-10">
           <p
             className={

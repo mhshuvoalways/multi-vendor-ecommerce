@@ -2,6 +2,9 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import userReducer from "./reducers/userReducer";
 import productReducer from "./reducers/productReducer";
+import tagsReducer from "./reducers/tagsReducer";
+import categoryReducer from "./reducers/categoryReducer";
+import inCartReducer from "./reducers/inCartReducer";
 import alartReducer from "./reducers/alertReducer";
 import thunk from "redux-thunk";
 
@@ -12,6 +15,9 @@ const composedEnhancers = composeWithDevTools(...enhancers);
 const rootReducer = combineReducers({
   userReducer,
   productReducer,
+  tagsReducer,
+  categoryReducer,
+  inCartReducer,
   alartReducer,
 });
 

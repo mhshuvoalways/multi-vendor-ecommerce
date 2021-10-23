@@ -4,8 +4,6 @@ import { Link, navigate } from "@reach/router";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../store/actions/userAction";
 
-import Favorite from "../../assets/images/icons/favorite.png";
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -13,12 +11,20 @@ function classNames(...classes) {
 const AccountPopUp = () => {
   const userState = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
+
   return (
     <Menu as="div" className="ml-3 relative">
       <div>
-        <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-          <span className="sr-only">Open user menu</span>
-          <img className="h-8 w-8 rounded-full" src={Favorite} alt="" />
+        <Menu.Button className="bg-gray-200 flex p-1 rounded-full">
+          {userState.user.image ? (
+            <img
+              src={userState.user.image}
+              alt=""
+              className="h-8 w-8 rounded-full"
+            />
+          ) : (
+            <i className="far fa-user h-8 w-8 rounded-full p-1 text-lg"></i>
+          )}
         </Menu.Button>
       </div>
       <Transition
@@ -62,6 +68,19 @@ const AccountPopUp = () => {
             </div>
           ) : (
             <div>
+              <Menu.Item>
+                {({ active }) => (
+                  <Link
+                    to="/my-account"
+                    className={classNames(
+                      active ? "bg-gray-100" : "",
+                      "block px-4 py-2 text-sm text-gray-700"
+                    )}
+                  >
+                    My Account
+                  </Link>
+                )}
+              </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
                   <Link

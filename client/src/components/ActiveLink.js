@@ -7,9 +7,7 @@ const ActiveLink = ({ partial = true, ...props }) => (
     getProps={({ isCurrent, isPartiallyCurrent }) => {
       const isActive = partial ? isPartiallyCurrent : isCurrent;
       return {
-        style: {
-          color: isActive ? "text-purple-600" : "",
-        },
+        className: isActive ? "text-purple-600" : "",
       };
     }}
   />

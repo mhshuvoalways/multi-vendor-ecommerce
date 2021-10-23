@@ -16,7 +16,7 @@ export const adminRegister = () => (dispatch) => {
     })
     .catch((err) => {
       dispatch({
-        type: Types.REGISTER_USER_ERROR,
+        type: Types.ADMIN_REGISTER_USER_ERROR,
         payload: {
           error: err.response.data,
         },
@@ -45,7 +45,7 @@ export const userRegister = (user) => (dispatch) => {
     });
 };
 
-export const userLogin = (user, navigate) => (dispatch) => {
+export const userLogin = (user) => (dispatch) => {
   axios
     .post("/user/login", user)
     .then((response) => {
@@ -57,7 +57,6 @@ export const userLogin = (user, navigate) => (dispatch) => {
       });
       setAuthToken(response.data.token);
       localStorage.setItem("token", response.data.token);
-      navigate("/");
     })
     .catch((err) => {
       dispatch({
@@ -72,6 +71,7 @@ export const userLogin = (user, navigate) => (dispatch) => {
 export const isAuthenticate = () => (dispatch) => {
   const token = localStorage.getItem("token");
   if (token) {
+    setAuthToken(token);
     var decoded = jwt_decode(token);
     var dateNow = new Date();
     if (decoded.exp * 1000 < dateNow.getTime()) {
@@ -81,6 +81,7 @@ export const isAuthenticate = () => (dispatch) => {
           isAuthenticate: false,
         },
       });
+      localStorage.removeItem("token");
     } else {
       dispatch({
         type: Types.ISAUTHENTICATE,
@@ -88,6 +89,7 @@ export const isAuthenticate = () => (dispatch) => {
           isAuthenticate: true,
         },
       });
+      dispatch(getMyAccount());
     }
   } else {
     dispatch({
@@ -97,6 +99,23 @@ export const isAuthenticate = () => (dispatch) => {
       },
     });
   }
+};
+
+export const getMyAccount = () => (dispatch) => {
+  axios
+    .get("/user/getmyaccount")
+    .then((res) => {
+      dispatch({
+        type: Types.GET_MYACCOUT,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.GET_MYACCOUT,
+        payload: err.response,
+      });
+    });
 };
 
 export const logout = (navigate) => (dispatch) => {

@@ -15,6 +15,12 @@ const userReudcer = (state = init, action) => {
         error: null,
       };
     }
+    case Types.ADMIN_REGISTER_USER_ERROR: {
+      return {
+        ...state,
+        error: action.payload.error,
+      };
+    }
     case Types.REGISTER_USER: {
       return {
         isAuthenticate: Object.keys(action.payload.user).length > 0,
@@ -48,6 +54,18 @@ const userReudcer = (state = init, action) => {
         isAuthenticate: action.payload.isAuthenticate,
         user: {},
         error: null,
+      };
+    }
+    case Types.GET_MYACCOUT: {
+      return {
+        ...state,
+        user: action.payload,
+      };
+    }
+    case Types.GET_MYACCOUT_ERROR: {
+      return {
+        ...state,
+        user: action.payload,
       };
     }
     default:

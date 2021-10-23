@@ -9,11 +9,19 @@ const {
 } = require("../middlewares/userValidation");
 
 const adminRegister = (_req, res) => {
-  const name = process.env.adminName;
+  const firstName = process.env.firstName;
+  const lastName = process.env.lastName;
   const email = process.env.adminEmail;
   const phone = process.env.adminPhone;
   const password = process.env.adminPassword;
-  const validation = adminRegisterValidation({ name, email, phone, password });
+  const validation = adminRegisterValidation({
+    firstName,
+    lastName,
+    email,
+    phone,
+    password,
+  });
+  const username = email.substring(0, email.lastIndexOf("@"));
   if (validation.isValid) {
     User.findOne({ email })
       .then((response) => {
@@ -23,8 +31,10 @@ const adminRegister = (_req, res) => {
               serverError(res);
             } else {
               const user = {
-                name,
+                firstName,
+                lastName,
                 email,
+                username,
                 phone,
                 password: hash,
                 role: "admin",
@@ -57,14 +67,29 @@ const adminRegister = (_req, res) => {
 };
 
 const register = (req, res) => {
-  const { name, email, phone, password, role, recaptch, agree } = req.body;
-  const validation = registerValidation({
-    name,
+  const {
+    firstName,
+    lastName,
     email,
     phone,
     password,
+    storeName,
+    role,
+    recaptch,
     agree,
+  } = req.body;
+  const validation = registerValidation({
+    firstName,
+    lastName,
+    email,
+    phone,
+    password,
+    storeName,
+    recaptch,
+    agree,
+    role,
   });
+  const username = email.substring(0, email.lastIndexOf("@"));
   if (process.env.adminEmail === email) {
     res.status(400).json({
       message: "You can't use admin mail",
@@ -78,7 +103,23 @@ const register = (req, res) => {
               if (err) {
                 serverError(res);
               } else {
-                const user = { name, email, phone, password: hash, role };
+                const vendor = {
+                  firstName,
+                  lastName,
+                  email,
+                  username,
+                  phone,
+                  password: hash,
+                  storeName,
+                  role,
+                };
+                const curstomer = {
+                  email,
+                  username,
+                  password: hash,
+                  role,
+                };
+                const user = role === "vendor" ? vendor : curstomer;
                 new User(user)
                   .save()
                   .then((response) => {
@@ -118,6 +159,7 @@ const login = (req, res) => {
             if (result) {
               const token = jwt.sign(
                 {
+                  _id: response._id,
                   email: response.email,
                 },
                 process.env.SECRET,
@@ -152,6 +194,19 @@ const login = (req, res) => {
 
 const getUser = (req, res) => {
   User.find()
+    .select("-password")
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch(() => {
+      serverError(res);
+    });
+};
+
+const getMyAccount = (req, res) => {
+  const { email } = req.user;
+  User.findOne({ email: email })
+    .select("-password")
     .then((response) => {
       res.status(200).json(response);
     })
@@ -179,5 +234,6 @@ module.exports = {
   register,
   login,
   getUser,
+  getMyAccount,
   deleteUser,
 };
