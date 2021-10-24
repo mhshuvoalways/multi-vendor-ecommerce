@@ -57,6 +57,31 @@ export const deleteProduct = (id) => (dispatch) => {
         type: Types.DELETE_PRODUCT_ERROR,
         payload: err.response.data,
       });
-      console.log(err.data);
     });
+};
+
+export const updateProduct = (id, body) => (dispatch) => {
+  axios
+    .put("/product/edit/" + id, body)
+    .then((response) => {
+      dispatch({
+        type: Types.UPDATE_PRODUCT,
+        payload: {
+          product: response.data,
+          id,
+        },
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.UPDATE_PRODUCT_ERROR,
+        payload: err.response.data,
+      });
+    });
+};
+
+export const modalToggle = () => (dispatch) => {
+  dispatch({
+    type: Types.MODAL_TOGGLE,
+  });
 };

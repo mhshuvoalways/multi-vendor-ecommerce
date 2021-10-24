@@ -21,8 +21,6 @@ const addCart = (state = init, action) => {
       };
     }
     case Types.CART_GET: {
-      console.log(action.payload);
-
       return {
         cart: action.payload,
         error: {},

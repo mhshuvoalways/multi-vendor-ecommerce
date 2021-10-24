@@ -4,12 +4,11 @@ import UploadModal from "./UploadModal";
 import moment from "moment";
 import Clear from "../../assets/images/icons/clear.png";
 import Edit from "../../assets/images/icons/edit.png";
-import { deleteProduct } from "../../store/actions/productAction";
+import { deleteProduct, modalToggle } from "../../store/actions/productAction";
 import { getTags } from "../../store/actions/tagAction";
 import { getCategory } from "../../store/actions/categoryAction";
 
 const Products = () => {
-  const [state, setState] = useState(false);
   const [products, setProduct] = useState();
   const productReducer = useSelector((el) => el.productReducer);
   const userReducer = useSelector((el) => el.userReducer);
@@ -26,10 +25,6 @@ const Products = () => {
     );
   }, [dispatch, productReducer.products, userReducer.user._id, productReducer]);
 
-  const modalHandler = () => {
-    setState(!state);
-  };
-
   return (
     <div className="overflow-x-auto md:overflow-x-hidden">
       <div className="flex justify-between mb-2">
@@ -42,7 +37,7 @@ const Products = () => {
         </div>
         <button
           className="bg-purple-600 text-white p-2 rounded hover:bg-gray-900"
-          onClick={modalHandler}
+          onClick={() => dispatch(modalToggle())}
         >
           Add Product
         </button>
@@ -98,7 +93,9 @@ const Products = () => {
             </tr>
           ))}
       </table>
-      {state && <UploadModal modalHandler={modalHandler} modal={state} />}
+      {productReducer.modal && (
+        <UploadModal modalHandler={modalToggle} modal={productReducer.modal} />
+      )}
     </div>
   );
 };

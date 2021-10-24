@@ -14,12 +14,14 @@ const adminRegister = (_req, res) => {
   const email = process.env.adminEmail;
   const phone = process.env.adminPhone;
   const password = process.env.adminPassword;
+  const storeName = process.env.storeName;
   const validation = adminRegisterValidation({
     firstName,
     lastName,
     email,
     phone,
     password,
+    storeName
   });
   const username = email.substring(0, email.lastIndexOf("@"));
   if (validation.isValid) {
@@ -36,6 +38,7 @@ const adminRegister = (_req, res) => {
                 email,
                 username,
                 phone,
+                storeName,
                 password: hash,
                 role: "admin",
               };

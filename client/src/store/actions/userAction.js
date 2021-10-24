@@ -24,7 +24,7 @@ export const adminRegister = () => (dispatch) => {
     });
 };
 
-export const userRegister = (user) => (dispatch) => {
+export const userRegister = (user, navigate) => (dispatch) => {
   axios
     .post("/user/register", user)
     .then((response) => {
@@ -34,6 +34,7 @@ export const userRegister = (user) => (dispatch) => {
           user: response.data,
         },
       });
+      navigate("/login");
     })
     .catch((err) => {
       dispatch({

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
+import { navigate } from "@reach/router";
 import { useDispatch } from "react-redux";
 import { adminRegister, userRegister } from "../../store/actions/userAction";
 import ActiveLink from "../ActiveLink";
@@ -65,26 +66,31 @@ const Register = () => {
       agree,
     } = state;
     dispatch(
-      userRegister({
-        firstName,
-        lastName,
-        phone,
-        email,
-        password,
-        storeName,
-        recaptch,
-        role,
-        agree,
-      })
+      userRegister(
+        {
+          firstName,
+          lastName,
+          phone,
+          email,
+          password,
+          storeName,
+          recaptch,
+          role,
+          agree,
+        },
+        navigate
+      )
     );
-    // setState({
-    //   name: "",
-    //   phone: "",
-    //   email: "",
-    //   password: "",
-    //   role: "customer",
-    //   agree: true,
-    // });
+    setState({
+      firstName: "",
+      lastName: "",
+      phone: "",
+      email: "",
+      password: "",
+      storeName: "",
+      role: "customer",
+      agree: true,
+    });
   };
 
   return (

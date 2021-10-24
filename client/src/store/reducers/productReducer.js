@@ -4,6 +4,7 @@ const init = {
   products: [],
   error: {},
   isLoading: true,
+  modal: false,
 };
 
 const productReducer = (state = init, action) => {
@@ -14,6 +15,7 @@ const productReducer = (state = init, action) => {
         products: temp,
         error: {},
         isLoading: false,
+        modal: false,
       };
     }
     case Types.UPLOAD_PRODUCT_ERROR: {
@@ -51,6 +53,29 @@ const productReducer = (state = init, action) => {
         ...state,
         error: action.payload,
         isLoading: false,
+      };
+    }
+    case Types.UPDATE_PRODUCT: {
+      const temp = [...state.products];
+      const findIndex = temp.findIndex((el) => el._id === action.payload.id);
+      temp[findIndex] = action.payload.product;
+      return {
+        products: temp,
+        error: {},
+        isLoading: false,
+      };
+    }
+    case Types.UPDATE_PRODUCT_ERROR: {
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false,
+      };
+    }
+    case Types.MODAL_TOGGLE: {
+      return {
+        ...state,
+        modal: !state.modal,
       };
     }
     default:

@@ -3,25 +3,33 @@ const Product = require("../Model/Product");
 const serverError = require("../utils/serverError");
 
 const addCart = (req, res) => {
-  Product.findOne({ _id: req.params.id })
+  InCart.findOne({ productId: req.params.id })
     .then((response) => {
-      const product = {
-        authorId: response.author.authorId,
-        productId: response._id,
-        name: response.name,
-        image: response.image[0].url,
-        regularPrice: response.regularPrice,
-        salePrice: response.salePrice,
-        subTotal: response.salePrice,
-      };
-      new InCart(product)
-        .save()
-        .then((response) => {
-          res.status(200).json(response);
-        })
-        .catch(() => {
-          serverError(res);
-        });
+      if (!response) {
+        Product.findOne({ _id: req.params.id })
+          .then((response) => {
+            const product = {
+              authorId: response.author.authorId,
+              productId: response._id,
+              name: response.name,
+              image: response.image[0].url,
+              regularPrice: response.regularPrice,
+              salePrice: response.salePrice,
+              subTotal: response.salePrice,
+            };
+            new InCart(product)
+              .save()
+              .then((response) => {
+                res.status(200).json(response);
+              })
+              .catch(() => {
+                serverError(res);
+              });
+          })
+          .catch(() => {
+            serverError(res);
+          });
+      }
     })
     .catch(() => {
       serverError(res);

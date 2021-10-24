@@ -5,6 +5,7 @@ import {
   decrement,
   deleteCartItem,
 } from "../store/actions/inCartAction";
+import { updateProduct } from "../store/actions/productAction";
 import Clear from "../assets/images/icons/clear.png";
 
 const Cart = () => {
@@ -69,7 +70,15 @@ const Cart = () => {
                     <div className="flex border-solid border-2 border-gray-200 py-1 justify-around">
                       <span
                         className="hover:bg-gray-300 px-2 rounded-full cursor-pointer"
-                        onClick={() => dispatch(decrement(el._id))}
+                        onClick={() => {
+                          dispatch(decrement(el._id));
+                          if (el.quantity === 1) {
+                            dispatch(deleteCartItem(el._id));
+                            dispatch(
+                              updateProduct(el.productId, { inCart: false })
+                            );
+                          }
+                        }}
                       >
                         -
                       </span>
@@ -90,7 +99,12 @@ const Cart = () => {
                       src={Clear}
                       alt=""
                       className="cursor-pointer w-5"
-                      onClick={() => dispatch(deleteCartItem(el._id))}
+                      onClick={() => {
+                        dispatch(deleteCartItem(el._id));
+                        dispatch(
+                          updateProduct(el.productId, { inCart: false })
+                        );
+                      }}
                     />
                   </td>
                 </tr>

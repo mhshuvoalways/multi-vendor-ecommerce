@@ -10,7 +10,7 @@ const userReudcer = (state = init, action) => {
   switch (action.type) {
     case Types.ADMIN_REGISTER_USER: {
       return {
-        isAuthenticate: Object.keys(action.payload.user).length > 0,
+        ...state,
         user: action.payload.user,
         error: null,
       };
@@ -23,7 +23,7 @@ const userReudcer = (state = init, action) => {
     }
     case Types.REGISTER_USER: {
       return {
-        isAuthenticate: Object.keys(action.payload.user).length > 0,
+        ...state,
         user: action.payload.user,
         error: null,
       };

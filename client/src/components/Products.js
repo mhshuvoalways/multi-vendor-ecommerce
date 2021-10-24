@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@reach/router";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../store/actions/productAction";
-import { addCart } from "../store/actions/inCartAction";
+import { getProducts, updateProduct } from "../store/actions/productAction";
+import { addCart, } from "../store/actions/inCartAction";
 import ProductModal from "./ProductModal";
 import Loading from "./Loading";
 import Visibility from "../assets/images/icons/visibility.png";
@@ -29,7 +29,7 @@ const Products = () => {
         {productReducer.isLoading ? (
           <Loading />
         ) : (
-          productReducer.products.reverse().map((el) => (
+          productReducer.products.map((el) => (
             <div
               className="w-64 rounded shadow-lg product__card relative"
               key={el._id}
@@ -66,7 +66,10 @@ const Products = () => {
                         ? "rounded-full mx-3 bg-purple-400 cursor-not-allowed p-1"
                         : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
                     }
-                    onClick={() => dispatch(addCart(el._id))}
+                    onClick={() => {
+                      dispatch(addCart(el._id));
+                      dispatch(updateProduct(el._id, { inCart: true }));
+                    }}
                   />
                 ) : (
                   <Link to="/login">

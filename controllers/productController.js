@@ -76,39 +76,19 @@ const getProduct = (req, res) => {
 
 const updateProduct = (req, res) => {
   const id = req.params.id;
-  const {
+  const { name, regularPrice, salePrice, description, inCart, inWish } =
+    req.body;
+  const updateProduct = {
     name,
-    category,
     regularPrice,
     salePrice,
     description,
     inCart,
     inWish,
-    tags,
-  } = req.body;
-
-  const { email } = req.user;
-  User.findOne({ email })
+  };
+  Product.findOneAndUpdate({ _id: id }, updateProduct, { new: true })
     .then((response) => {
-      if (response.role === "admin" || response.role === "vendor") {
-        const updateProduct = {
-          name,
-          category,
-          regularPrice,
-          salePrice,
-          description,
-          tags: JSON.parse(tags),
-          inCart,
-          inWish,
-        };
-        Product.findOneAndUpdate({ _id: id, updateProduct }, { new: true })
-          .then((response) => {
-            res.status(200).json(response);
-          })
-          .catch(() => {
-            serverError(res);
-          });
-      }
+      res.status(200).json(response);
     })
     .catch(() => {
       serverError(res);

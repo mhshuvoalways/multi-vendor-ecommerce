@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../store/actions/productAction";
 import Tags from "./Tags";
@@ -14,7 +14,6 @@ const UploadModal = ({ modal, modalHandler }) => {
     finalTags: [],
   });
   const [tags, setTags] = useState({
-    tagsArr: [],
     searchTerm: "",
     searchTags: [],
   });
@@ -22,14 +21,6 @@ const UploadModal = ({ modal, modalHandler }) => {
   const dispatch = useDispatch();
   const tagsData = useSelector((data) => data.tagsReducer);
   const categoryData = useSelector((data) => data.categoryReducer);
-
-  useEffect(() => {
-    setTags({
-      ...tags,
-      tagsArr: tagsData.tags,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const changeHandlerImage = (event) => {
     setImage(event.target.files[0]);
@@ -43,7 +34,7 @@ const UploadModal = ({ modal, modalHandler }) => {
   };
 
   const changeHandlerTag = (e) => {
-    const temp = [...tags.tagsArr];
+    const temp = [...tagsData.tags];
     setTags({
       ...tags,
       searchTerm: e.target.value,
@@ -54,7 +45,7 @@ const UploadModal = ({ modal, modalHandler }) => {
   };
 
   const onClickTags = (id) => {
-    const tagAr = [...tags.tagsArr];
+    const tagAr = [...tagsData.tags];
     const obj = tagAr.find((el) => el._id === id);
     const finalTag = [...product.finalTags, obj];
     setProduct({
@@ -107,7 +98,7 @@ const UploadModal = ({ modal, modalHandler }) => {
                   <button className="p-1 ml-auto bg-transparent border-0 text-gray-300 float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
                     <span
                       className="bg-transparent h-6 w-6 text-2xl block outline-none focus:outline-none"
-                      onClick={modalHandler}
+                      onClick={() => dispatch(modalHandler())}
                     >
                       <i className="fas fa-times"></i>
                     </span>
