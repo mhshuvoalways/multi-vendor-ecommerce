@@ -37,7 +37,7 @@ export const getProducts = () => (dispatch) => {
       dispatch({
         type: Types.GET_PRODUCT_ERROR,
         payload: {
-          error: err.response.data,
+          error: err.response,
         },
       });
     });
@@ -60,25 +60,31 @@ export const deleteProduct = (id) => (dispatch) => {
     });
 };
 
-export const updateProduct = (id, body) => (dispatch) => {
-  axios
-    .put("/product/edit/" + id, body)
-    .then((response) => {
-      dispatch({
-        type: Types.UPDATE_PRODUCT,
-        payload: {
-          product: response.data,
-          id,
-        },
-      });
-    })
-    .catch((err) => {
-      dispatch({
-        type: Types.UPDATE_PRODUCT_ERROR,
-        payload: err.response.data,
-      });
-    });
-};
+// export const updateProduct = (id, body) => (dispatch) => {
+//   axios
+//     .put("/product/edit/" + id, body)
+//     .then((response) => {
+//       dispatch({
+//         type: Types.UPDATE_PRODUCT,
+//         payload: {
+//           product: response.data,
+//           id,
+//         },
+//       });
+//     })
+//     .catch((err) => {
+//       dispatch({
+//         type: Types.UPDATE_PRODUCT_ERROR,
+//         payload: err.response.data,
+//       });
+//     });
+// };
+
+export const freshProduct = () => (dispatch) => {
+  dispatch({
+    type: Types.FRESH_PRODUCT,
+  });
+}
 
 export const modalToggle = () => (dispatch) => {
   dispatch({

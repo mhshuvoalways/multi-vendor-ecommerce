@@ -8,3 +8,4 @@ export const LOGOUT_USER = "LOGOUT_USER";
 export const ISAUTHENTICATE = "ISAUTHENTICATE";
 export const GET_MYACCOUT = "GET_MYACCOUT";
 export const GET_MYACCOUT_ERROR = "GET_MYACCOUT_ERROR";
+export const FRESH_USER = "FRESH_USER";

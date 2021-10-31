@@ -64,25 +64,15 @@ const productSchema = new Schema(
         },
       },
     ],
-    reviews: {
-      type: Schema.Types.ObjectId,
-      ref: "review",
-    },
+    reviews: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "review",
+      },
+    ],
     stockStatus: {
       type: Boolean,
       default: true,
-    },
-    inCart: {
-      cartId: {
-        type: Schema.Types.ObjectId,
-        ref: "incart",
-      },
-      type: Boolean,
-      default: false,
-    },
-    inWish: {
-      type: Boolean,
-      default: false,
     },
   },
   {

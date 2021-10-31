@@ -1,13 +1,16 @@
 import * as Types from "../constants/InCartType";
 import axios from "../../utils/axios";
 
-export const addCart = (id) => (dispatch) => {
+export const addCart = (id, body) => (dispatch) => {
   axios
-    .post("/cart/add/" + id)
+    .post("/cart/add/" + id, body)
     .then((res) => {
       dispatch({
         type: Types.CART_ADD,
-        payload: res.data,
+        payload: {
+          id,
+          cartItem: res.data,
+        },
       });
     })
     .catch((err) => {
@@ -18,9 +21,9 @@ export const addCart = (id) => (dispatch) => {
     });
 };
 
-export const getCartItem = () => (dispatch) => {
+export const getCartItem = (userId) => (dispatch) => {
   axios
-    .get("/cart/get")
+    .get("/cart/get/" + userId)
     .then((res) => {
       dispatch({
         type: Types.CART_GET,
@@ -93,4 +96,10 @@ export const deleteCartItem = (id) => (dispatch) => {
         payload: err.response,
       });
     });
+};
+
+export const freshCart = () => (dispatch) => {
+  dispatch({
+    type: Types.FRESH_CART,
+  });
 };

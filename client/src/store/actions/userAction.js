@@ -50,10 +50,11 @@ export const userLogin = (user) => (dispatch) => {
   axios
     .post("/user/login", user)
     .then((response) => {
+      var decoded = jwt_decode(response.data.token);
       dispatch({
         type: Types.LOGIN_USER,
         payload: {
-          user: response.data,
+          user: decoded,
         },
       });
       setAuthToken(response.data.token);
@@ -119,6 +120,12 @@ export const getMyAccount = () => (dispatch) => {
     });
 };
 
+export const freshData = () => (dispatch) => {
+  dispatch({
+    type: Types.FRESH_USER,
+  });
+};
+
 export const logout = (navigate) => (dispatch) => {
   dispatch({
     type: Types.LOGOUT_USER,
@@ -126,7 +133,6 @@ export const logout = (navigate) => (dispatch) => {
       isAuthenticate: false,
     },
   });
-  setAuthToken(null);
   localStorage.removeItem("token");
   navigate("/login");
 };

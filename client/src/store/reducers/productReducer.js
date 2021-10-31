@@ -78,6 +78,14 @@ const productReducer = (state = init, action) => {
         modal: !state.modal,
       };
     }
+    case Types.FRESH_PRODUCT: {
+      return {
+        products: [],
+        error: {},
+        isLoading: true,
+        modal: false,
+      };
+    }
     default:
       return state;
   }

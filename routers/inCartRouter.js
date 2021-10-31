@@ -9,7 +9,7 @@ const {
 const authenticate = require("../middlewares/authenticate");
 
 router.post("/add/:id", authenticate, addCart);
-router.get("/get", authenticate, getCartItem);
+router.get("/get/:id", getCartItem);
 router.put("/increment/:id", authenticate, increment);
 router.put("/decrement/:id", authenticate, decrement);
 router.delete("/delete/:id", authenticate, deleteCartItem);

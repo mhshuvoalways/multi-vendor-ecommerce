@@ -2,7 +2,9 @@ import React, { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Link, navigate } from "@reach/router";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../store/actions/userAction";
+import { logout, freshData } from "../../store/actions/userAction";
+import { freshCart } from "../../store/actions/inCartAction";
+import { freshProduct } from "../../store/actions/productAction";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -59,7 +61,12 @@ const AccountPopUp = () => {
                       active ? "bg-gray-100 cursor-pointer" : "",
                       "block px-4 py-2 text-sm text-gray-700"
                     )}
-                    onClick={() => dispatch(logout(navigate))}
+                    onClick={() => {
+                      dispatch(logout(navigate));
+                      dispatch(freshData());
+                      dispatch(freshCart());
+                      dispatch(freshProduct());
+                    }}
                   >
                     Logout
                   </p>

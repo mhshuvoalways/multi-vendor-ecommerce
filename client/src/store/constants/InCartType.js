@@ -12,3 +12,5 @@ export const DECREMENT_ERROR = "DECREMENT_ERROR";
 
 export const DELETE_ITEM = "DELETE_ITEM";
 export const DELETE_ITEM_ERROR = "DELETE_ITEM_ERROR";
+
+export const FRESH_CART = 'FRESH_CART'

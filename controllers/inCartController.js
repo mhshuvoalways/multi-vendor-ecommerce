@@ -1,21 +1,24 @@
+const e = require("cors");
 const InCart = require("../Model/InCart");
 const Product = require("../Model/Product");
 const serverError = require("../utils/serverError");
 
 const addCart = (req, res) => {
+  const { quantity } = req.body;
   InCart.findOne({ productId: req.params.id })
     .then((response) => {
       if (!response) {
         Product.findOne({ _id: req.params.id })
           .then((response) => {
             const product = {
-              authorId: response.author.authorId,
+              authorId: [{ _id: req.user._id }],
               productId: response._id,
               name: response.name,
               image: response.image[0].url,
               regularPrice: response.regularPrice,
               salePrice: response.salePrice,
               subTotal: response.salePrice,
+              quantity: quantity,
             };
             new InCart(product)
               .save()
@@ -29,6 +32,22 @@ const addCart = (req, res) => {
           .catch(() => {
             serverError(res);
           });
+      } else {
+        const authorId = response.authorId;
+        authorId.push(req.user._id);
+        const updateItem = {
+          authorId,
+          quantity,
+        };
+        InCart.findOneAndUpdate({ productId: req.params.id }, updateItem, {
+          new: true,
+        })
+          .then((response) => {
+            res.status(200).json(response);
+          })
+          .catch(() => {
+            serverError(res);
+          });
       }
     })
     .catch(() => {
@@ -37,7 +56,7 @@ const addCart = (req, res) => {
 };
 
 const getCartItem = (req, res) => {
-  InCart.find()
+  InCart.find({ authorId: req.params.id })
     .then((response) => {
       res.status(200).json(response);
     })

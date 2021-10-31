@@ -68,6 +68,13 @@ const userReudcer = (state = init, action) => {
         user: action.payload,
       };
     }
+    case Types.FRESH_USER: {
+      return {
+        isAuthenticate: false,
+        user: {},
+        error: null,
+      };
+    }
     default:
       return state;
   }

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@reach/router";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts, updateProduct } from "../store/actions/productAction";
-import { addCart, } from "../store/actions/inCartAction";
+import { getProducts } from "../store/actions/productAction";
+import { addCart } from "../store/actions/inCartAction";
 import ProductModal from "./ProductModal";
 import Loading from "./Loading";
 import Visibility from "../assets/images/icons/visibility.png";
@@ -14,6 +14,7 @@ const Products = () => {
   const dispatch = useDispatch();
   const userReducer = useSelector((el) => el.userReducer);
   const productReducer = useSelector((el) => el.productReducer);
+  const cartReducer = useSelector((el) => el.inCartReducer);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -62,13 +63,19 @@ const Products = () => {
                     src={Cart}
                     alt=""
                     className={
-                      el.inCart
-                        ? "rounded-full mx-3 bg-purple-400 cursor-not-allowed p-1"
+                      cartReducer.cart.length
+                        ? cartReducer.cart.map((item) => {
+                            return item.authorId.map((auth) =>
+                              auth === userReducer.user._id &&
+                              item.productId === el._id
+                                ? "rounded-full mx-3 bg-purple-400 cursor-not-allowed p-1"
+                                : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
+                            );
+                          })
                         : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
                     }
                     onClick={() => {
                       dispatch(addCart(el._id));
-                      dispatch(updateProduct(el._id, { inCart: true }));
                     }}
                   />
                 ) : (
@@ -76,11 +83,7 @@ const Products = () => {
                     <img
                       src={Cart}
                       alt=""
-                      className={
-                        el.inCart
-                          ? "rounded-full mx-3 bg-purple-400 cursor-not-allowed p-1"
-                          : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
-                      }
+                      className="rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
                     />
                   </Link>
                 )}

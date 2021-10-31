@@ -5,7 +5,6 @@ import {
   decrement,
   deleteCartItem,
 } from "../store/actions/inCartAction";
-import { updateProduct } from "../store/actions/productAction";
 import Clear from "../assets/images/icons/clear.png";
 
 const Cart = () => {
@@ -32,7 +31,7 @@ const Cart = () => {
   useEffect(() => {
     setCart(cartReducer.cart);
     productTotal();
-  }, [cartReducer.cart, productTotal]);
+  }, [cartReducer.cart, dispatch, productTotal]);
 
   return (
     <div>
@@ -74,9 +73,6 @@ const Cart = () => {
                           dispatch(decrement(el._id));
                           if (el.quantity === 1) {
                             dispatch(deleteCartItem(el._id));
-                            dispatch(
-                              updateProduct(el.productId, { inCart: false })
-                            );
                           }
                         }}
                       >
@@ -101,9 +97,6 @@ const Cart = () => {
                       className="cursor-pointer w-5"
                       onClick={() => {
                         dispatch(deleteCartItem(el._id));
-                        dispatch(
-                          updateProduct(el.productId, { inCart: false })
-                        );
                       }}
                     />
                   </td>

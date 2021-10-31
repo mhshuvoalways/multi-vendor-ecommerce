@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@reach/router";
+import { useDispatch, useSelector } from "react-redux";
+import { addCart } from "../store/actions/inCartAction";
 import Loading from "./Loading";
 
 const ProductModal = ({ state, modalHandler, productReducer }) => {
   const [products, setProducts] = useState();
+  const [count, setCount] = useState();
+
+  const dispatch = useDispatch();
+  const cartReducer = useSelector((store) => store.inCartReducer);
 
   useEffect(() => {
     setProducts(productReducer.products.find((el) => el._id === state.id));
-  }, [productReducer.products, state.id]);
+    const findCount = cartReducer.cart.find(
+      (el) => el.productId === (products && products._id)
+    );
+    setCount(findCount && findCount.quantity);
+  }, [cartReducer.cart, productReducer.products, products, state.id]);
 
   return (
     <div>
@@ -70,11 +80,26 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
                         <p className="border-solid bg-gray-100 border-2 my-10"></p>
                         <div className="flex gap-4 items-center">
                           <div className="flex gap-5 border-solid border-2 border-gray-100 cursor-pointer p-2">
-                            <p>-</p>
-                            <p>1</p>
-                            <p>+</p>
+                            <p
+                              onClick={() => {
+                                if (count > 1) {
+                                  setCount(count - 1);
+                                }
+                              }}
+                            >
+                              -
+                            </p>
+                            <p>{count}</p>
+                            <p onClick={() => setCount(count + 1)}>+</p>
                           </div>
-                          <button className="bg-purple-600 text-white w-40 cursor-pointer py-2">
+                          <button
+                            className="bg-purple-600 text-white w-40 cursor-pointer py-2"
+                            onClick={() => {
+                              dispatch(
+                                addCart(products._id, { quantity: count })
+                              );
+                            }}
+                          >
                             ADD TO CART
                           </button>
                           <i className="far fa-heart cursor-pointer text-2xl"></i>

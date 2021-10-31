@@ -8,7 +8,19 @@ const init = {
 const addCart = (state = init, action) => {
   switch (action.type) {
     case Types.CART_ADD: {
-      const temp = [...state.cart, action.payload];
+      const temp = [...state.cart];
+      if (temp.length) {
+        const findIndex = temp.findIndex(
+          (el) => el.productId === action.payload.id
+        );
+        if (findIndex === -1) {
+          temp.push(action.payload.cartItem);
+        } else {
+          temp[findIndex] = action.payload.cartItem;
+        }
+      } else {
+        temp.push(action.payload.cartItem);
+      }
       return {
         cart: temp,
         error: {},
@@ -17,7 +29,7 @@ const addCart = (state = init, action) => {
     case Types.CART_ADD_ERROR: {
       return {
         ...state,
-        error: action.payload.data,
+        error: action.payload,
       };
     }
     case Types.CART_GET: {
@@ -29,7 +41,7 @@ const addCart = (state = init, action) => {
     case Types.CART_GET_ERROR: {
       return {
         ...state,
-        error: action.payload.data,
+        error: action.payload,
       };
     }
     case Types.INCREMENT: {
@@ -74,6 +86,12 @@ const addCart = (state = init, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    }
+    case Types.FRESH_CART: {
+      return {
+        cart: [],
+        error: {},
       };
     }
     default:

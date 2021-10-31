@@ -16,7 +16,7 @@ const productReducer = (state = init, action) => {
     case Types.GET_TAGS_ERROR: {
       return {
         ...state,
-        error: action.payload.data,
+        error: action.payload,
       };
     }
     default:

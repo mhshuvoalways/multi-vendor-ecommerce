@@ -10,8 +10,6 @@ const addProduct = (req, res) => {
     regularPrice,
     salePrice,
     description,
-    inCart,
-    inWish,
     tags,
   } = req.body;
 
@@ -37,8 +35,6 @@ const addProduct = (req, res) => {
                 salePrice,
                 description,
                 tags: JSON.parse(tags),
-                inCart,
-                inWish,
                 image: [
                   {
                     url: result.url,

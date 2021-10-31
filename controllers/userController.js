@@ -164,6 +164,7 @@ const login = (req, res) => {
                 {
                   _id: response._id,
                   email: response.email,
+                  username: response.username
                 },
                 process.env.SECRET,
                 { expiresIn: "1h" }

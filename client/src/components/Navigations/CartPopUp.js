@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "@reach/router";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteCartItem } from "../../store/actions/inCartAction";
-import { updateProduct } from "../../store/actions/productAction";
 import Clear from "../../assets/images/icons/clear.png";
 
 const CartPopUp = () => {
@@ -54,7 +53,6 @@ const CartPopUp = () => {
                   className="cursor-pointer"
                   onClick={() => {
                     dispatch(deleteCartItem(el._id));
-                    dispatch(updateProduct(el.productId, { inCart: false }));
                   }}
                 />
               </div>

@@ -3,14 +3,12 @@ import { Helmet } from "react-helmet";
 import Routers from "./Routers";
 import { useDispatch } from "react-redux";
 import { isAuthenticate } from "../store/actions/userAction";
-import { getCartItem } from "../store/actions/inCartAction";
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(isAuthenticate());
-    dispatch(getCartItem());
   }, [dispatch]);
 
   return (
