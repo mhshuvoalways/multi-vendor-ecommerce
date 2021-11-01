@@ -3,6 +3,8 @@ import * as Types from "../constants/InCartType";
 const init = {
   cart: [],
   error: {},
+  modal: false,
+  id: "",
 };
 
 const addCart = (state = init, action) => {
@@ -83,6 +85,24 @@ const addCart = (state = init, action) => {
       };
     }
     case Types.DELETE_ITEM_ERROR: {
+      return {
+        ...state,
+        error: action.payload,
+      };
+    }
+    case Types.UPDATE_ITEM: {
+      const temp = [...state.cart];
+      const findIndex = temp.findIndex(
+        (el) => el.productId === action.payload.id
+      );
+      temp[findIndex] = action.payload.cartItem;
+      return {
+        cart: temp,
+        modal: false,
+        error: {},
+      };
+    }
+    case Types.UPDATE_ITEM_ERROR: {
       return {
         ...state,
         error: action.payload,

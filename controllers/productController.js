@@ -4,14 +4,8 @@ const cloudinary = require("cloudinary");
 const serverError = require("../utils/serverError");
 
 const addProduct = (req, res) => {
-  const {
-    name,
-    category,
-    regularPrice,
-    salePrice,
-    description,
-    tags,
-  } = req.body;
+  const { name, category, regularPrice, salePrice, description, tags } =
+    req.body;
 
   const { email } = req.user;
   User.findOne({ email })
@@ -99,7 +93,14 @@ const deleteProduct = (req, res) => {
       if (response.role === "admin" || response.role === "vendor") {
         Product.findOneAndRemove({ _id: id })
           .then((response) => {
-            res.status(200).json(response);
+            cloudinary.v2.uploader.destroy(
+              response.public_id,
+              function (result) {
+                if (result) {
+                  res.status(200).json(response);
+                }
+              }
+            );
           })
           .catch(() => {
             serverError(res);

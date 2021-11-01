@@ -2,10 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./app/App";
+import setAuthToken from "./utils/setAuthToken";
 import { Provider } from "react-redux";
 import store from "./store";
 import reportWebVitals from "./reportWebVitals";
 import "./assets/css/style.css";
+
+const token = localStorage.getItem("token");
+if (token) {
+  setAuthToken(token);
+}
 
 ReactDOM.render(
   <Provider store={store}>

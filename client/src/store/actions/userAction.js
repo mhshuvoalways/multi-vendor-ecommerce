@@ -64,7 +64,7 @@ export const userLogin = (user) => (dispatch) => {
       dispatch({
         type: Types.LOGIN_USER_ERROR,
         payload: {
-          error: err.response.data,
+          error: err.response,
         },
       });
     });
@@ -73,7 +73,6 @@ export const userLogin = (user) => (dispatch) => {
 export const isAuthenticate = () => (dispatch) => {
   const token = localStorage.getItem("token");
   if (token) {
-    setAuthToken(token);
     var decoded = jwt_decode(token);
     var dateNow = new Date();
     if (decoded.exp * 1000 < dateNow.getTime()) {

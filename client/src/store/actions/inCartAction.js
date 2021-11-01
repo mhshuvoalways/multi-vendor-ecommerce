@@ -21,9 +21,9 @@ export const addCart = (id, body) => (dispatch) => {
     });
 };
 
-export const getCartItem = (userId) => (dispatch) => {
+export const getCartItem = () => (dispatch) => {
   axios
-    .get("/cart/get/" + userId)
+    .get("/cart/get")
     .then((res) => {
       dispatch({
         type: Types.CART_GET,
@@ -93,6 +93,26 @@ export const deleteCartItem = (id) => (dispatch) => {
     .catch((err) => {
       dispatch({
         type: Types.DELETE_ITEM_ERROR,
+        payload: err.response,
+      });
+    });
+};
+
+export const updateCart = (id, quantity) => (dispatch) => {
+  axios
+    .put("/cart/edit/" + id, quantity)
+    .then((res) => {
+      dispatch({
+        type: Types.UPDATE_ITEM,
+        payload: {
+          id,
+          cartItem: res.data,
+        },
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.UPDATE_ITEM_ERROR,
         payload: err.response,
       });
     });

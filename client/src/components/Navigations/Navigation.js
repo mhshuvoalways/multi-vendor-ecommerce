@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Link } from "@reach/router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getCartItem } from "../../store/actions/inCartAction";
 import CartPopUp from "./CartPopUp";
 import AccountPopUp from "./AccountPopUp";
@@ -14,12 +14,11 @@ function classNames(...classes) {
 }
 
 export default function Navigation() {
-  const userReducer = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCartItem(userReducer.user._id));
-  }, [dispatch, userReducer.user._id]);
+    dispatch(getCartItem());
+  }, [dispatch]);
 
   const navigation = [
     { name: "Home", href: "/", current: false },

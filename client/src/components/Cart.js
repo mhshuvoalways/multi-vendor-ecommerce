@@ -31,7 +31,7 @@ const Cart = () => {
   useEffect(() => {
     setCart(cartReducer.cart);
     productTotal();
-  }, [cartReducer.cart, dispatch, productTotal]);
+  }, [cartReducer.cart, productTotal]);
 
   return (
     <div>

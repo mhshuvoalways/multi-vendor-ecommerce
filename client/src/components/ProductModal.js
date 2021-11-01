@@ -7,16 +7,18 @@ import Loading from "./Loading";
 const ProductModal = ({ state, modalHandler, productReducer }) => {
   const [products, setProducts] = useState();
   const [count, setCount] = useState();
+  const [cart, setCart] = useState();
 
   const dispatch = useDispatch();
   const cartReducer = useSelector((store) => store.inCartReducer);
 
   useEffect(() => {
     setProducts(productReducer.products.find((el) => el._id === state.id));
-    const findCount = cartReducer.cart.find(
+    const findCart = cartReducer.cart.find(
       (el) => el.productId === (products && products._id)
     );
-    setCount(findCount && findCount.quantity);
+    setCount((findCart && findCart.quantity) || 1);
+    setCart(findCart);
   }, [cartReducer.cart, productReducer.products, products, state.id]);
 
   return (
@@ -79,7 +81,7 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
                         <p className="mt-5">{products.description}</p>
                         <p className="border-solid bg-gray-100 border-2 my-10"></p>
                         <div className="flex gap-4 items-center">
-                          <div className="flex gap-5 border-solid border-2 border-gray-100 cursor-pointer p-2">
+                          <div className="flex gap-5 border-solid border border-gray-300 cursor-pointer p-2">
                             <p
                               onClick={() => {
                                 if (count > 1) {
@@ -93,10 +95,16 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
                             <p onClick={() => setCount(count + 1)}>+</p>
                           </div>
                           <button
-                            className="bg-purple-600 text-white w-40 cursor-pointer py-2"
+                            className={
+                              cart && cart.productId === products._id
+                                ? "bg-gray-800 hover:bg-purple-600 text-white w-40 cursor-not-allowed p-3 border border-gray-100 text-sm"
+                                : "bg-gray-800 hover:bg-purple-600 text-white w-40 cursor-pointer p-3 border border-gray-100 text-sm"
+                            }
                             onClick={() => {
                               dispatch(
-                                addCart(products._id, { quantity: count })
+                                addCart(products._id, {
+                                  quantity: count,
+                                })
                               );
                             }}
                           >

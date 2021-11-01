@@ -65,12 +65,10 @@ const Products = () => {
                     className={
                       cartReducer.cart.length
                         ? cartReducer.cart.map((item) => {
-                            return item.authorId.map((auth) =>
-                              auth === userReducer.user._id &&
+                            return item.authorId === userReducer.user._id &&
                               item.productId === el._id
-                                ? "rounded-full mx-3 bg-purple-400 cursor-not-allowed p-1"
-                                : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
-                            );
+                              ? "rounded-full mx-3 bg-purple-400 cursor-not-allowed p-1"
+                              : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1";
                           })
                         : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
                     }

@@ -16,7 +16,7 @@ const categoryReducer = (state = init, action) => {
     case Types.GET_CATEGORY_ERROR: {
       return {
         ...state,
-        error: action.payload.data,
+        error: action.payload,
       };
     }
     default:
