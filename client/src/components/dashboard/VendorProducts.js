@@ -7,6 +7,7 @@ import Edit from "../../assets/images/icons/edit.png";
 import { deleteProduct, modalToggle } from "../../store/actions/productAction";
 import { getTags } from "../../store/actions/tagAction";
 import { getCategory } from "../../store/actions/categoryAction";
+import { getCartItem } from "../../store/actions/inCartAction";
 
 const Products = () => {
   const [products, setProduct] = useState();
@@ -86,7 +87,10 @@ const Products = () => {
                     src={Clear}
                     alt=""
                     className="cursor-pointer w-5"
-                    onClick={() => dispatch(deleteProduct(el._id))}
+                    onClick={() => {
+                      dispatch(deleteProduct(el._id))
+                      dispatch(getCartItem())
+                    }}
                   />
                 </div>
               </td>

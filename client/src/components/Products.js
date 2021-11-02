@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "@reach/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../store/actions/productAction";
-import { addCart } from "../store/actions/inCartAction";
+import { addCart, modalHandler } from "../store/actions/inCartAction";
 import ProductModal from "./ProductModal";
 import Loading from "./Loading";
 import Visibility from "../assets/images/icons/visibility.png";
@@ -10,7 +10,6 @@ import Favorite from "../assets/images/icons/favorite.png";
 import Cart from "../assets/images/icons/cart.png";
 
 const Products = () => {
-  const [state, setState] = useState({ modal: false, id: "" });
   const dispatch = useDispatch();
   const userReducer = useSelector((el) => el.userReducer);
   const productReducer = useSelector((el) => el.productReducer);
@@ -19,10 +18,6 @@ const Products = () => {
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
-
-  const modalHandler = (id) => {
-    setState({ modal: !state.modal, id });
-  };
 
   return (
     <div className="w-11/12 m-auto">
@@ -46,9 +41,9 @@ const Products = () => {
                 <img
                   src={Visibility}
                   alt=""
-                  onClick={() => modalHandler(el._id)}
+                  onClick={() => dispatch(modalHandler(el._id))}
                   className={
-                    state.modal
+                    cartReducer.modal
                       ? "rounded-full mx-3 bg-purple-400 cursor-pointer p-1"
                       : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
                   }
@@ -116,7 +111,7 @@ const Products = () => {
         )}
       </div>
       <ProductModal
-        state={state}
+        state={cartReducer}
         modalHandler={modalHandler}
         productReducer={productReducer}
       />

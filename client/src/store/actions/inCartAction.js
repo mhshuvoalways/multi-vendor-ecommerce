@@ -118,6 +118,13 @@ export const updateCart = (id, quantity) => (dispatch) => {
     });
 };
 
+export const modalHandler = (id) => (dispatch) => {
+  dispatch({
+    type: Types.MODAL_HANDLER,
+    payload: id,
+  });
+};
+
 export const freshCart = () => (dispatch) => {
   dispatch({
     type: Types.FRESH_CART,

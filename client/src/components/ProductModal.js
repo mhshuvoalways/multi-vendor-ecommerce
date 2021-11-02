@@ -39,7 +39,7 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
                   <button className="p-1 ml-auto bg-transparent border-0 text-gray-300 float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
                     <span
                       className="bg-transparent h-6 w-6 text-2xl block outline-none focus:outline-none"
-                      onClick={modalHandler}
+                      onClick={() => dispatch(modalHandler())}
                     >
                       <i className="fas fa-times"></i>
                     </span>

@@ -1,29 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "@reach/router";
 import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../store/actions/productAction";
+import { addCart } from "../store/actions/inCartAction";
 import Loading from "./Loading";
 
 const Details = () => {
   const [products, setProducts] = useState();
+  const [count, setCount] = useState();
+  const [cart, setCart] = useState();
   const params = useParams();
 
   const dispatch = useDispatch();
   const productReducer = useSelector((el) => el.productReducer);
+  const cartReducer = useSelector((store) => store.inCartReducer);
 
   useEffect(() => {
     setProducts(productReducer.products.find((el) => el._id === params.id));
-  }, [dispatch, productReducer.products, params.id]);
+    const findCart = cartReducer.cart.find(
+      (el) => el.productId === (products && products._id)
+    );
+    setCount((findCart && findCart.quantity) || 1);
+    setCart(findCart);
+    dispatch(getProducts());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cartReducer.cart, dispatch, params.id, products]);
 
   return (
     <div>
       {!products ? (
         <Loading />
       ) : (
-        <div className="w-11/12 my-20 flex md:flex gap-20 justify-center m-auto">
-          <div className="w-72">
-            <img src={products.image[0].url} alt="" />
+        <div className="w-11/12 my-20 md:flex gap-10 m-auto">
+          <div className="flex-1">
+            <img src={products.image[0].url} alt=""/>
           </div>
-          <div className="my-10 md:my-0">
+          <div className="my-10 md:my-0 flex-1">
             <p className="mb-2 text-3xl">{products.name}</p>
             <div className="flex">
               <p className="text-2xl">${products.salePrice}</p>
@@ -47,15 +59,36 @@ const Details = () => {
                 <i class="far fa-star fa-sm text-yellow-500 mr-1"></i>
               </li>
             </ul>
-            <p className="mt-5">{products.description}</p>
+            <p className="mt-5 text-base">{products.description}</p>
             <p className="border-solid bg-gray-100 border-2 my-10"></p>
             <div className="flex gap-4 items-center">
-              <div className="flex gap-5 border-solid border-2 border-gray-100 cursor-pointer p-2">
-                <p>-</p>
-                <p>1</p>
-                <p>+</p>
+              <div className="flex gap-5 border-solid border border-gray-300 cursor-pointer p-2">
+                <p
+                  onClick={() => {
+                    if (count > 1) {
+                      setCount(count - 1);
+                    }
+                  }}
+                >
+                  -
+                </p>
+                <p>{count}</p>
+                <p onClick={() => setCount(count + 1)}>+</p>
               </div>
-              <button className="bg-purple-600 text-white w-40 cursor-pointer py-2">
+              <button
+                className={
+                  cart && cart.productId === products._id
+                    ? "bg-gray-800 hover:bg-purple-600 text-white w-40 cursor-not-allowed p-3 border border-gray-100 text-sm"
+                    : "bg-gray-800 hover:bg-purple-600 text-white w-40 cursor-pointer p-3 border border-gray-100 text-sm"
+                }
+                onClick={() => {
+                  dispatch(
+                    addCart(products._id, {
+                      quantity: count,
+                    })
+                  );
+                }}
+              >
                 ADD TO CART
               </button>
               <i className="far fa-heart cursor-pointer text-2xl"></i>

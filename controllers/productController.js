@@ -1,4 +1,5 @@
 const Product = require("../Model/Product");
+const InCart = require("../Model/InCart");
 const User = require("../Model/User");
 const cloudinary = require("cloudinary");
 const serverError = require("../utils/serverError");
@@ -6,7 +7,6 @@ const serverError = require("../utils/serverError");
 const addProduct = (req, res) => {
   const { name, category, regularPrice, salePrice, description, tags } =
     req.body;
-
   const { email } = req.user;
   User.findOne({ email })
     .then((response) => {
@@ -89,18 +89,26 @@ const deleteProduct = (req, res) => {
   const id = req.params.id;
   const { email } = req.user;
   User.findOne({ email })
-    .then((response) => {
-      if (response.role === "admin" || response.role === "vendor") {
+    .then((userResponse) => {
+      if (userResponse.role === "admin" || userResponse.role === "vendor") {
         Product.findOneAndRemove({ _id: id })
-          .then((response) => {
-            cloudinary.v2.uploader.destroy(
-              response.public_id,
-              function (result) {
-                if (result) {
-                  res.status(200).json(response);
-                }
-              }
-            );
+          .then((proResponse) => {
+            InCart.deleteMany({ productId: id })
+              .then(() => {
+                cloudinary.v2.uploader.destroy(
+                  proResponse.image[0].public_id,
+                  function (err, result) {
+                    if (err) {
+                      serverError(res);
+                    } else if (result) {
+                      res.status(200).json(proResponse);
+                    }
+                  }
+                );
+              })
+              .catch(() => {
+                serverError(res);
+              });
           })
           .catch(() => {
             serverError(res);

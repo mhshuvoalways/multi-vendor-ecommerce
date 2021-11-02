@@ -43,6 +43,7 @@ export const getProducts = () => (dispatch) => {
     });
 };
 
+
 export const deleteProduct = (id) => (dispatch) => {
   axios
     .delete("/product/delete/" + id)
@@ -84,7 +85,7 @@ export const freshProduct = () => (dispatch) => {
   dispatch({
     type: Types.FRESH_PRODUCT,
   });
-}
+};
 
 export const modalToggle = () => (dispatch) => {
   dispatch({

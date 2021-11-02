@@ -108,6 +108,13 @@ const addCart = (state = init, action) => {
         error: action.payload,
       };
     }
+    case Types.MODAL_HANDLER: {
+      return {
+        ...state,
+        modal: !state.modal,
+        id: action.payload,
+      };
+    }
     case Types.FRESH_CART: {
       return {
         cart: [],

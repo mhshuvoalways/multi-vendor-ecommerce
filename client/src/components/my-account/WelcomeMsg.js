@@ -16,7 +16,6 @@ const WelcomeMsg = () => {
   useEffect(() => {
     dispatch(getMyAccount());
   }, [dispatch]);
-  console.log(userReducer.user.role);
 
   return (
     <div className="shadow-md rounded-md p-5">
