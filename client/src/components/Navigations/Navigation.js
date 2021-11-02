@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Link } from "@reach/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCartItem } from "../../store/actions/inCartAction";
 import CartPopUp from "./CartPopUp";
 import AccountPopUp from "./AccountPopUp";
@@ -15,6 +15,7 @@ function classNames(...classes) {
 
 export default function Navigation() {
   const dispatch = useDispatch();
+  const userReducer = useSelector((store) => store.userReducer);
 
   useEffect(() => {
     dispatch(getCartItem());
@@ -71,7 +72,16 @@ export default function Navigation() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-10">
-                <img src={Favorite} alt="" className="px-3" />
+                {userReducer.isAuthenticate ? (
+                  <Link to="/wishlist">
+                    <img src={Favorite} alt="" className="px-3" />
+                  </Link>
+                ) : (
+                  <Link to="/login">
+                    <img src={Favorite} alt="" className="px-3" />
+                  </Link>
+                )}
+
                 {/* Start cart */}
                 <Menu as="div" className="relative mt-1">
                   <div>
@@ -89,7 +99,7 @@ export default function Navigation() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="origin-top-right absolute right-0 mt-4 w-80 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="origin-top-right absolute -right-16 sm:right-0 mt-4 w-72 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         <CartPopUp />
                       </Menu.Item>
@@ -103,7 +113,6 @@ export default function Navigation() {
               </div>
             </div>
           </div>
-
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navigation.map((item) => (

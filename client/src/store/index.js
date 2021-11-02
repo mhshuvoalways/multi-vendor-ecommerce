@@ -5,6 +5,7 @@ import productReducer from "./reducers/productReducer";
 import tagsReducer from "./reducers/tagsReducer";
 import categoryReducer from "./reducers/categoryReducer";
 import inCartReducer from "./reducers/inCartReducer";
+import wishListReducer from "./reducers/wishListReducer";
 import alartReducer from "./reducers/alertReducer";
 import thunk from "redux-thunk";
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   tagsReducer,
   categoryReducer,
   inCartReducer,
+  wishListReducer,
   alartReducer,
 });
 

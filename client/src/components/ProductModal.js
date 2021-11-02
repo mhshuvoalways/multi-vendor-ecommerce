@@ -11,9 +11,13 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
 
   const dispatch = useDispatch();
   const cartReducer = useSelector((store) => store.inCartReducer);
+  const userReducer = useSelector((store) => store.userReducer);
 
   useEffect(() => {
-    setProducts(productReducer.products.find((el) => el._id === state.id));
+    setProducts(
+      productReducer.products &&
+        productReducer.products.find((el) => el._id === state.id)
+    );
     const findCart = cartReducer.cart.find(
       (el) => el.productId === (products && products._id)
     );
@@ -48,11 +52,11 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
                 <div className="p-6 text-gray-500 text-lg leading-relaxed">
                   {/* Content start */}
                   {products ? (
-                    <div className="w-11/12 m-auto my-20 md:flex gap-20">
-                      <div className="w-full">
+                    <div className="w-11/12 my-20 md:flex gap-20 m-auto">
+                      <div className="flex-1">
                         <img src={products.image[0].url} alt="" />
                       </div>
-                      <div className="my-10 md:my-0">
+                      <div className="my-10 md:my-0 flex-1">
                         <p className="mb-2 text-3xl">{products.name}</p>
                         <div className="flex">
                           <p className="text-2xl">${products.salePrice}</p>
@@ -94,22 +98,30 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
                             <p>{count}</p>
                             <p onClick={() => setCount(count + 1)}>+</p>
                           </div>
-                          <button
-                            className={
-                              cart && cart.productId === products._id
-                                ? "bg-gray-800 hover:bg-purple-600 text-white w-40 cursor-not-allowed p-3 border border-gray-100 text-sm"
-                                : "bg-gray-800 hover:bg-purple-600 text-white w-40 cursor-pointer p-3 border border-gray-100 text-sm"
-                            }
-                            onClick={() => {
-                              dispatch(
-                                addCart(products._id, {
-                                  quantity: count,
-                                })
-                              );
-                            }}
-                          >
-                            ADD TO CART
-                          </button>
+                          {userReducer.isAuthenticate ? (
+                            <button
+                              className={
+                                cart && cart.productId === products._id
+                                  ? "bg-gray-800 hover:bg-purple-600 text-white w-40 cursor-not-allowed p-3 border border-gray-100 text-sm"
+                                  : "bg-gray-800 hover:bg-purple-600 text-white w-40 cursor-pointer p-3 border border-gray-100 text-sm"
+                              }
+                              onClick={() => {
+                                dispatch(
+                                  addCart(products._id, {
+                                    quantity: count,
+                                  })
+                                );
+                              }}
+                            >
+                              ADD TO CART
+                            </button>
+                          ) : (
+                            <Link to="/login">
+                              <button className="bg-gray-800 hover:bg-purple-600 text-white w-40 cursor-pointer p-3 border border-gray-100 text-sm">
+                                ADD TO CART
+                              </button>
+                            </Link>
+                          )}
                           <i className="far fa-heart cursor-pointer text-2xl"></i>
                         </div>
                         <div className="mt-5">

@@ -125,6 +125,16 @@ const deleteCartItem = (req, res) => {
     });
 };
 
+const clearCart = (req, res) => {
+  InCart.deleteMany({ authorId: req.user._id })
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch(() => {
+      serverError(res);
+    });
+};
+
 const updateCartItem = (req, res) => {
   const { name, regularPrice, salePrice, subTotal, quantity } = req.body;
   const product = {
@@ -147,6 +157,7 @@ const updateCartItem = (req, res) => {
 module.exports = {
   addCart,
   getCartItem,
+  clearCart,
   increment,
   decrement,
   deleteCartItem,

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "@reach/router";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../store/actions/productAction";
 import { addCart } from "../store/actions/inCartAction";
+import { getWishItem, addWishList } from "../store/actions/wishListAction";
 import Loading from "./Loading";
 
 const Details = () => {
@@ -14,6 +14,8 @@ const Details = () => {
   const dispatch = useDispatch();
   const productReducer = useSelector((el) => el.productReducer);
   const cartReducer = useSelector((store) => store.inCartReducer);
+  const userReducer = useSelector((store) => store.userReducer);
+  const wishListReducer = useSelector((el) => el.wishListReducer);
 
   useEffect(() => {
     setProducts(productReducer.products.find((el) => el._id === params.id));
@@ -22,18 +24,23 @@ const Details = () => {
     );
     setCount((findCart && findCart.quantity) || 1);
     setCart(findCart);
-    dispatch(getProducts());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cartReducer.cart, dispatch, params.id, products]);
+    dispatch(getWishItem());
+  }, [
+    cartReducer.cart,
+    dispatch,
+    params.id,
+    productReducer.products,
+    products,
+  ]);
 
   return (
     <div>
       {!products ? (
         <Loading />
       ) : (
-        <div className="w-11/12 my-20 md:flex gap-10 m-auto">
+        <div className="w-11/12 my-20 md:flex gap-20 m-auto">
           <div className="flex-1">
-            <img src={products.image[0].url} alt=""/>
+            <img src={products.image[0].url} alt="" />
           </div>
           <div className="my-10 md:my-0 flex-1">
             <p className="mb-2 text-3xl">{products.name}</p>
@@ -75,23 +82,44 @@ const Details = () => {
                 <p>{count}</p>
                 <p onClick={() => setCount(count + 1)}>+</p>
               </div>
-              <button
-                className={
-                  cart && cart.productId === products._id
-                    ? "bg-gray-800 hover:bg-purple-600 text-white w-40 cursor-not-allowed p-3 border border-gray-100 text-sm"
-                    : "bg-gray-800 hover:bg-purple-600 text-white w-40 cursor-pointer p-3 border border-gray-100 text-sm"
-                }
-                onClick={() => {
-                  dispatch(
-                    addCart(products._id, {
-                      quantity: count,
-                    })
-                  );
-                }}
-              >
-                ADD TO CART
-              </button>
-              <i className="far fa-heart cursor-pointer text-2xl"></i>
+              {userReducer.isAuthenticate ? (
+                <button
+                  className={
+                    cart && cart.productId === products._id
+                      ? "bg-gray-800 hover:bg-purple-600 text-white w-40 cursor-not-allowed p-3 border border-gray-100 text-sm"
+                      : "bg-gray-800 hover:bg-purple-600 text-white w-40 cursor-pointer p-3 border border-gray-100 text-sm"
+                  }
+                  onClick={() => {
+                    dispatch(
+                      addCart(products._id, {
+                        quantity: count,
+                      })
+                    );
+                  }}
+                >
+                  ADD TO CART
+                </button>
+              ) : (
+                <Link to="/login">
+                  <button className="bg-gray-800 hover:bg-purple-600 text-white w-40 cursor-pointer p-3 border border-gray-100 text-sm">
+                    ADD TO CART
+                  </button>
+                </Link>
+              )}
+              {userReducer.isAuthenticate ? (
+                <i
+                  className={wishListReducer.wishlist.map((wish) =>
+                    wish.productId === products._id
+                      ? "far fa-heart text-2xl cursor-not-allowed"
+                      : "far fa-heart text-2xl cursor-pointer"
+                  )}
+                  onClick={() => dispatch(addWishList(products._id))}
+                ></i>
+              ) : (
+                <Link to="/login">
+                  <i className="far fa-heart text-2xl cursor-pointer"></i>
+                </Link>
+              )}
             </div>
             <div className="mt-5">
               <p>Categories : {products.category}</p>

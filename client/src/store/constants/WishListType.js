@@ -1,0 +1,13 @@
+export const WISH_ADD = "WISH_ADD";
+export const WISH_ADD_ERROR = "WISH_ADD_ERROR";
+
+export const WISH_GET = "WISH_GET";
+export const WISH_GET_ERROR = "CWISH_GET_ERROR";
+
+export const DELETE_ITEM = "DELETE_ITEM";
+export const DELETE_ITEM_ERROR = "DELETE_ITEM_ERROR";
+
+export const DELETEALL_ITEM = "DELETEALL_ITEM";
+export const DELETEALL_ITEM_ERROR = "DELETEALL_ITEM_ERROR";
+
+export const FRESH_WISHLIST = "FRESH_WISHLIST";

@@ -2,6 +2,7 @@ import * as Types from "../constants/InCartType";
 
 const init = {
   cart: [],
+  isLoading: true,
   error: {},
   modal: false,
   id: "",
@@ -24,6 +25,7 @@ const addCart = (state = init, action) => {
         temp.push(action.payload.cartItem);
       }
       return {
+        ...state,
         cart: temp,
         error: {},
       };
@@ -36,13 +38,16 @@ const addCart = (state = init, action) => {
     }
     case Types.CART_GET: {
       return {
+        ...state,
         cart: action.payload,
+        isLoading: false,
         error: {},
       };
     }
     case Types.CART_GET_ERROR: {
       return {
         ...state,
+        isLoading: true,
         error: action.payload,
       };
     }
@@ -51,6 +56,7 @@ const addCart = (state = init, action) => {
       const findIndex = temp.findIndex((el) => el._id === action.payload.id);
       temp[findIndex] = action.payload.cartItem;
       return {
+        ...state,
         cart: temp,
         error: {},
       };
@@ -66,6 +72,7 @@ const addCart = (state = init, action) => {
       const findIndex = temp.findIndex((el) => el._id === action.payload.id);
       temp[findIndex] = action.payload.cartItem;
       return {
+        ...state,
         cart: temp,
         error: {},
       };
@@ -80,11 +87,25 @@ const addCart = (state = init, action) => {
       const temp = [...state.cart];
       const newTemp = temp.filter((el) => el._id !== action.payload.id);
       return {
+        ...state,
         cart: newTemp,
         error: {},
       };
     }
     case Types.DELETE_ITEM_ERROR: {
+      return {
+        ...state,
+        error: action.payload,
+      };
+    }
+    case Types.DELETEALL_ITEM: {
+      return {
+        ...state,
+        cart: action.payload,
+        error: {},
+      };
+    }
+    case Types.DELETEALL_ITEM_ERROR: {
       return {
         ...state,
         error: action.payload,
@@ -97,6 +118,7 @@ const addCart = (state = init, action) => {
       );
       temp[findIndex] = action.payload.cartItem;
       return {
+        ...state,
         cart: temp,
         modal: false,
         error: {},
@@ -118,7 +140,10 @@ const addCart = (state = init, action) => {
     case Types.FRESH_CART: {
       return {
         cart: [],
+        isLoading: false,
         error: {},
+        modal: false,
+        id: "",
       };
     }
     default:

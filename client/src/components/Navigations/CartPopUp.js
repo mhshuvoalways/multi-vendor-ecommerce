@@ -28,23 +28,27 @@ const CartPopUp = () => {
     productTotal();
   }, [cartReducer.cart, productTotal]);
 
+  const reverseCart = [...cart];
+
   return (
-    <div>
+    <div className="overflow-y-scroll h-96">
       {cart.length ? (
         <div>
-          {cart.map((el) => (
+          {reverseCart.reverse().map((el) => (
             <div className="flex justify-between gap-1 text-sm text-gray-700 p-8 hover:bg-gray-100">
               <div className="w-20">
-                <img src={el.image} alt="" className="cursor-pointer" />
+                <Link to={`/details/${el.productId}`}>
+                  <img src={el.image} alt="" className="cursor-pointer" />
+                </Link>
               </div>
               <div>
                 <p>{el.name}</p>
                 <p>Qty: {el.quantity}</p>
                 <p>${el.subTotal}</p>
-                {/* <div className="mt-2">
-                <p>Color: blue</p>
-                <p>Size: x</p>
-              </div> */}
+                <div className="mt-2">
+                  <p>Color: blue</p>
+                  <p>Size: x</p>
+                </div>
               </div>
               <div>
                 <img
@@ -59,24 +63,26 @@ const CartPopUp = () => {
             </div>
           ))}
           <div>
-            <div className="flex justify-between w-64 m-auto my-5 font-medium">
+            <div className="flex justify-between w-60 m-auto my-5 font-medium">
               <p>Total:</p>
               <p>${calculate.proTotal}</p>
             </div>
             <div>
               <Link to="/cart">
-                <button className="bg-purple-600 text-white py-2 block my-2 w-64 m-auto hover:bg-gray-700">
+                <button className="bg-purple-600 text-white py-2 block my-2 w-60 m-auto hover:bg-gray-700">
                   VIEW CART
                 </button>
               </Link>
-              <button className="bg-purple-600 text-white py-2 block my-2 w-64 m-auto hover:bg-gray-700">
+              <button className="bg-purple-600 text-white py-2 block my-2 w-60 m-auto hover:bg-gray-700">
                 CHECKOUT
               </button>
             </div>
           </div>
         </div>
       ) : (
-        <p className="p-10 text-base text-center">No items added to cart</p>
+        <p className="text-2xl w-11/12 my-36 text-center">
+          No items added to cart
+        </p>
       )}
     </div>
   );

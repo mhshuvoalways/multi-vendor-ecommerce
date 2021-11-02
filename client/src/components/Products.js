@@ -3,6 +3,7 @@ import { Link } from "@reach/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../store/actions/productAction";
 import { addCart, modalHandler } from "../store/actions/inCartAction";
+import { addWishList, getWishItem } from "../store/actions/wishListAction";
 import ProductModal from "./ProductModal";
 import Loading from "./Loading";
 import Visibility from "../assets/images/icons/visibility.png";
@@ -14,10 +15,14 @@ const Products = () => {
   const userReducer = useSelector((el) => el.userReducer);
   const productReducer = useSelector((el) => el.productReducer);
   const cartReducer = useSelector((el) => el.inCartReducer);
+  const wishListReducer = useSelector((el) => el.wishListReducer);
 
   useEffect(() => {
     dispatch(getProducts());
+    dispatch(getWishItem());
   }, [dispatch]);
+
+  const reverseCart = [...productReducer.products];
 
   return (
     <div className="w-11/12 m-auto">
@@ -25,7 +30,7 @@ const Products = () => {
         {productReducer.isLoading ? (
           <Loading />
         ) : (
-          productReducer.products.map((el) => (
+          reverseCart.reverse().map((el) => (
             <div
               className="w-64 rounded shadow-lg product__card relative"
               key={el._id}
@@ -48,11 +53,33 @@ const Products = () => {
                       : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
                   }
                 />
-                <img
-                  src={Favorite}
-                  alt=""
-                  className="rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
-                />
+                {userReducer.isAuthenticate ? (
+                  <img
+                    src={Favorite}
+                    alt=""
+                    className={
+                      wishListReducer.wishlist.length
+                        ? wishListReducer.wishlist.map((item) => {
+                            return item.authorId === userReducer.user._id &&
+                              item.productId === el._id
+                              ? "rounded-full mx-3 bg-purple-400 cursor-not-allowed p-1"
+                              : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1";
+                          })
+                        : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
+                    }
+                    onClick={() => {
+                      dispatch(addWishList(el._id));
+                    }}
+                  />
+                ) : (
+                  <Link to="/login">
+                    <img
+                      src={Favorite}
+                      alt=""
+                      className="rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
+                    />
+                  </Link>
+                )}
                 {userReducer.isAuthenticate ? (
                   <img
                     src={Cart}

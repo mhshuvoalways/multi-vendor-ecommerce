@@ -9,6 +9,7 @@ const productRouter = require("./routers/productRouter");
 const categoryRouter = require("./routers/categoryRouter");
 const tagsRouter = require("./routers/tagsRouter");
 const inCartRouter = require("./routers/inCartRouter");
+const inWishListRouter = require("./routers/inWishListRouter");
 
 const app = express();
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use("/product", productRouter);
 app.use("/tags", tagsRouter);
 app.use("/category", categoryRouter);
 app.use("/cart", inCartRouter);
+app.use("/wishlist", inWishListRouter);
 
 app.get("/", (req, res) => {
   res.send("A MERN stack ecommerce app");

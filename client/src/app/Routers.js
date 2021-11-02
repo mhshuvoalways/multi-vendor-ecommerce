@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Details from "../pages/Details";
 import Shop from "../pages/Shop";
 import Cart from "../pages/Cart";
+import InWish from "../pages/InWish";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import MyAccount from "../pages/MyAccount";
@@ -16,7 +17,6 @@ import VendorRoutes from "../pages/VendorRoutes";
 import VendorProducts from "../pages/VendorProducts";
 
 const Routers = () => {
-  
   return (
     <div>
       <Router>
@@ -24,6 +24,7 @@ const Routers = () => {
         <Shop path="/shop" />
         <Details path="/details/:id" />
         <Cart path="/cart" />
+        <InWish path="/wishlist" />
         <Register path="/register" />
         <Login path="/login" />
         <Contact path="/contact" />

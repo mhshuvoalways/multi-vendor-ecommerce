@@ -98,6 +98,23 @@ export const deleteCartItem = (id) => (dispatch) => {
     });
 };
 
+export const deleteAllCartItem = () => (dispatch) => {
+  axios
+    .delete("/cart/deleteall")
+    .then((res) => {
+      dispatch({
+        type: Types.DELETEALL_ITEM,
+        payload: [],
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.DELETEALL_ITEM_ERROR,
+        payload: err.response,
+      });
+    });
+};
+
 export const updateCart = (id, quantity) => (dispatch) => {
   axios
     .put("/cart/edit/" + id, quantity)
