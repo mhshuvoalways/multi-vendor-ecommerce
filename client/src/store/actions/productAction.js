@@ -43,6 +43,26 @@ export const getProducts = () => (dispatch) => {
     });
 };
 
+export const getMyProducts = () => (dispatch) => {
+  axios
+    .get("/product/getmyproducts")
+    .then((response) => {
+      dispatch({
+        type: Types.GET_MY_PRODUCT,
+        payload: {
+          product: response.data,
+        },
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.GET_MY_PRODUCT_ERROR,
+        payload: {
+          error: err.response,
+        },
+      });
+    });
+};
 
 export const deleteProduct = (id) => (dispatch) => {
   axios

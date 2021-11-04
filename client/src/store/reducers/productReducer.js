@@ -39,6 +39,20 @@ const productReducer = (state = init, action) => {
         isLoading: true,
       };
     }
+    case Types.GET_MY_PRODUCT: {
+      return {
+        ...state,
+        products: action.payload.product,
+        isLoading: false,
+      };
+    }
+    case Types.GET_MY_PRODUCT_ERROR: {
+      return {
+        ...state,
+        error: action.payload.error,
+        isLoading: true,
+      };
+    }
     case Types.DELETE_PRODUCT: {
       const temp = [...state.products];
       const products = temp.filter((el) => el._id !== action.payload._id);

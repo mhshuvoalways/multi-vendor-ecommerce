@@ -2,7 +2,8 @@ import React, { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Link } from "@reach/router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { isAuthenticate } from "../../store/actions/userAction";
 import { getCartItem } from "../../store/actions/inCartAction";
 import CartPopUp from "./CartPopUp";
 import AccountPopUp from "./AccountPopUp";
@@ -15,9 +16,9 @@ function classNames(...classes) {
 
 export default function Navigation() {
   const dispatch = useDispatch();
-  const userReducer = useSelector((store) => store.userReducer);
 
   useEffect(() => {
+    dispatch(isAuthenticate());
     dispatch(getCartItem());
   }, [dispatch]);
 
@@ -28,7 +29,7 @@ export default function Navigation() {
   ];
 
   return (
-    <Disclosure as="nav" className="bg-gray-100">
+    <Disclosure as="nav" className="bg-white">
       {({ open }) => (
         <Fragment>
           <div className="w-11/12 m-auto">
@@ -72,16 +73,9 @@ export default function Navigation() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-10">
-                {userReducer.isAuthenticate ? (
-                  <Link to="/wishlist">
-                    <img src={Favorite} alt="" className="px-3" />
-                  </Link>
-                ) : (
-                  <Link to="/login">
-                    <img src={Favorite} alt="" className="px-3" />
-                  </Link>
-                )}
-
+                <Link to="/wishlist">
+                  <img src={Favorite} alt="" className="px-3" />
+                </Link>
                 {/* Start cart */}
                 <Menu as="div" className="relative mt-1">
                   <div>

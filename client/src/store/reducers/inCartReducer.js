@@ -47,7 +47,7 @@ const addCart = (state = init, action) => {
     case Types.CART_GET_ERROR: {
       return {
         ...state,
-        isLoading: true,
+        isLoading: false,
         error: action.payload,
       };
     }

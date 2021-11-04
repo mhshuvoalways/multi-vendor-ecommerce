@@ -1,17 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { Redirect } from "@reach/router";
 import Navigation from "../components/Navigations/Navigation";
-import LoginComponent from "../components/authentication/Login";
+import CheckoutComponent from "../components/Checkout";
 import Footer from "../components/Footer";
 
-const Login = () => {
-  const store = useSelector((store) => store.userReducer.isAuthenticate);
-  
-  if (store) {
-    return <Redirect to="/" noThrow />;
-  }
-
+const Checkout = () => {
   return (
     <div>
       <Navigation />
@@ -21,13 +13,13 @@ const Login = () => {
           <li>
             <span className="mx-2">/</span>
           </li>
-          <li>LOGIN</li>
+          <li>CHECKOUT</li>
         </ol>
       </nav>
-      <LoginComponent />
+      <CheckoutComponent />
       <Footer />
     </div>
   );
 };
 
-export default Login;
+export default Checkout;

@@ -36,7 +36,7 @@ const Cart = () => {
     productTotal();
   }, [cartReducer.cart, productTotal]);
 
-  const reverseCart = [...cart]
+  const reverseCart = [...cart];
 
   return (
     <div>
@@ -60,7 +60,9 @@ const Cart = () => {
                   {reverseCart.reverse().map((el) => (
                     <tr className="border-gray-100 border-2">
                       <td className="p-2">
-                        <Link to={`/details/${el.productId}`}><img src={el.image} alt="" className="w-28" /></Link>
+                        <Link to={`/details/${el.productId}`}>
+                          <img src={el.image} alt="" className="w-28" />
+                        </Link>
                       </td>
                       <td className="p-2">
                         <p className="text-base">{el.name}</p>
@@ -147,9 +149,11 @@ const Cart = () => {
                   <p>Grand Total</p>
                   <p>${calculate.grandTotal}</p>
                 </div>
-                <button className="bg-purple-600 text-white py-2 w-full hover:bg-gray-600">
-                  PROCEED TO CHECKOUT
-                </button>
+                <Link to="/checkout">
+                  <button className="bg-purple-600 text-white py-2 w-full hover:bg-gray-600">
+                    PROCEED TO CHECKOUT
+                  </button>
+                </Link>
               </div>
             </div>
           ) : (

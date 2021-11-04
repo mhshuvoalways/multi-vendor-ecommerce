@@ -73,9 +73,11 @@ const CartPopUp = () => {
                   VIEW CART
                 </button>
               </Link>
-              <button className="bg-purple-600 text-white py-2 block my-2 w-60 m-auto hover:bg-gray-700">
-                CHECKOUT
-              </button>
+              <Link to="/checkout">
+                <button className="bg-purple-600 text-white py-2 block my-2 w-60 m-auto hover:bg-gray-700">
+                  CHECKOUT
+                </button>
+              </Link>
             </div>
           </div>
         </div>

@@ -33,6 +33,10 @@ const Details = () => {
     products,
   ]);
 
+  const idCheck = wishListReducer.wishlist.find(
+    (el) => el.productId === params.id
+  );
+
   return (
     <div>
       {!products ? (
@@ -108,11 +112,13 @@ const Details = () => {
               )}
               {userReducer.isAuthenticate ? (
                 <i
-                  className={wishListReducer.wishlist.map((wish) =>
-                    wish.productId === products._id
-                      ? "far fa-heart text-2xl cursor-not-allowed"
+                  className={
+                    idCheck &&
+                    idCheck.authorId === userReducer.user._id &&
+                    idCheck.productId === products._id
+                      ? "fas fa-heart text-2xl cursor-not-allowed text-red-800"
                       : "far fa-heart text-2xl cursor-pointer"
-                  )}
+                  }
                   onClick={() => dispatch(addWishList(products._id))}
                 ></i>
               ) : (

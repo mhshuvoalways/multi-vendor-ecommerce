@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "@reach/router";
 import { useDispatch, useSelector } from "react-redux";
 import { addCart } from "../store/actions/inCartAction";
+import { addWishList } from "../store/actions/wishListAction";
 import Loading from "./Loading";
 
 const ProductModal = ({ state, modalHandler, productReducer }) => {
@@ -12,6 +13,7 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
   const dispatch = useDispatch();
   const cartReducer = useSelector((store) => store.inCartReducer);
   const userReducer = useSelector((store) => store.userReducer);
+  const wishListReducer = useSelector((el) => el.wishListReducer);
 
   useEffect(() => {
     setProducts(
@@ -24,6 +26,10 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
     setCount((findCart && findCart.quantity) || 1);
     setCart(findCart);
   }, [cartReducer.cart, productReducer.products, products, state.id]);
+
+  const idCheck = wishListReducer.wishlist.find(
+    (el) => el.productId === (products && products._id)
+  );
 
   return (
     <div>
@@ -122,7 +128,24 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
                               </button>
                             </Link>
                           )}
-                          <i className="far fa-heart cursor-pointer text-2xl"></i>
+                          {userReducer.isAuthenticate ? (
+                            <i
+                              className={
+                                idCheck &&
+                                idCheck.authorId === userReducer.user._id &&
+                                idCheck.productId === products._id
+                                  ? "fas fa-heart text-2xl cursor-not-allowed text-red-800"
+                                  : "far fa-heart text-2xl cursor-pointer"
+                              }
+                              onClick={() =>
+                                dispatch(addWishList(products._id))
+                              }
+                            ></i>
+                          ) : (
+                            <Link to="/login">
+                              <i className="far fa-heart text-2xl cursor-pointer"></i>
+                            </Link>
+                          )}
                         </div>
                         <div className="mt-5">
                           <p>Categories : {products.category}</p>

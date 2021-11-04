@@ -64,6 +64,16 @@ const getProduct = (req, res) => {
     });
 };
 
+const getMyproducts = (req, res) => {
+  Product.find({ 'author.authorId': req.user._id })
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch(() => {
+      serverError(res);
+    });
+};
+
 const updateProduct = (req, res) => {
   const id = req.params.id;
   const { name, regularPrice, salePrice, description, inCart, inWish } =
@@ -123,6 +133,7 @@ const deleteProduct = (req, res) => {
 module.exports = {
   addProduct,
   getProduct,
+  getMyproducts,
   updateProduct,
   deleteProduct,
 };

@@ -18,7 +18,7 @@ export const adminRegister = () => (dispatch) => {
       dispatch({
         type: Types.ADMIN_REGISTER_USER_ERROR,
         payload: {
-          error: err.response.data,
+          error: err.response
         },
       });
     });

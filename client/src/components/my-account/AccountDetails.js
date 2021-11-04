@@ -3,7 +3,7 @@ import React from "react";
 const AccoutDetails = () => {
   return (
     <div className="">
-      <f  orm className="w-4/5 max-w-lg m-auto">
+      <form className="w-4/5 max-w-lg m-auto">
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label
@@ -102,9 +102,8 @@ const AccoutDetails = () => {
               Save Changes
             </button>
           </div>
-          <div className="md:w-2/3"></div>
         </div>
-      </f>
+      </form>
     </div>
   );
 };

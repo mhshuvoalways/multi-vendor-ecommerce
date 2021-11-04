@@ -15,6 +15,15 @@ const Home = () => {
   return (
     <div>
       <Navigation />
+      <nav className="bg-gray-100 py-6 rounded mb-10">
+        <ol className="flex justify-center">
+          <li>HOME</li>
+          <li>
+            <span className="mx-2">/</span>
+          </li>
+          <li>SHOP PRODUCT</li>
+        </ol>
+      </nav>
       <Details />
       <Footer />
     </div>

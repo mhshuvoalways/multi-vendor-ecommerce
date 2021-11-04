@@ -45,7 +45,7 @@ const addCart = (state = init, action) => {
     case Types.WISH_GET_ERROR: {
       return {
         ...state,
-        isLoading: true,
+        isLoading: false,
         error: action.payload,
       };
     }

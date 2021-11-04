@@ -14,12 +14,12 @@ const Shop = () => {
   return (
     <div>
       <Navigation />
-      <div className="mt-5">
-        <nav class="bg-gray-100 py-6 rounded mb-10">
-          <ol class="flex justify-center">
+      <div>
+        <nav className="bg-gray-100 py-6 rounded mb-10">
+          <ol className="flex justify-center">
             <li>HOME</li>
             <li>
-              <span class="mx-2">/</span>
+              <span className="mx-2">/</span>
             </li>
             <li>SHOP</li>
           </ol>

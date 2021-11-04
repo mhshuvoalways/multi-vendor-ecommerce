@@ -1,16 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
 import Routers from "./Routers";
-import { useDispatch } from "react-redux";
-import { isAuthenticate } from "../store/actions/userAction";
 
 const App = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(isAuthenticate());
-  }, [dispatch]);
-
   return (
     <div>
       <Helmet>

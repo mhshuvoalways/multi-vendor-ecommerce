@@ -17,6 +17,8 @@ const InWishList = () => {
     dispatch(getWishItem());
   }, [dispatch]);
 
+  const wishListReverse = [...wishListReducer.wishlist];
+
   return (
     <div>
       {wishListReducer.isLoading ? (
@@ -35,7 +37,7 @@ const InWishList = () => {
                     <th className="p-2 bg-gray-100">ADD TO CART</th>
                     <th className="p-2 bg-gray-100">ACTION</th>
                   </tr>
-                  {wishListReducer.wishlist.reverse().map((el) => (
+                  {wishListReverse.reverse().map((el) => (
                     <tr className="border-gray-100 border-2">
                       <td className="p-2">
                         <Link to={`/details/${el.productId}`}>
