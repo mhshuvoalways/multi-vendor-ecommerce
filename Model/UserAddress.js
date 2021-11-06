@@ -26,14 +26,11 @@ const userAddressSchema = new Schema(
     streetAddress: {
       type: String,
       required: true,
-    },
-    additionalInfo: {
-      type: String,
-    },
+    }
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = model("address", userAddressSchema);
+module.exports = model("useraddress", userAddressSchema);

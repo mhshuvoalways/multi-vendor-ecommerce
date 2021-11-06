@@ -1,4 +1,4 @@
-import * as Types from "../constants/AddressType";
+import * as Types from "../constants/UserAddressType";
 
 const init = {
   address: {},

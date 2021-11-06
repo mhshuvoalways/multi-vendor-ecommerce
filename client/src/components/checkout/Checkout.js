@@ -1,8 +1,57 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import PlaceOrder from "./PlaceOrder";
 
 const Checkout = () => {
+  const [state, setState] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    zipCode: "",
+    city: "",
+    state: "",
+    country: "",
+    streetAddress: "",
+    additionalInfo: "",
+  });
+
+  const dispatch = useDispatch();
+  const userReducer = useSelector((state) => state.userReducer);
+  const userAddressReducer = useSelector((state) => state.userAddressReducer);
+
+  useEffect(() => {
+    userAddressReducer.address &&
+      userReducer.user &&
+      setState({
+        firstName: userReducer.user.firstName,
+        lastName: userReducer.user.lastName,
+        email: userReducer.user.email,
+        phone: userReducer.user.phone,
+        zipCode: userAddressReducer.address.zipCode,
+        city: userAddressReducer.address.city,
+        state: userAddressReducer.address.state,
+        country: userAddressReducer.address.country,
+        streetAddress: userAddressReducer.address.streetAddress,
+      });
+  }, [dispatch, userAddressReducer.address, userReducer.user]);
+
+  const onChangeHandler = (event) => {
+    setState({
+      ...state,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <div className="flex w-11/12 m-auto flex-wrap justify-between">
+    <form
+      onSubmit={onSubmitHandler}
+      className="flex w-11/12 m-auto flex-wrap justify-between"
+    >
       <div className="mt-5">
         <p className="text-xl mb-5 font-semibold">Billing Details</p>
         <div className="flex gap-5 mb-10 justify-between">
@@ -11,6 +60,9 @@ const Checkout = () => {
             <input
               type="text"
               className="appearance-none md:w-96 w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              name="firstName"
+              onChange={onChangeHandler}
+              value={state.firstName}
             />
           </div>
           <div>
@@ -18,6 +70,9 @@ const Checkout = () => {
             <input
               type="text"
               className="appearance-none md:w-96 w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              name="lastName"
+              onChange={onChangeHandler}
+              value={state.lastName}
             />
           </div>
         </div>
@@ -27,13 +82,19 @@ const Checkout = () => {
             <input
               type="text"
               className="appearance-none md:w-96 w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              name="email"
+              value={state.email}
+              onChange={onChangeHandler}
             />
           </div>
           <div>
             <label className="block">Phone</label>
             <input
-              type="text"
               className="appearance-none md:w-96 w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              value={state.phone}
+              type="phone"
+              name="phone"
+              onChange={onChangeHandler}
             />
           </div>
         </div>
@@ -43,6 +104,9 @@ const Checkout = () => {
             <input
               type="text"
               className="appearance-none md:w-96 w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              name="zipCode"
+              onChange={onChangeHandler}
+              value={state.zipCode}
             />
           </div>
           <div>
@@ -50,6 +114,9 @@ const Checkout = () => {
             <input
               type="text"
               className="appearance-none md:w-96 w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              name="city"
+              onChange={onChangeHandler}
+              value={state.city}
             />
           </div>
         </div>
@@ -59,6 +126,9 @@ const Checkout = () => {
             <input
               type="text"
               className="appearance-none md:w-96 w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              name="state"
+              onChange={onChangeHandler}
+              value={state.state}
             />
           </div>
           <div>
@@ -66,6 +136,9 @@ const Checkout = () => {
             <input
               type="text"
               className="appearance-none md:w-96 w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              name="country"
+              onChange={onChangeHandler}
+              value={state.country}
             />
           </div>
         </div>
@@ -74,41 +147,24 @@ const Checkout = () => {
           <input
             type="text"
             className="appearance-none w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            name="streetAddress"
+            value={state.streetAddress}
+            onChange={onChangeHandler}
           />
         </div>
         <div className="mt-10">
-          <label className="block">Additional information</label>
+          <label className="block">Additional information (optional)</label>
           <textarea
-            placeholder="Note about your order"
+            placeholder="Note about your order, e.g. special notes for delivery"
             className="appearance-none w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 h-32 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            name="additionalInfo"
+            value={state.additionalInfo}
+            onChange={onChangeHandler}
           />
         </div>
       </div>
-      <div className="w-96 mt-5">
-        <p className="text-xl mb-10 font-semibold">Your order</p>
-        <div className="bg-gray-100 p-10">
-          <div className="flex justify-between text-xl border-b border-gray-400 mb-5">
-            <p className="mb-5">Product</p>
-            <p className="mb-5">Total</p>
-          </div>
-          <div className="flex justify-between my-10 border-b border-gray-400">
-            <p className="mb-5">Lorem ipsum female coat X 3</p>
-            <p className="mb-5">$68.85</p>
-          </div>
-          <div className="flex justify-between my-5 border-b border-gray-400">
-            <p className="mb-5 text-base">Shipping</p>
-            <p className="mb-5">Free shipping</p>
-          </div>
-          <div className="flex justify-between text-xl">
-            <p>Total</p>
-            <p className="text-purple-600">$78.39</p>
-          </div>
-        </div>
-        <button className="bg-purple-600 text-white py-3 w-full hover:bg-gray-600 mt-10 rounded-full">
-          PLACE ORDER
-        </button>
-      </div>
-    </div>
+      <PlaceOrder state={state} />
+    </form>
   );
 };
 

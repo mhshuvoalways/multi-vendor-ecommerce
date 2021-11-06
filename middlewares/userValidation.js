@@ -2,17 +2,8 @@ const axios = require("axios");
 
 const adminRegisterValidation = (value) => {
   const error = {};
-  if (!value.firstName) {
-    error.name = "Please provide your name in env";
-  }
-  if (!value.lastName) {
-    error.name = "Please provide your name in env";
-  }
   if (!value.email) {
     error.email = "Please provide your email in env";
-  }
-  if (!value.phone) {
-    error.phone = "Please provide your phone in env";
   }
   if (!value.storeName) {
     error.phone = "Please provide your store name in env";
@@ -34,15 +25,6 @@ const adminRegisterValidation = (value) => {
 const registerValidation = (value) => {
   const error = {};
   if (value.role === "vendor") {
-    if (!value.firstName) {
-      error.name = "Please provide your first name";
-    }
-    if (!value.lastName) {
-      error.name = "Please provide your last name";
-    }
-    if (!value.phone) {
-      error.phone = "Please provide your phone";
-    }
     if (!value.storeName) {
       error.storeName = "Please provide your store name";
     }

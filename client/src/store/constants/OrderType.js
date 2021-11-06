@@ -1,0 +1,3 @@
+export const ORDER_PRODUCT = "ORDER_PRODUCT";
+export const ORDER_PRODUCT_ERROR = "ORDER_PRODUCT_ERROR";
+

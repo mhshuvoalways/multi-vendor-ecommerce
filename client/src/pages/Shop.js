@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Navigation from "../components/Navigations/Navigation";
+import PageLocation from "../components/PageLocation";
 import Filter from "../components/Filter";
 import Products from "../components/Products";
 import Footer from "../components/Footer";
@@ -15,15 +16,7 @@ const Shop = () => {
     <div>
       <Navigation />
       <div>
-        <nav className="bg-gray-100 py-6 rounded mb-10">
-          <ol className="flex justify-center">
-            <li>HOME</li>
-            <li>
-              <span className="mx-2">/</span>
-            </li>
-            <li>SHOP</li>
-          </ol>
-        </nav>
+        <PageLocation value={["HOME", "-/-", "SHOP"]} />
         <div className="flex justify-between w-11/12 m-auto mb-10">
           <p
             className={

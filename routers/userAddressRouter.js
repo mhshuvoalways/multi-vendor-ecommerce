@@ -2,12 +2,10 @@ const router = require("express").Router();
 const {
   addAddress,
   getAddress,
-  updateAddress,
-} = require("../controllers/addressController");
+} = require("../controllers/userAddressController");
 const authenticate = require("../middlewares/authenticate");
 
 router.post("/create", authenticate, addAddress);
-router.post("/get", authenticate, getAddress);
-router.put("/edit", authenticate, updateAddress);
+router.get("/get", authenticate, getAddress);
 
 module.exports = router;

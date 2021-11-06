@@ -43,6 +43,14 @@ const userReudcer = (state = init, action) => {
         error: null,
       };
     }
+    case Types.LOGIN_USER_ERROR: {
+      return {
+        isAuthenticate: false,
+        user: {},
+        error: action.payload.error,
+      };
+    }
+
     case Types.ISAUTHENTICATE: {
       return {
         ...state,
@@ -66,6 +74,18 @@ const userReudcer = (state = init, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+    }
+    case Types.UPDATE_MYACCOUT: {
+      return {
+        ...state,
+        user: action.payload,
+      };
+    }
+    case Types.UPDATE_MYACCOUT_ERROR: {
+      return {
+        ...state,
+        error: action.payload,
       };
     }
     case Types.FRESH_USER: {

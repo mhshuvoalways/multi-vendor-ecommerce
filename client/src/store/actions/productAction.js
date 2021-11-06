@@ -1,5 +1,6 @@
 import * as Types from "../constants/ProductTypes";
 import axios from "../../utils/axios";
+import alertAction from "./AlertAction";
 
 export const createProduct = (formData) => (dispatch) => {
   axios
@@ -11,6 +12,7 @@ export const createProduct = (formData) => (dispatch) => {
           product: response.data,
         },
       });
+      dispatch(alertAction("Successfully create product"));
     })
     .catch((err) => {
       dispatch({
@@ -19,6 +21,7 @@ export const createProduct = (formData) => (dispatch) => {
           error: err.response.data,
         },
       });
+      dispatch(alertAction("Something is wrong"));
     });
 };
 
@@ -72,12 +75,14 @@ export const deleteProduct = (id) => (dispatch) => {
         type: Types.DELETE_PRODUCT,
         payload: response.data,
       });
+      dispatch(alertAction("Successfully delete product"));
     })
     .catch((err) => {
       dispatch({
         type: Types.DELETE_PRODUCT_ERROR,
         payload: err.response.data,
       });
+      dispatch(alertAction("Something is wrong"));
     });
 };
 

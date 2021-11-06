@@ -2,9 +2,11 @@ import React, { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Link } from "@reach/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { isAuthenticate } from "../../store/actions/userAction";
 import { getCartItem } from "../../store/actions/inCartAction";
+import { freshCart } from "../../store/actions/inCartAction";
+import { freshProduct } from "../../store/actions/productAction";
 import CartPopUp from "./CartPopUp";
 import AccountPopUp from "./AccountPopUp";
 import Cart from "../../assets/images/icons/cart.png";
@@ -16,11 +18,16 @@ function classNames(...classes) {
 
 export default function Navigation() {
   const dispatch = useDispatch();
+  const userReducer = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     dispatch(isAuthenticate());
     dispatch(getCartItem());
-  }, [dispatch]);
+    if (!userReducer.isAuthenticate) {
+      dispatch(freshCart());
+      dispatch(freshProduct());
+    }
+  }, [dispatch, userReducer.isAuthenticate]);
 
   const navigation = [
     { name: "Home", href: "/", current: false },

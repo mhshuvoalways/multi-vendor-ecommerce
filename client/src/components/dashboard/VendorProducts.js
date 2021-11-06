@@ -23,7 +23,7 @@ const Products = () => {
     dispatch(getMyProducts());
   }, [dispatch]);
 
-  const reverseProduct = [...productReducer.products];
+  const reverseProduct = [...productReducer.myProducts];
 
   return (
     <div className="overflow-x-auto md:overflow-x-hidden">

@@ -2,6 +2,7 @@ import * as Types from "../constants/ProductTypes";
 
 const init = {
   products: [],
+  myProducts: [],
   error: {},
   isLoading: true,
   modal: false,
@@ -42,7 +43,7 @@ const productReducer = (state = init, action) => {
     case Types.GET_MY_PRODUCT: {
       return {
         ...state,
-        products: action.payload.product,
+        myProducts: action.payload.product,
         isLoading: false,
       };
     }
@@ -95,6 +96,7 @@ const productReducer = (state = init, action) => {
     case Types.FRESH_PRODUCT: {
       return {
         products: [],
+        myProducts: [],
         error: {},
         isLoading: true,
         modal: false,

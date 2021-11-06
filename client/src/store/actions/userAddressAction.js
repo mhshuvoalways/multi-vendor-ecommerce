@@ -1,5 +1,6 @@
-import * as Types from "../constants/AddressType";
+import * as Types from "../constants/UserAddressType";
 import axios from "../../utils/axios";
+import alertAction from "./AlertAction";
 
 export const addAddress = (body) => (dispatch) => {
   axios
@@ -9,18 +10,20 @@ export const addAddress = (body) => (dispatch) => {
         type: Types.ADD_ADDRESS,
         payload: res.data,
       });
+      dispatch(alertAction("Successfully updated"));
     })
     .catch((err) => {
       dispatch({
         type: Types.ADD_ADDRESS_ERROR,
         payload: err.response,
       });
+      dispatch(alertAction("Something is wrong"));
     });
 };
 
 export const getAddress = () => (dispatch) => {
     axios
-      .post("/address/get")
+      .get("/address/get")
       .then((res) => {
         dispatch({
           type: Types.GET_ADDRESS,
@@ -30,23 +33,6 @@ export const getAddress = () => (dispatch) => {
       .catch((err) => {
         dispatch({
           type: Types.GET_ADDRESS_ERROR,
-          payload: err.response,
-        });
-      });
-  };
-
-export const editAddress = (body) => (dispatch) => {
-    axios
-      .post("/address/edit", body)
-      .then((res) => {
-        dispatch({
-          type: Types.EDIT_ADDRESS,
-          payload: res.data,
-        });
-      })
-      .catch((err) => {
-        dispatch({
-          type: Types.EDIT_ADDRESS_ERROR,
           payload: err.response,
         });
       });

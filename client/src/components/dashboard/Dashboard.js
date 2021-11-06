@@ -1,7 +1,13 @@
 import React, { useEffect } from "react";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import { useSelector, useDispatch } from "react-redux";
-import { getMyAccount, logout } from "../../store/actions/userAction";
+import {
+  getMyAccount,
+  logout,
+  freshData,
+} from "../../store/actions/userAction";
+import { freshCart } from "../../store/actions/inCartAction";
+import { freshProduct } from "../../store/actions/productAction";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -14,10 +20,16 @@ const Dashboard = () => {
   return (
     <div className="shadow-md rounded-md p-5">
       <p>
-        Hello {userReducer.user.username} (not {userReducer.user.username}?
+        Hello {userReducer.user && userReducer.user.username} (not{" "}
+        {userReducer.user && userReducer.user.username}?
         <span
           className="cursor-pointer underline text-purple-500"
-          onClick={() => dispatch(logout())}
+          onClick={() => {
+            dispatch(logout(navigate));
+            dispatch(freshData());
+            dispatch(freshCart());
+            dispatch(freshProduct());
+          }}
         >
           {" "}
           Logout

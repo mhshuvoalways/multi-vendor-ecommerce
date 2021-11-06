@@ -7,9 +7,6 @@ import ActiveLink from "../ActiveLink";
 
 const Register = () => {
   const [state, setState] = useState({
-    firstName: "",
-    lastName: "",
-    phone: "",
     email: "",
     password: "",
     recaptch: "",
@@ -55,9 +52,6 @@ const Register = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     const {
-      firstName,
-      lastName,
-      phone,
       email,
       password,
       storeName,
@@ -68,9 +62,6 @@ const Register = () => {
     dispatch(
       userRegister(
         {
-          firstName,
-          lastName,
-          phone,
           email,
           password,
           storeName,
@@ -82,9 +73,6 @@ const Register = () => {
       )
     );
     setState({
-      firstName: "",
-      lastName: "",
-      phone: "",
       email: "",
       password: "",
       storeName: "",
@@ -129,52 +117,17 @@ const Register = () => {
             />
           </label>
           {state.role === "vendor" && (
-            <div>
-              <label className="block">
-                <span className="text-gray-700">FIRST NAME</span>
-                <input
-                  type="text"
-                  placeholder="Enter Your First Name"
-                  className="p-2 my-1 placeholder-gray-400 text-gray-600 w-full bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
-                  name="firstName"
-                  onChange={onChange}
-                  value={state.firstName}
-                />
-              </label>
-              <label className="block">
-                <span className="text-gray-700">LAST NAME</span>
-                <input
-                  type="text"
-                  placeholder="Enter Your Last Name"
-                  className="p-2 my-1 placeholder-gray-400 text-gray-600 w-full bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
-                  name="lastName"
-                  onChange={onChange}
-                  value={state.lastName}
-                />
-              </label>
-              <label className="block">
-                <span className="text-gray-700">PHONE</span>
-                <input
-                  type="phone"
-                  placeholder="Enter Your Phone"
-                  className="p-2 my-1 placeholder-gray-400 text-gray-600 w-full bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
-                  name="phone"
-                  onChange={onChange}
-                  value={state.phone}
-                />
-              </label>
-              <label className="block">
-                <span className="text-gray-700">STORE</span>
-                <input
-                  type="text"
-                  placeholder="Enter Your Store Name"
-                  className="p-2 my-1 placeholder-gray-400 text-gray-600 w-full bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
-                  name="storeName"
-                  onChange={onChange}
-                  value={state.storeName}
-                />
-              </label>
-            </div>
+            <label className="block">
+              <span className="text-gray-700">STORE NAME</span>
+              <input
+                type="text"
+                placeholder="Enter Your Store Name"
+                className="p-2 my-1 placeholder-gray-400 text-gray-600 w-full bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
+                name="storeName"
+                onChange={onChange}
+                value={state.storeName}
+              />
+            </label>
           )}
           <label className="block">
             <span className="text-gray-700">RECAPTCHA</span>

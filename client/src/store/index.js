@@ -6,8 +6,8 @@ import tagsReducer from "./reducers/tagsReducer";
 import categoryReducer from "./reducers/categoryReducer";
 import inCartReducer from "./reducers/inCartReducer";
 import wishListReducer from "./reducers/wishListReducer";
-import addressReducer from "./reducers/addressReducer";
-import alartReducer from "./reducers/alertReducer";
+import userAddressReducer from "./reducers/userAddressReducer";
+import alertReducer from "./reducers/alertReducer";
 import thunk from "redux-thunk";
 
 const middlewares = [thunk];
@@ -21,8 +21,8 @@ const rootReducer = combineReducers({
   categoryReducer,
   inCartReducer,
   wishListReducer,
-  addressReducer,
-  alartReducer,
+  userAddressReducer,
+  alertReducer,
 });
 
 const store = createStore(rootReducer, composedEnhancers);

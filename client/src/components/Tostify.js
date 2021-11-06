@@ -1,22 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 const Tostify = () => {
-  const notify = () =>
-    toast("Wow so easy!", {
-      position: "bottom-left",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+  const alertReducer = useSelector((state) => state.alertReducer);
+  
+  useEffect(() => {
+    alertReducer.msg &&
+      toast(`${alertReducer.msg}`, {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+  }, [alertReducer]);
 
   return (
     <div>
-      <button onClick={notify}>Notify!</button>
       <ToastContainer
         position="bottom-left"
         autoClose={5000}

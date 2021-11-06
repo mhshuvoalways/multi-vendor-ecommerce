@@ -8,9 +8,6 @@ module.exports = (app) => {
     .then(() => {
       app.listen(port, () => {
         if (
-          process.env.firstName &&
-          process.env.lastName &&
-          process.env.adminPhone &&
           process.env.adminEmail &&
           process.env.adminPassword &&
           process.env.storeName

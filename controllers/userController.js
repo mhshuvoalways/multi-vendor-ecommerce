@@ -9,19 +9,13 @@ const {
 } = require("../middlewares/userValidation");
 
 const adminRegister = (_req, res) => {
-  const firstName = process.env.firstName;
-  const lastName = process.env.lastName;
   const email = process.env.adminEmail;
-  const phone = process.env.adminPhone;
   const password = process.env.adminPassword;
   const storeName = process.env.storeName;
   const validation = adminRegisterValidation({
-    firstName,
-    lastName,
     email,
-    phone,
     password,
-    storeName
+    storeName,
   });
   const username = email.substring(0, email.lastIndexOf("@"));
   if (validation.isValid) {
@@ -33,11 +27,8 @@ const adminRegister = (_req, res) => {
               serverError(res);
             } else {
               const user = {
-                firstName,
-                lastName,
                 email,
                 username,
-                phone,
                 storeName,
                 password: hash,
                 role: "admin",
@@ -71,10 +62,7 @@ const adminRegister = (_req, res) => {
 
 const register = (req, res) => {
   const {
-    firstName,
-    lastName,
     email,
-    phone,
     password,
     storeName,
     role,
@@ -82,10 +70,7 @@ const register = (req, res) => {
     agree,
   } = req.body;
   const validation = registerValidation({
-    firstName,
-    lastName,
     email,
-    phone,
     password,
     storeName,
     recaptch,
@@ -107,11 +92,8 @@ const register = (req, res) => {
                 serverError(res);
               } else {
                 const vendor = {
-                  firstName,
-                  lastName,
                   email,
                   username,
-                  phone,
                   password: hash,
                   storeName,
                   role,
@@ -164,7 +146,7 @@ const login = (req, res) => {
                 {
                   _id: response._id,
                   email: response.email,
-                  username: response.username
+                  username: response.username,
                 },
                 process.env.SECRET,
                 { expiresIn: "1h" }
@@ -219,6 +201,73 @@ const getMyAccount = (req, res) => {
     });
 };
 
+const updateUser = (req, res) => {
+  const { firstName, lastName, phone, currentPassword, newPassword } =
+    req.body;
+  if (currentPassword && newPassword) {
+    User.findOne({ _id: req.user._id })
+      .then((responseOne) => {
+        bcrypt.compare(
+          currentPassword,
+          responseOne.password,
+          function (error, result) {
+            if (result) {
+              bcrypt.hash(newPassword, 10, function (err, hash) {
+                if (hash) {
+                  const updateWithPass = {
+                    firstName,
+                    lastName,
+                    phone,
+                    password: hash,
+                  };
+                  User.findOneAndUpdate({ _id: req.user._id }, updateWithPass, {
+                    new: true,
+                  })
+                    .select("-password")
+                    .then((response) => {
+                      res.status(200).json(response);
+                    })
+                    .catch(() => {
+                      serverError(res);
+                    });
+                }
+                if (err) {
+                  serverError(res);
+                }
+              });
+            } else {
+              res.status(400).json({
+                message: "Password doesn't match",
+              });
+            }
+            if (error) {
+              serverError(res);
+            }
+          }
+        );
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else {
+    const updateUser = {
+      firstName,
+      lastName,
+      phone,
+    };
+    User.findOneAndUpdate({ _id: req.user._id }, updateUser, {
+      new: true,
+    })
+      .select("-password")
+      .then((response) => {
+        res.status(200).json(response);
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  }
+};
+
 const deleteUser = (req, res) => {
   const id = req.params.id;
   User.findOneAndRemove({ _id: id })
@@ -239,5 +288,6 @@ module.exports = {
   login,
   getUser,
   getMyAccount,
+  updateUser,
   deleteUser,
 };

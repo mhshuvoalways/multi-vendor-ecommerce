@@ -2,6 +2,7 @@ import * as Types from "../constants/UserTypes";
 import setAuthToken from "../../utils/setAuthToken";
 import axios from "../../utils/axios";
 import jwt_decode from "jwt-decode";
+import alertAction from "./AlertAction";
 
 export const adminRegister = () => (dispatch) => {
   axios
@@ -18,7 +19,7 @@ export const adminRegister = () => (dispatch) => {
       dispatch({
         type: Types.ADMIN_REGISTER_USER_ERROR,
         payload: {
-          error: err.response
+          error: err.response,
         },
       });
     });
@@ -43,6 +44,7 @@ export const userRegister = (user, navigate) => (dispatch) => {
           error: err.response.data,
         },
       });
+      dispatch(alertAction("Something is wrong"));
     });
 };
 
@@ -67,6 +69,7 @@ export const userLogin = (user) => (dispatch) => {
           error: err.response,
         },
       });
+      dispatch(alertAction("Something is wrong"));
     });
 };
 
@@ -117,6 +120,27 @@ export const getMyAccount = () => (dispatch) => {
         payload: err.response,
       });
     });
+};
+
+export const updateUser = (user) => (dispatch) => {
+  if (user.newPassword === user.confirmPassword) {
+    axios
+      .put("/user/edit", user)
+      .then((res) => {
+        dispatch({
+          type: Types.UPDATE_MYACCOUT,
+          payload: res.data,
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: Types.UPDATE_MYACCOUT_ERROR,
+          payload: err.response,
+        });
+      });
+  } else {
+    dispatch(alertAction("New password and confirm password do not match"));
+  }
 };
 
 export const freshData = () => (dispatch) => {
