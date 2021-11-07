@@ -8,7 +8,7 @@ import {
 } from "../store/actions/inCartAction";
 import { Link } from "@reach/router";
 import Clear from "../assets/images/icons/clear.png";
-import Loading from "./Loading";
+import Loading from "./utils/Loading";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);

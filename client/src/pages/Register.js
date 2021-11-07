@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Redirect } from "@reach/router";
-import Navigation from "../components/Navigations/Navigation";
-import PageLocation from "../components/PageLocation";
+import Navigation from "../components/nav/Navigation";
+import PageLocation from "../components/utils/PageLocation";
 import RegisterComponent from "../components/authentication/Register";
 import Footer from "../components/Footer";
 

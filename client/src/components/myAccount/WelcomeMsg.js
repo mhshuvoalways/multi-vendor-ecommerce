@@ -36,7 +36,7 @@ const WelcomeMsg = () => {
         </span>
         )
       </p>
-      <Link to="/dashboard">
+      <Link to="/vendor/dashboard">
         {userReducer.user &&
           (userReducer.user.role === "admin" ||
             userReducer.user.role === "vendor") && (

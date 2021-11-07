@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Navigation from "../components/Navigations/Navigation";
-import PageLocation from "../components/PageLocation";
+import Navigation from "../components/nav/Navigation";
+import PageLocation from "../components/utils/PageLocation";
 import Filter from "../components/Filter";
 import Products from "../components/Products";
 import Footer from "../components/Footer";

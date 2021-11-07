@@ -38,7 +38,10 @@ const userSchema = new Schema(
       type: String,
       default: "customer",
     },
-    image: String,
+    avatar: {
+      public_id: String,
+      url: String,
+    },
   },
   {
     timestamps: true,

@@ -1,6 +1,6 @@
 import React from "react";
-import Navigation from "../components/Navigations/Navigation";
-import PageLocation from "../components/PageLocation";
+import Navigation from "../components/nav/Navigation";
+import PageLocation from "../components/utils/PageLocation";
 import CheckoutComponent from "../components/checkout/Checkout";
 import Footer from "../components/Footer";
 

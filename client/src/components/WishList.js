@@ -6,7 +6,7 @@ import {
   deleteAllWishItem,
 } from "../store/actions/wishListAction";
 import { Link } from "@reach/router";
-import Loading from "./Loading";
+import Loading from "./utils/Loading";
 import Clear from "../assets/images/icons/clear.png";
 
 const InWishList = () => {

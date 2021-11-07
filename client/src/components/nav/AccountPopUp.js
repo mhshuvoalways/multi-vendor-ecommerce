@@ -18,9 +18,9 @@ const AccountPopUp = () => {
     <Menu as="div" className="ml-3 relative">
       <div>
         <Menu.Button className="bg-gray-200 flex p-1 rounded-full">
-          {userState.user && userState.user.image ? (
+          {userState.user && userState.user.avatar ? (
             <img
-              src={userState.user.image}
+              src={userState.user.avatar.url}
               alt=""
               className="h-8 w-8 rounded-full"
             />

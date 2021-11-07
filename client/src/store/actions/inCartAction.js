@@ -13,14 +13,13 @@ export const addCart = (id, body) => (dispatch) => {
           cartItem: res.data,
         },
       });
-      dispatch(alertAction("Successfully add in cart"));
+      dispatch(alertAction("Item added in cart"));
     })
     .catch((err) => {
       dispatch({
         type: Types.CART_ADD_ERROR,
         payload: err.response,
       });
-      dispatch(alertAction("Something is wrong"));
     });
 };
 
@@ -92,14 +91,13 @@ export const deleteCartItem = (id) => (dispatch) => {
           cartItem: res.data,
         },
       });
-      dispatch(alertAction("Successfully remove from cart"));
+      dispatch(alertAction("Remove item from cart"));
     })
     .catch((err) => {
       dispatch({
         type: Types.DELETE_ITEM_ERROR,
         payload: err.response,
       });
-      dispatch(alertAction("Something is wrong"));
     });
 };
 
@@ -111,14 +109,13 @@ export const deleteAllCartItem = () => (dispatch) => {
         type: Types.DELETEALL_ITEM,
         payload: [],
       });
-      dispatch(alertAction("Successfully remove all items from cart"));
+      dispatch(alertAction("Remove all items from cart"));
     })
     .catch((err) => {
       dispatch({
         type: Types.DELETEALL_ITEM_ERROR,
         payload: err.response,
       });
-      dispatch(alertAction("Something is wrong"));
     });
 };
 
@@ -139,7 +136,6 @@ export const updateCart = (id, quantity) => (dispatch) => {
         type: Types.UPDATE_ITEM_ERROR,
         payload: err.response,
       });
-      dispatch(alertAction("Something is wrong"));
     });
 };
 

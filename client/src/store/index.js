@@ -7,6 +7,8 @@ import categoryReducer from "./reducers/categoryReducer";
 import inCartReducer from "./reducers/inCartReducer";
 import wishListReducer from "./reducers/wishListReducer";
 import userAddressReducer from "./reducers/userAddressReducer";
+import orderReducer from "./reducers/orderReducer";
+import reviewReducer from "./reducers/reviewReducer";
 import alertReducer from "./reducers/alertReducer";
 import thunk from "redux-thunk";
 
@@ -22,6 +24,8 @@ const rootReducer = combineReducers({
   inCartReducer,
   wishListReducer,
   userAddressReducer,
+  orderReducer,
+  reviewReducer,
   alertReducer,
 });
 

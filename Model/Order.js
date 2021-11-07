@@ -17,6 +17,12 @@ const orderSchema = new Schema(
       type: mongoose.Types.ObjectId,
       ref: "billingaddress",
     },
+    status: {
+      type: String,
+      default: "Pending",
+    },
+    quantity: String,
+    subTotal: String,
   },
   {
     timestamps: true,

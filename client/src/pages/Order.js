@@ -1,8 +1,8 @@
 import React from "react";
-import Navigation from "../components/Navigations/Navigation";
-import PageLocation from "../components/PageLocation";
-import AccountRoutes from "../components/my-account/AccountRoutes";
-import Order from "../components/my-account/Order";
+import Navigation from "../components/nav/Navigation";
+import PageLocation from "../components/utils/PageLocation";
+import AccountRoutes from "../components/myAccount/AccountRoutes";
+import Order from "../components/myAccount/Order";
 import Footer from "../components/Footer";
 
 const MyAccount = () => {

@@ -1,8 +1,8 @@
 import React from "react";
-import Navigation from "../components/Navigations/Navigation";
-import PageLocation from "../components/PageLocation";
-import AccountRoutes from "../components/my-account/AccountRoutes";
-import WelcomeMsg from "../components/my-account/WelcomeMsg";
+import Navigation from "../components/nav/Navigation";
+import PageLocation from "../components/utils/PageLocation";
+import AccountRoutes from "../components/myAccount/AccountRoutes";
+import WelcomeMsg from "../components/myAccount/WelcomeMsg";
 import Footer from "../components/Footer";
 
 const MyAccount = () => {

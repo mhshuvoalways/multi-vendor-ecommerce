@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@reach/router";
 import { useDispatch, useSelector } from "react-redux";
+import ReactStars from "react-rating-stars-component";
 import { addCart } from "../store/actions/inCartAction";
 import { addWishList } from "../store/actions/wishListAction";
-import Loading from "./Loading";
+import Loading from "./utils/Loading";
 
 const ProductModal = ({ state, modalHandler, productReducer }) => {
   const [products, setProducts] = useState();
@@ -71,23 +72,19 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
                             ${products.regularPrice}
                           </p>
                         </div>
-                        <ul className="flex mt-3">
-                          <li>
-                            <i className="fas fa-star fa-sm text-yellow-500 mr-1"></i>
-                          </li>
-                          <li>
-                            <i className="fas fa-star fa-sm text-yellow-500 mr-1"></i>
-                          </li>
-                          <li>
-                            <i className="fas fa-star fa-sm text-yellow-500 mr-1"></i>
-                          </li>
-                          <li>
-                            <i className="far fa-star fa-sm text-yellow-500 mr-1"></i>
-                          </li>
-                          <li>
-                            <i className="far fa-star fa-sm text-yellow-500 mr-1"></i>
-                          </li>
-                        </ul>
+                        <div className="mt-2">
+                          <ReactStars
+                            {...{
+                              size: 20,
+                              value: products.rating,
+                              count: 5,
+                              activeColor: "red",
+                              a11y: true,
+                              isHalf: true,
+                              edit: false,
+                            }}
+                          />
+                        </div>
                         <p className="mt-5">{products.description}</p>
                         <p className="border-solid bg-gray-100 border-2 my-10"></p>
                         <div className="flex gap-4 items-center">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { adminRegister, userLogin } from "../../store/actions/userAction";
-import ActiveLink from "../ActiveLink";
+import ActiveLink from "../utils/ActiveLink";
 
 const Login = () => {
   const [state, setState] = useState({

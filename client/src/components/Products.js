@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../store/actions/productAction";
 import { addCart, modalHandler } from "../store/actions/inCartAction";
 import { addWishList, getWishItem } from "../store/actions/wishListAction";
+import ReactStars from "react-rating-stars-component";
 import ProductModal from "./ProductModal";
-import Loading from "./Loading";
+import Loading from "./utils/Loading";
 import Visibility from "../assets/images/icons/visibility.png";
 import Favorite from "../assets/images/icons/favorite.png";
 import Cart from "../assets/images/icons/cart.png";
@@ -115,23 +116,17 @@ const Products = () => {
                   <span className="mx-2">-</span>
                   <p className="line-through">${el.regularPrice}</p>
                 </div>
-                <ul className="flex">
-                  <li>
-                    <i className="fas fa-star fa-sm text-yellow-500 mr-1"></i>
-                  </li>
-                  <li>
-                    <i className="fas fa-star fa-sm text-yellow-500 mr-1"></i>
-                  </li>
-                  <li>
-                    <i className="fas fa-star fa-sm text-yellow-500 mr-1"></i>
-                  </li>
-                  <li>
-                    <i className="far fa-star fa-sm text-yellow-500 mr-1"></i>
-                  </li>
-                  <li>
-                    <i className="far fa-star fa-sm text-yellow-500 mr-1"></i>
-                  </li>
-                </ul>
+                <ReactStars
+                  {...{
+                    size: 20,
+                    value: el.rating,
+                    count: 5,
+                    activeColor: "red",
+                    a11y: true,
+                    isHalf: true,
+                    edit: false,
+                  }}
+                />
               </div>
             </div>
           ))

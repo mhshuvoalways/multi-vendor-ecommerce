@@ -32,8 +32,12 @@ const orderPlace = (req, res) => {
           streetAddress,
         };
         const productId = [];
+        let quantity = 0;
+        let subTotal = 0;
         cartResponse.map((product) => {
           productId.push(product.productId.toString());
+          quantity += product.quantity;
+          subTotal += product.subTotal;
         });
         BillingAddress.findOne({ authorId: req.user._id })
           .then((billFindRes) => {
@@ -41,12 +45,14 @@ const orderPlace = (req, res) => {
               new BillingAddress(billing)
                 .save()
                 .then((billResponse) => {
-                  const billing = {
+                  const order = {
                     authorId: req.user._id,
                     productId,
                     billingaddressId: billResponse._id,
+                    quantity,
+                    subTotal,
                   };
-                  new Order(billing)
+                  new Order(order)
                     .save()
                     .then((orderResponse) => {
                       InCart.deleteMany({ authorId: req.user._id })
@@ -71,12 +77,14 @@ const orderPlace = (req, res) => {
                 { new: true }
               )
                 .then((billingUpdate) => {
-                  const billing = {
+                  const order = {
                     authorId: req.user._id,
                     productId,
                     billingaddressId: billingUpdate._id,
+                    quantity,
+                    subTotal,
                   };
-                  new Order(billing)
+                  new Order(order)
                     .save()
                     .then((orderResponse) => {
                       InCart.deleteMany({ authorId: req.user._id })
@@ -106,6 +114,17 @@ const orderPlace = (req, res) => {
     });
 };
 
+const getOderDetails = (req, res) => {
+  Order.find({ authorId: req.user._id })
+    .then((orderResponse) => {
+      res.status(200).json(orderResponse);
+    })
+    .catch(() => {
+      serverError(res);
+    });
+};
+
 module.exports = {
   orderPlace,
+  getOderDetails,
 };

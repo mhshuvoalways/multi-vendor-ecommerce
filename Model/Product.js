@@ -64,8 +64,15 @@ const productSchema = new Schema(
         },
       },
     ],
-    reviews: [
-      
+    rating: {
+      type: Number,
+      default: 0,
+    },
+    reviewId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "user",
+      },
     ],
     stockStatus: {
       type: Boolean,

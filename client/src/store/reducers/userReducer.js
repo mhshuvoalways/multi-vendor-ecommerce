@@ -76,6 +76,18 @@ const userReudcer = (state = init, action) => {
         user: action.payload,
       };
     }
+    case Types.AVATAR_UPDATE: {
+      return {
+        ...state,
+        user: action.payload,
+      };
+    }
+    case Types.AVATAR_UPDATE_ERROR: {
+      return {
+        ...state,
+        error: action.payload,
+      };
+    }
     case Types.UPDATE_MYACCOUT: {
       return {
         ...state,

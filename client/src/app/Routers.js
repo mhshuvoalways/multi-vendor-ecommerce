@@ -1,9 +1,9 @@
 import React from "react";
 import { Router } from "@reach/router";
-import Tostify from "../components/Tostify";
+import Tostify from "../components/utils/Tostify";
 import ProtectRouter from "./ProtectRouter";
 import Home from "../pages/Home";
-import Details from "../pages/Details";
+import Details from "../pages/ProductDetails";
 import Shop from "../pages/Shop";
 import Cart from "../pages/Cart";
 import CheckOut from "../pages/CheckOut";
@@ -36,8 +36,8 @@ const Routers = () => {
         <ProtectRouter component={Order} path="/my-account/order" />
         <ProtectRouter component={UserAddress} path="/my-account/address" />
         <ProtectRouter component={AccountDetails} path="/my-account/details" />
-        <ProtectRouter component={VendorRoutes} path="/dashboard" />
-        <ProtectRouter component={VendorProducts} path="/dashboard/products" />
+        <ProtectRouter component={VendorRoutes} path="/vendor/dashboard" />
+        <ProtectRouter component={VendorProducts} path="/vendor/dashboard/products" />
       </Router>
     </div>
   );

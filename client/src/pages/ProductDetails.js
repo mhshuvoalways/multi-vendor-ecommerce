@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getProducts } from "../store/actions/productAction";
-import Navigation from "../components/Navigations/Navigation";
-import PageLocation from "../components/PageLocation";
-import Details from "../components/Details";
+import Navigation from "../components/nav/Navigation";
+import PageLocation from "../components/utils/PageLocation";
+import Details from "../components/productDetails/Index";
 import Footer from "../components/Footer";
 
 const Home = () => {

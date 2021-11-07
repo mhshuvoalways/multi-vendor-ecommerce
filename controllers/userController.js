@@ -1,6 +1,7 @@
 const User = require("../Model/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cloudinary = require("cloudinary");
 const serverError = require("../utils/serverError");
 const {
   adminRegisterValidation,
@@ -37,7 +38,7 @@ const adminRegister = (_req, res) => {
                 .save()
                 .then((response) => {
                   res.status(200).json({
-                    message: "Register successful",
+                    message: "Thanks for register!",
                     response,
                   });
                 })
@@ -48,7 +49,7 @@ const adminRegister = (_req, res) => {
           });
         } else {
           res.status(400).json({
-            message: "User already exists",
+            message: "User already exists!",
           });
         }
       })
@@ -61,14 +62,7 @@ const adminRegister = (_req, res) => {
 };
 
 const register = (req, res) => {
-  const {
-    email,
-    password,
-    storeName,
-    role,
-    recaptch,
-    agree,
-  } = req.body;
+  const { email, password, storeName, role, recaptch, agree } = req.body;
   const validation = registerValidation({
     email,
     password,
@@ -80,7 +74,7 @@ const register = (req, res) => {
   const username = email.substring(0, email.lastIndexOf("@"));
   if (process.env.adminEmail === email) {
     res.status(400).json({
-      message: "You can't use admin mail",
+      message: "You can't use admin mail!",
     });
   } else {
     if (validation.isValid) {
@@ -109,7 +103,7 @@ const register = (req, res) => {
                   .save()
                   .then((response) => {
                     res.status(200).json({
-                      message: "Register successful",
+                      message: "Thanks for register!",
                       response,
                     });
                   })
@@ -120,7 +114,7 @@ const register = (req, res) => {
             });
           } else {
             res.status(400).json({
-              message: "User already exists",
+              message: "User already exists!",
             });
           }
         })
@@ -152,12 +146,12 @@ const login = (req, res) => {
                 { expiresIn: "1h" }
               );
               res.status(200).json({
-                message: "Login successful",
+                message: "Welcome back!",
                 token,
               });
             } else {
               res.status(400).json({
-                message: "Password doesn't match",
+                message: "Password doesn't match!",
               });
             }
             if (err) {
@@ -166,7 +160,7 @@ const login = (req, res) => {
           });
         } else {
           res.status(400).json({
-            message: "User not found",
+            message: "User not found!",
           });
         }
       })
@@ -201,9 +195,85 @@ const getMyAccount = (req, res) => {
     });
 };
 
+const avatarAdd = (req, res) => {
+  User.findOne({ _id: req.user._id })
+    .then((response) => {
+      if (response.avatar.public_id) {
+        if (req.file.filename) {
+          cloudinary.v2.uploader.destroy(
+            response.avatar.public_id,
+            function (err, _result) {
+              if (err) {
+                serverError(res);
+              } else {
+                cloudinary.v2.uploader.upload(
+                  req.file.path,
+                  {
+                    public_id: "ecommerce-app/user/avatar/" + req.file.filename,
+                  },
+                  function (picErr, picResult) {
+                    if (picErr) {
+                      serverError(res);
+                    } else {
+                      const avatar = {
+                        public_id: picResult.public_id,
+                        url: picResult.url,
+                      };
+                      User.findOneAndUpdate(
+                        { _id: req.user._id },
+                        { avatar },
+                        { new: true }
+                      )
+                        .select("-password")
+                        .then((responseOne) => {
+                          res.status(200).json(responseOne);
+                        })
+                        .catch(() => {
+                          serverError(res);
+                        });
+                    }
+                  }
+                );
+              }
+            }
+          );
+        }
+      } else {
+        cloudinary.v2.uploader.upload(
+          req.file.path,
+          { public_id: "ecommerce-app/user/avatar/" + req.file.filename },
+          function (picErr, picResult) {
+            if (picErr) {
+              serverError(res);
+            } else {
+              const avatar = {
+                public_id: picResult.public_id,
+                url: picResult.url,
+              };
+              User.findOneAndUpdate(
+                { _id: req.user._id },
+                { avatar },
+                { new: true }
+              )
+                .select("-password")
+                .then((responseOne) => {
+                  res.status(200).json(responseOne);
+                })
+                .catch(() => {
+                  serverError(res);
+                });
+            }
+          }
+        );
+      }
+    })
+    .catch(() => {
+      serverError(res);
+    });
+};
+
 const updateUser = (req, res) => {
-  const { firstName, lastName, phone, currentPassword, newPassword } =
-    req.body;
+  const { firstName, lastName, phone, currentPassword, newPassword } = req.body;
   if (currentPassword && newPassword) {
     User.findOne({ _id: req.user._id })
       .then((responseOne) => {
@@ -237,7 +307,7 @@ const updateUser = (req, res) => {
               });
             } else {
               res.status(400).json({
-                message: "Password doesn't match",
+                message: "Password doesn't match!",
               });
             }
             if (error) {
@@ -272,10 +342,7 @@ const deleteUser = (req, res) => {
   const id = req.params.id;
   User.findOneAndRemove({ _id: id })
     .then((response) => {
-      res.status(200).json({
-        message: "Delete successful",
-        response,
-      });
+      res.status(200).json(response);
     })
     .catch(() => {
       serverError(res);
@@ -289,5 +356,6 @@ module.exports = {
   getUser,
   getMyAccount,
   updateUser,
+  avatarAdd,
   deleteUser,
 };

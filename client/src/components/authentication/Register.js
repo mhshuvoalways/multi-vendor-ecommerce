@@ -3,7 +3,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { navigate } from "@reach/router";
 import { useDispatch } from "react-redux";
 import { adminRegister, userRegister } from "../../store/actions/userAction";
-import ActiveLink from "../ActiveLink";
+import ActiveLink from "../utils/ActiveLink";
 
 const Register = () => {
   const [state, setState] = useState({

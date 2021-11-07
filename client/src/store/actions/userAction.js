@@ -35,6 +35,7 @@ export const userRegister = (user, navigate) => (dispatch) => {
           user: response.data,
         },
       });
+      dispatch(alertAction("Thanks for register!"));
       navigate("/login");
     })
     .catch((err) => {
@@ -44,7 +45,12 @@ export const userRegister = (user, navigate) => (dispatch) => {
           error: err.response.data,
         },
       });
-      dispatch(alertAction("Something is wrong"));
+      dispatch(alertAction(err.response.data.email));
+      dispatch(alertAction(err.response.data.password));
+      dispatch(alertAction(err.response.data.storeName));
+      dispatch(alertAction(err.response.data.recaptch));
+      dispatch(alertAction(err.response.data.recaptch));
+      dispatch(alertAction(err.response.data.message));
     });
 };
 
@@ -61,6 +67,7 @@ export const userLogin = (user) => (dispatch) => {
       });
       setAuthToken(response.data.token);
       localStorage.setItem("token", response.data.token);
+      dispatch(alertAction("Welcome back!"));
     })
     .catch((err) => {
       dispatch({
@@ -69,7 +76,9 @@ export const userLogin = (user) => (dispatch) => {
           error: err.response,
         },
       });
-      dispatch(alertAction("Something is wrong"));
+      dispatch(alertAction(err.response.data.email));
+      dispatch(alertAction(err.response.data.password));
+      dispatch(alertAction(err.response.data.message));
     });
 };
 
@@ -131,6 +140,7 @@ export const updateUser = (user) => (dispatch) => {
           type: Types.UPDATE_MYACCOUT,
           payload: res.data,
         });
+        dispatch(alertAction("Updated!"));
       })
       .catch((err) => {
         dispatch({
@@ -139,8 +149,25 @@ export const updateUser = (user) => (dispatch) => {
         });
       });
   } else {
-    dispatch(alertAction("New password and confirm password do not match"));
+    dispatch(alertAction("New password and confirm password don't match"));
   }
+};
+
+export const avatarAdd = (avatar) => (dispatch) => {
+  axios
+    .put("/user/avatar", avatar)
+    .then((res) => {
+      dispatch({
+        type: Types.AVATAR_UPDATE,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.AVATAR_UPDATE_ERROR,
+        payload: err.response,
+      });
+    });
 };
 
 export const freshData = () => (dispatch) => {

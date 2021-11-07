@@ -1,6 +1,6 @@
 import React from "react";
-import Navigation from "../components/Navigations/Navigation";
-import PageLocation from "../components/PageLocation";
+import Navigation from "../components/nav/Navigation";
+import PageLocation from "../components/utils/PageLocation";
 import ContactForm from "../components/Contact";
 import Footer from "../components/Footer";
 

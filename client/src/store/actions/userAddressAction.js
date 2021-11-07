@@ -10,14 +10,14 @@ export const addAddress = (body) => (dispatch) => {
         type: Types.ADD_ADDRESS,
         payload: res.data,
       });
-      dispatch(alertAction("Successfully updated"));
+      dispatch(alertAction("Updated!"));
     })
     .catch((err) => {
       dispatch({
         type: Types.ADD_ADDRESS_ERROR,
         payload: err.response,
       });
-      dispatch(alertAction("Something is wrong"));
+      dispatch(alertAction("Opps! Something is wrong. Please try again!"));
     });
 };
 

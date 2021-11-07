@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "@reach/router";
 import { useDispatch, useSelector } from "react-redux";
-import { addCart } from "../store/actions/inCartAction";
-import { getWishItem, addWishList } from "../store/actions/wishListAction";
-import Loading from "./Loading";
+import ReactStars from "react-rating-stars-component";
+import { addCart } from "../../store/actions/inCartAction";
+import { getWishItem, addWishList } from "../../store/actions/wishListAction";
+import Loading from "../utils/Loading";
 
 const Details = () => {
   const [products, setProducts] = useState();
@@ -53,23 +54,19 @@ const Details = () => {
               <span className="mx-2 text-2xl">-</span>
               <p className="line-through text-2xl">${products.regularPrice}</p>
             </div>
-            <ul class="flex mt-3">
-              <li>
-                <i class="fas fa-star fa-sm text-yellow-500 mr-1"></i>
-              </li>
-              <li>
-                <i class="fas fa-star fa-sm text-yellow-500 mr-1"></i>
-              </li>
-              <li>
-                <i class="fas fa-star fa-sm text-yellow-500 mr-1"></i>
-              </li>
-              <li>
-                <i class="far fa-star fa-sm text-yellow-500 mr-1"></i>
-              </li>
-              <li>
-                <i class="far fa-star fa-sm text-yellow-500 mr-1"></i>
-              </li>
-            </ul>
+            <div class="mt-3">
+              <ReactStars
+                {...{
+                  size: 20,
+                  value: products.rating,
+                  count: 5,
+                  activeColor: "red",
+                  a11y: true,
+                  isHalf: true,
+                  edit: false,
+                }}
+              />
+            </div>
             <p className="mt-5 text-base">{products.description}</p>
             <p className="border-solid bg-gray-100 border-2 my-10"></p>
             <div className="flex gap-4 items-center">

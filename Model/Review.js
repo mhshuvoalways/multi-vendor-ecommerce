@@ -7,31 +7,21 @@ const reviewSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "user",
     },
-    name: {
-      type: String,
-      required: true,
-    }
+    firstName: String,
+    lastName: String,
+    image: String,
   },
-  product: {
-    productId: {
-      type: Schema.Types.ObjectId,
-      ref: "product",
-    },
-    name: {
-      type: String,
-      required: true,
-    },
+  productId: {
+    type: Schema.Types.ObjectId,
+    ref: "product",
   },
   rating: {
     type: Number,
-    default: 0,
-    required: true,
+    default: 5,
   },
-  comments: [
-    {
-      type: String,
-    },
-  ],
+  comments: {
+    type: String,
+  },
 });
 
 module.exports = model("review", reviewSchema);
