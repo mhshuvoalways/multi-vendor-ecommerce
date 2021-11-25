@@ -68,12 +68,6 @@ const productSchema = new Schema(
       type: Number,
       default: 0,
     },
-    reviewId: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "user",
-      },
-    ],
     stockStatus: {
       type: Boolean,
       default: true,

@@ -3,6 +3,7 @@ const fileUploader = require("../middlewares/fileUploader");
 const {
   addProduct,
   getProduct,
+  filterProduct,
   getMyproducts,
   updateProduct,
   deleteProduct,
@@ -11,6 +12,7 @@ const authenticate = require("../middlewares/authenticate");
 
 router.post("/add", authenticate, fileUploader.single("image"), addProduct);
 router.get("/get", getProduct);
+router.post("/filterproducts", filterProduct);
 router.get("/getmyproducts", authenticate, getMyproducts);
 router.put("/edit/:id", authenticate, updateProduct);
 router.delete("/delete/:id", authenticate, deleteProduct);

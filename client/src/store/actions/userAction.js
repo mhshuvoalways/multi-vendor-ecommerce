@@ -49,7 +49,6 @@ export const userRegister = (user, navigate) => (dispatch) => {
       dispatch(alertAction(err.response.data.password));
       dispatch(alertAction(err.response.data.storeName));
       dispatch(alertAction(err.response.data.recaptch));
-      dispatch(alertAction(err.response.data.recaptch));
       dispatch(alertAction(err.response.data.message));
     });
 };

@@ -6,6 +6,8 @@ const init = {
   error: {},
   isLoading: true,
   modal: false,
+  searchTerm: "",
+  performSearch: [],
 };
 
 const productReducer = (state = init, action) => {
@@ -26,14 +28,45 @@ const productReducer = (state = init, action) => {
         isLoading: true,
       };
     }
-    case Types.GET_PRODUCT: {
+    case Types.SEARCH_TERM: {
       return {
         ...state,
-        products: action.payload.product,
-        isLoading: false,
+        searchTerm: action.payload,
       };
     }
+    case Types.GET_PRODUCT: {
+      if (state.searchTerm) {
+        const products = action.payload.product.filter((el) =>
+          el.name.toLowerCase().includes(state.searchTerm.toLowerCase())
+        );
+        return {
+          ...state,
+          products,
+          isLoading: false,
+        };
+      } else {
+        return {
+          ...state,
+          products: action.payload.product,
+          isLoading: false,
+        };
+      }
+    }
     case Types.GET_PRODUCT_ERROR: {
+      return {
+        ...state,
+        error: action.payload.error,
+        isLoading: true,
+      };
+    }
+    case Types.FILTER_PRODUCT: {
+      return {
+        ...state,
+        searchTerm: "",
+        products: action.payload.product,
+      };
+    }
+    case Types.FILTER_PRODUCT_ERROR: {
       return {
         ...state,
         error: action.payload.error,

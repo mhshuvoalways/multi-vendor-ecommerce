@@ -64,8 +64,35 @@ const getProduct = (req, res) => {
     });
 };
 
+const filterProduct = (req, res) => {
+  const { categories, tags } = req.body;
+  const category = Object.values(categories);
+  const categoryFinal = category.filter((el) => el !== "");
+  const tag = Object.values(tags);
+  const tagFinal = tag.filter((el) => el !== "");
+  if (categoryFinal.length === 0 && tagFinal.length === 0) {
+    Product.find()
+      .then((response) => {
+        res.status(200).json(response);
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else {
+    Product.find({
+      $or: [{ category: categoryFinal }, { "tags.name": tagFinal }],
+    })
+      .then((response) => {
+        res.status(200).json(response);
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  }
+};
+
 const getMyproducts = (req, res) => {
-  Product.find({ 'author.authorId': req.user._id })
+  Product.find({ "author.authorId": req.user._id })
     .then((response) => {
       res.status(200).json(response);
     })
@@ -133,6 +160,7 @@ const deleteProduct = (req, res) => {
 module.exports = {
   addProduct,
   getProduct,
+  filterProduct,
   getMyproducts,
   updateProduct,
   deleteProduct,

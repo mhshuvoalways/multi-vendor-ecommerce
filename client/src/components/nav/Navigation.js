@@ -19,6 +19,8 @@ function classNames(...classes) {
 export default function Navigation() {
   const dispatch = useDispatch();
   const userReducer = useSelector((state) => state.userReducer);
+  const inCartReducer = useSelector((state) => state.inCartReducer);
+  const wishListReducer = useSelector((state) => state.wishListReducer);
 
   useEffect(() => {
     dispatch(isAuthenticate());
@@ -52,10 +54,10 @@ export default function Navigation() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+              <div className="mx-10 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <Link
                   to="/"
-                  className="flex-shrink-0 flex items-center text-3xl cursor-pointer"
+                  className="flex-shrink-0 flex items-center sm:text-3xl cursor-pointer text-xl"
                 >
                   e-Shop
                 </Link>
@@ -80,14 +82,22 @@ export default function Navigation() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-10">
-                <Link to="/wishlist">
-                  <img src={Favorite} alt="" className="px-3" />
-                </Link>
+                <div className="relative">
+                  <Link to="/wishlist">
+                    <img src={Favorite} alt="" className="px-3" />
+                    <p className="absolute left-7 bottom-3 bg-gray-900 text-gray-100 w-5 h-5 rounded-full flex justify-center items-center">
+                      {wishListReducer.wishlist.length}
+                    </p>
+                  </Link>
+                </div>
                 {/* Start cart */}
                 <Menu as="div" className="relative mt-1">
                   <div>
                     <Menu.Button>
                       <span className="sr-only">Open user menu</span>
+                      <p className="absolute left-7 bottom-4 bg-gray-900 text-gray-100 w-5 h-5 rounded-full flex justify-center items-center">
+                        {inCartReducer.cart.length}
+                      </p>
                       <img src={Cart} alt="" className="px-3" />
                     </Menu.Button>
                   </div>

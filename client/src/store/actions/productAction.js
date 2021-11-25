@@ -46,6 +46,35 @@ export const getProducts = () => (dispatch) => {
     });
 };
 
+export const filterProducts = (filterValue) => (dispatch) => {
+  axios
+    .post("/product/filterproducts", filterValue)
+    .then((response) => {
+      dispatch({
+        type: Types.FILTER_PRODUCT,
+        payload: {
+          product: response.data,
+        },
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.FILTER_PRODUCT_ERROR,
+        payload: {
+          error: err.response,
+        },
+      });
+    });
+};
+
+export const searchTerm = (value) => (dispatch) => {
+  dispatch({
+    type: Types.SEARCH_TERM,
+    payload: value,
+  });
+  dispatch(getProducts());
+};
+
 export const getMyProducts = () => (dispatch) => {
   axios
     .get("/product/getmyproducts")
@@ -84,26 +113,6 @@ export const deleteProduct = (id) => (dispatch) => {
       });
     });
 };
-
-// export const updateProduct = (id, body) => (dispatch) => {
-//   axios
-//     .put("/product/edit/" + id, body)
-//     .then((response) => {
-//       dispatch({
-//         type: Types.UPDATE_PRODUCT,
-//         payload: {
-//           product: response.data,
-//           id,
-//         },
-//       });
-//     })
-//     .catch((err) => {
-//       dispatch({
-//         type: Types.UPDATE_PRODUCT_ERROR,
-//         payload: err.response.data,
-//       });
-//     });
-// };
 
 export const freshProduct = () => (dispatch) => {
   dispatch({

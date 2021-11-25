@@ -7,7 +7,7 @@ const {
 const authenticate = require("../middlewares/authenticate");
 
 router.post("/create", authenticate, createCategory);
-router.get("/get", authenticate, getCategory);
+router.get("/get", getCategory);
 router.delete("/delete/:id", authenticate, deleteCategory);
 
 module.exports = router;
