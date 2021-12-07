@@ -1,17 +1,14 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { searchTerm } from "../../store/actions/productAction";
 
 const Filter = ({
   categoryReducer,
   onChangeHandler,
-  productReducer,
+  searchTermHandler,
   categories,
   tagsReducer,
   tags,
   onClickTagHandler,
 }) => {
-  const dispatch = useDispatch();
 
   return (
     <div className="bg-gray-50 mb-5 pb-5">
@@ -22,8 +19,7 @@ const Filter = ({
             type="text"
             placeholder="Search Product..."
             className="px-2 py-2 my-1 placeholder-gray-400 text-gray-600 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
-            onChange={(e) => dispatch(searchTerm(e.target.value))}
-            value={productReducer.searchTerm}
+            onChange={searchTermHandler}
           />
           <div className="my-1">
             <label>

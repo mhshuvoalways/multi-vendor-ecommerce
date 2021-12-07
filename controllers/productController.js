@@ -65,13 +65,57 @@ const getProduct = (req, res) => {
 };
 
 const filterProduct = (req, res) => {
-  const { categories, tags } = req.body;
+  const { search, categories, tags } = req.body;
   const category = Object.values(categories);
   const categoryFinal = category.filter((el) => el !== "");
   const tag = Object.values(tags);
   const tagFinal = tag.filter((el) => el !== "");
-  if (categoryFinal.length === 0 && tagFinal.length === 0) {
-    Product.find()
+  console.log(req.body);
+  if (categoryFinal.length) {
+    Product.find({ category: categoryFinal })
+      .then((response) => {
+        res.status(200).json(response);
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else if (tagFinal.length) {
+    Product.find({ "tags.name": tagFinal })
+      .then((response) => {
+        res.status(200).json(response);
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else if (search.length) {
+    console.log("search");
+    Product.find({ name: { $regex: search, $options: "i" } })
+      .then((response) => {
+        res.status(200).json(response);
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else if (categoryFinal.length && tagFinal.length) {
+    console.log('cat and tag');
+    Product.find({
+      $and: [{ category: categoryFinal }, { "tags.name": tagFinal }],
+    })
+      .then((response) => {
+        res.status(200).json(response);
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else if (categoryFinal.length && tagFinal.length && search.length) {
+    console.log("test");
+    Product.find({
+      $and: [
+        { category: categoryFinal },
+        { "tags.name": tagFinal },
+        { name: { $regex: search, $options: "i" } },
+      ],
+    })
       .then((response) => {
         res.status(200).json(response);
       })
@@ -79,9 +123,7 @@ const filterProduct = (req, res) => {
         serverError(res);
       });
   } else {
-    Product.find({
-      $or: [{ category: categoryFinal }, { "tags.name": tagFinal }],
-    })
+    Product.find()
       .then((response) => {
         res.status(200).json(response);
       })

@@ -41,6 +41,7 @@ const Products = () => {
                   className="w-full cursor-pointer"
                   src={el.image[0].url}
                   alt="Sunset in the mountains"
+                  thumbnail
                 />
               </Link>
               <div className="product__cfc bg-purple-600">

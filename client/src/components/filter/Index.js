@@ -8,7 +8,7 @@ import { getTags } from "../../store/actions/tagAction";
 const Index = () => {
   const [categories, setCategoies] = useState({});
   const [tags, setTags] = useState({});
-  const productReducer = useSelector((el) => el.productReducer);
+  const [searchTerm, setSearchTerm] = useState("");
   const categoryReducer = useSelector((el) => el.categoryReducer);
   const tagsReducer = useSelector((el) => el.tagsReducer);
 
@@ -42,37 +42,34 @@ const Index = () => {
     }
   };
 
+  const searchTermHandler = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
   useEffect(() => {
     dispatch(getCategory());
     dispatch(getTags());
-    if (productReducer.searchTerm) {
-      setCategoies({});
-      setTags({});
-    }
-  }, [dispatch, productReducer.searchTerm]);
+  }, [dispatch]);
 
   useEffect(() => {
-    const category = Object.values(categories);
-    const tag = Object.values(tags);
-    if (category.length || tag.length) {
-      dispatch(
-        filterProducts({
-          categories: {
-            ...categories,
-          },
-          tags: {
-            ...tags,
-          },
-        })
-      );
-    }
-  }, [categories, dispatch, tags]);
+    dispatch(
+      filterProducts({
+        search: searchTerm,
+        categories: {
+          ...categories,
+        },
+        tags: {
+          ...tags,
+        },
+      })
+    );
+  }, [categories, dispatch, searchTerm, tags]);
 
   return (
     <Filter
       categoryReducer={categoryReducer}
       onChangeHandler={onChangeHandler}
-      productReducer={productReducer}
+      searchTermHandler={searchTermHandler}
       categories={categories}
       tagsReducer={tagsReducer}
       tags={tags}

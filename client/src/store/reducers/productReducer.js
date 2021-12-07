@@ -6,7 +6,6 @@ const init = {
   error: {},
   isLoading: true,
   modal: false,
-  searchTerm: "",
   performSearch: [],
 };
 
@@ -28,29 +27,12 @@ const productReducer = (state = init, action) => {
         isLoading: true,
       };
     }
-    case Types.SEARCH_TERM: {
+    case Types.GET_PRODUCT: {
       return {
         ...state,
-        searchTerm: action.payload,
+        products: action.payload.product,
+        isLoading: false,
       };
-    }
-    case Types.GET_PRODUCT: {
-      if (state.searchTerm) {
-        const products = action.payload.product.filter((el) =>
-          el.name.toLowerCase().includes(state.searchTerm.toLowerCase())
-        );
-        return {
-          ...state,
-          products,
-          isLoading: false,
-        };
-      } else {
-        return {
-          ...state,
-          products: action.payload.product,
-          isLoading: false,
-        };
-      }
     }
     case Types.GET_PRODUCT_ERROR: {
       return {
@@ -62,8 +44,8 @@ const productReducer = (state = init, action) => {
     case Types.FILTER_PRODUCT: {
       return {
         ...state,
-        searchTerm: "",
         products: action.payload.product,
+        isLoading: false,
       };
     }
     case Types.FILTER_PRODUCT_ERROR: {

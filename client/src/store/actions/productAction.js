@@ -46,9 +46,9 @@ export const getProducts = () => (dispatch) => {
     });
 };
 
-export const filterProducts = (filterValue) => (dispatch) => {
+export const filterProducts = (value) => (dispatch) => {
   axios
-    .post("/product/filterproducts", filterValue)
+    .post("/product/filterproducts", value)
     .then((response) => {
       dispatch({
         type: Types.FILTER_PRODUCT,
@@ -65,14 +65,6 @@ export const filterProducts = (filterValue) => (dispatch) => {
         },
       });
     });
-};
-
-export const searchTerm = (value) => (dispatch) => {
-  dispatch({
-    type: Types.SEARCH_TERM,
-    payload: value,
-  });
-  dispatch(getProducts());
 };
 
 export const getMyProducts = () => (dispatch) => {
