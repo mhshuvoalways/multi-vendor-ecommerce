@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import UploadModal from "./UploadModal";
 import moment from "moment";
@@ -15,6 +15,7 @@ import { getCartItem } from "../../store/actions/inCartAction";
 
 const Products = () => {
   const productReducer = useSelector((el) => el.productReducer);
+  const [inputValue, setInputValue] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,7 +24,11 @@ const Products = () => {
     dispatch(getMyProducts());
   }, [dispatch]);
 
-  const reverseProduct = [...productReducer.myProducts];
+  const reverseProduct = [
+    ...productReducer.myProducts.filter((product) =>
+      product.name.toLowerCase().includes(inputValue.toLowerCase())
+    ),
+  ];
 
   return (
     <div className="overflow-x-auto md:overflow-x-hidden">
@@ -33,6 +38,7 @@ const Products = () => {
             type="text"
             placeholder="Search Product..."
             className="w-4/5 max-w-lg p-2 placeholder-gray-400 text-gray-600 bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
+            onChange={(e) => setInputValue(e.target.value)}
           />
         </div>
         <button

@@ -21,12 +21,12 @@ const VendorRoutes = () => {
             Products
           </li>
         </ActiveLink>
-        <ActiveLink to="/vendor/dashboard">
+        <ActiveLink to="/comingsoon">
           <li className="border border-gray-300  text-gray-100 hover:bg-purple-600 hover:text-gray-100 py-2 px-5">
             Visit Store
           </li>
         </ActiveLink>
-        <ActiveLink to="/vendor/dashboard">
+        <ActiveLink to="/comingsoon">
           <li className="border border-gray-300  text-gray-100 hover:bg-purple-600 hover:text-gray-100 py-2 px-5">
             Settings
           </li>

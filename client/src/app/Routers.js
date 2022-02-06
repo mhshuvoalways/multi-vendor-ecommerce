@@ -8,6 +8,7 @@ import Shop from "../pages/Shop";
 import Cart from "../pages/Cart";
 import CheckOut from "../pages/CheckOut";
 import InWish from "../pages/InWish";
+import ComingSoon from "../pages/ComingSoon";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import MyAccount from "../pages/MyAccount";
@@ -38,6 +39,7 @@ const Routers = () => {
         <ProtectRouter component={AccountDetails} path="/my-account/details" />
         <ProtectRouter component={VendorRoutes} path="/vendor/dashboard" />
         <ProtectRouter component={VendorProducts} path="/vendor/dashboard/products" />
+        <ProtectRouter component={ComingSoon} path="/comingsoon" />
       </Router>
     </div>
   );
