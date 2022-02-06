@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Filter from "./Filter";
-import { filterProducts, searchTerm } from "../../store/actions/productAction";
+import { filterProducts } from "../../store/actions/productAction";
 import { getCategory } from "../../store/actions/categoryAction";
 import { getTags } from "../../store/actions/tagAction";
 
 const Index = () => {
   const [categories, setCategoies] = useState({});
   const [tags, setTags] = useState({});
+  const [logHighValue, setlogHighValue] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
   const categoryReducer = useSelector((el) => el.categoryReducer);
   const tagsReducer = useSelector((el) => el.tagsReducer);
 
@@ -42,7 +44,11 @@ const Index = () => {
   };
 
   const searchTermHandler = (event) => {
-    dispatch(searchTerm(event.target.value));
+    setSearchTerm(event.target.value);
+  };
+
+  const lowHigh = (v) => {
+    setlogHighValue(v);
   };
 
   useEffect(() => {
@@ -53,6 +59,8 @@ const Index = () => {
   useEffect(() => {
     dispatch(
       filterProducts({
+        logHighValue: logHighValue,
+        search: searchTerm,
         categories: {
           ...categories,
         },
@@ -61,7 +69,7 @@ const Index = () => {
         },
       })
     );
-  }, [categories, dispatch, tags]);
+  }, [categories, dispatch, logHighValue, searchTerm, tags]);
 
   return (
     <Filter
@@ -72,6 +80,7 @@ const Index = () => {
       tagsReducer={tagsReducer}
       tags={tags}
       onClickTagHandler={onClickTagHandler}
+      lowHigh={lowHigh}
     />
   );
 };

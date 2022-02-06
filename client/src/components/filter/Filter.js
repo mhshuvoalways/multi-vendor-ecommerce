@@ -8,8 +8,8 @@ const Filter = ({
   tagsReducer,
   tags,
   onClickTagHandler,
+  lowHigh,
 }) => {
-
   return (
     <div className="bg-gray-50 mb-5 pb-5">
       <div className="flex flex-wrap gap-8 md:justify-between justify-around w-11/12 m-auto">
@@ -23,10 +23,13 @@ const Filter = ({
           />
           <div className="my-1">
             <label>
-              <select className="px-2 w-full py-2 text-gray-600 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring">
+              <select
+                className="px-2 w-full py-2 text-gray-600 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
+                onChange={(e) => lowHigh(e.target.value)}
+              >
                 <option>Default</option>
-                <option>Price - High to Low</option>
-                <option>Price - Low to High</option>
+                <option value="hightolow">Price - High to Low</option>
+                <option value="lowtohigh">Price - Low to High</option>
               </select>
             </label>
           </div>

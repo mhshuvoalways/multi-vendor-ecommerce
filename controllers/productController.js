@@ -64,112 +64,146 @@ const getProduct = (req, res) => {
     });
 };
 
-// const filterProduct = (req, res) => {
-//   const { categories, tags } = req.body;
-//   const category = Object.values(categories);
-//   const categoryFinal = category.filter((el) => el !== "");
-//   const tag = Object.values(tags);
-//   const tagFinal = tag.filter((el) => el !== "");
-//   console.log(categoryFinal, tagFinal);
-//   if (categoryFinal.length && tagFinal.length) {
-//     Product.find({
-//       $or: [{ category: categoryFinal }, { "tags.name": tagFinal }],
-//     })
-//       .then((response) => {
-//         res.status(200).json(response);
-//       })
-//       .catch(() => {
-//         serverError(res);
-//       });
-//   } else if (tagFinal.length) {
-//     Product.find({ "tags.name": tagFinal })
-//       .then((response) => {
-//         res.status(200).json(response);
-//       })
-//       .catch(() => {
-//         serverError(res);
-//       });
-//   } else if (categoryFinal.length) {
-//     Product.find({ category: categoryFinal })
-//       .then((response) => {
-//         res.status(200).json(response);
-//       })
-//       .catch(() => {
-//         serverError(res);
-//       });
-//   } else {
-//     Product.find()
-//       .then((response) => {
-//         res.status(200).json(response);
-//       })
-//       .catch(() => {
-//         serverError(res);
-//       });
-//   }
-// };
-
 const filterProduct = (req, res) => {
-  const { search, categories, tags } = req.body;
+  const { search, categories, tags, logHighValue } = req.body;
   const category = Object.values(categories);
   const categoryFinal = category.filter((el) => el !== "");
   const tag = Object.values(tags);
   const tagFinal = tag.filter((el) => el !== "");
-  console.log(req.body);
-  if (categoryFinal.length && tagFinal.length && search.length) {
-    console.log("test");
+  if (categoryFinal.length && tagFinal.length) {
     Product.find({
-      $or: [
-        { category: categoryFinal },
-        { "tags.name": tagFinal },
-        { name: { $regex: search, $options: "i" } },
-      ],
+      $or: [{ category: categoryFinal }, { "tags.name": tagFinal }],
     })
-      .then((response) => {
-        res.status(200).json(response);
+      .then((resCetTag) => {
+        const temp = resCetTag.filter((el) =>
+          el.name.toLowerCase().includes(search.toLowerCase())
+        );
+        if (logHighValue === "hightolow") {
+          temp.sort((a, b) => {
+            if (a.salePrice > b.salePrice) {
+              return 1;
+            } else if (a.salePrice < b.salePrice) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+        } else if (logHighValue === "lowtohigh") {
+          temp.sort((a, b) => {
+            if (a.salePrice < b.salePrice) {
+              return 1;
+            } else if (a.salePrice > b.salePrice) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+        } else {
+          return res.status(200).json(temp);
+        }
+        res.status(200).json(temp);
       })
       .catch(() => {
         serverError(res);
       });
   } else if (categoryFinal.length) {
     Product.find({ category: categoryFinal })
-      .then((response) => {
-        res.status(200).json(response);
+      .then((resCetTag) => {
+        const temp = resCetTag.filter((el) =>
+          el.name.toLowerCase().includes(search.toLowerCase())
+        );
+        if (logHighValue === "hightolow") {
+          temp.sort((a, b) => {
+            if (a.salePrice > b.salePrice) {
+              return 1;
+            } else if (a.salePrice < b.salePrice) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+        } else if (logHighValue === "lowtohigh") {
+          temp.sort((a, b) => {
+            if (a.salePrice < b.salePrice) {
+              return 1;
+            } else if (a.salePrice > b.salePrice) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+        } else {
+          return res.status(200).json(temp);
+        }
+        res.status(200).json(temp);
       })
       .catch(() => {
         serverError(res);
       });
   } else if (tagFinal.length) {
     Product.find({ "tags.name": tagFinal })
-      .then((response) => {
-        res.status(200).json(response);
-      })
-      .catch(() => {
-        serverError(res);
-      });
-  } else if (search.length) {
-    console.log("search");
-    Product.find({ name: { $regex: search, $options: "i" } })
-      .then((response) => {
-        res.status(200).json(response);
-      })
-      .catch(() => {
-        serverError(res);
-      });
-  } else if (categoryFinal.length && tagFinal.length) {
-    console.log("cat and tag");
-    Product.find({
-      $and: [{ category: categoryFinal }, { "tags.name": tagFinal }],
-    })
-      .then((response) => {
-        res.status(200).json(response);
+      .then((resCetTag) => {
+        const temp = resCetTag.filter((el) =>
+          el.name.toLowerCase().includes(search.toLowerCase())
+        );
+        if (logHighValue === "hightolow") {
+          temp.sort((a, b) => {
+            if (a.salePrice > b.salePrice) {
+              return 1;
+            } else if (a.salePrice < b.salePrice) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+        } else if (logHighValue === "lowtohigh") {
+          temp.sort((a, b) => {
+            if (a.salePrice < b.salePrice) {
+              return 1;
+            } else if (a.salePrice > b.salePrice) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+        } else {
+          return res.status(200).json(temp);
+        }
+        res.status(200).json(temp);
       })
       .catch(() => {
         serverError(res);
       });
   } else {
     Product.find()
-      .then((response) => {
-        res.status(200).json(response);
+      .then((resCetTag) => {
+        const temp = resCetTag.filter((el) =>
+          el.name.toLowerCase().includes(search.toLowerCase())
+        );
+        if (logHighValue === "hightolow") {
+          temp.sort((a, b) => {
+            if (a.salePrice > b.salePrice) {
+              return 1;
+            } else if (a.salePrice < b.salePrice) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+        } else if (logHighValue === "lowtohigh") {
+          temp.sort((a, b) => {
+            if (a.salePrice < b.salePrice) {
+              return 1;
+            } else if (a.salePrice > b.salePrice) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+        } else {
+          return res.status(200).json(temp);
+        }
+        res.status(200).json(temp);
       })
       .catch(() => {
         serverError(res);

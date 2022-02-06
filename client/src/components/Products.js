@@ -23,7 +23,7 @@ const Products = () => {
     dispatch(getWishItem());
   }, [dispatch]);
 
-  const reverseCart = [...productReducer.performSearch];
+  const reverseCart = [...productReducer.products];
 
   return (
     <div className="w-11/12 m-auto">

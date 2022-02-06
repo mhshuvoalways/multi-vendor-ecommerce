@@ -35,7 +35,6 @@ export const getProducts = () => (dispatch) => {
           product: response.data,
         },
       });
-      dispatch(searchProduct());
     })
     .catch((err) => {
       dispatch({
@@ -45,7 +44,6 @@ export const getProducts = () => (dispatch) => {
         },
       });
     });
-    dispatch(searchProduct());
 };
 
 export const filterProducts = (value) => (dispatch) => {
@@ -67,19 +65,6 @@ export const filterProducts = (value) => (dispatch) => {
         },
       });
     });
-};
-
-export const searchTerm = (value) => (dispatch) => {
-  dispatch({
-    type: Types.SEARCH_TERM,
-    payload: value,
-  });
-};
-
-export const searchProduct = () => (dispatch) => {
-  dispatch({
-    type: Types.SEARCH_PRODUCT,
-  });
 };
 
 export const getMyProducts = () => (dispatch) => {
