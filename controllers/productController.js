@@ -64,6 +64,50 @@ const getProduct = (req, res) => {
     });
 };
 
+// const filterProduct = (req, res) => {
+//   const { categories, tags } = req.body;
+//   const category = Object.values(categories);
+//   const categoryFinal = category.filter((el) => el !== "");
+//   const tag = Object.values(tags);
+//   const tagFinal = tag.filter((el) => el !== "");
+//   console.log(categoryFinal, tagFinal);
+//   if (categoryFinal.length && tagFinal.length) {
+//     Product.find({
+//       $or: [{ category: categoryFinal }, { "tags.name": tagFinal }],
+//     })
+//       .then((response) => {
+//         res.status(200).json(response);
+//       })
+//       .catch(() => {
+//         serverError(res);
+//       });
+//   } else if (tagFinal.length) {
+//     Product.find({ "tags.name": tagFinal })
+//       .then((response) => {
+//         res.status(200).json(response);
+//       })
+//       .catch(() => {
+//         serverError(res);
+//       });
+//   } else if (categoryFinal.length) {
+//     Product.find({ category: categoryFinal })
+//       .then((response) => {
+//         res.status(200).json(response);
+//       })
+//       .catch(() => {
+//         serverError(res);
+//       });
+//   } else {
+//     Product.find()
+//       .then((response) => {
+//         res.status(200).json(response);
+//       })
+//       .catch(() => {
+//         serverError(res);
+//       });
+//   }
+// };
+
 const filterProduct = (req, res) => {
   const { search, categories, tags } = req.body;
   const category = Object.values(categories);
@@ -71,7 +115,22 @@ const filterProduct = (req, res) => {
   const tag = Object.values(tags);
   const tagFinal = tag.filter((el) => el !== "");
   console.log(req.body);
-  if (categoryFinal.length) {
+  if (categoryFinal.length && tagFinal.length && search.length) {
+    console.log("test");
+    Product.find({
+      $or: [
+        { category: categoryFinal },
+        { "tags.name": tagFinal },
+        { name: { $regex: search, $options: "i" } },
+      ],
+    })
+      .then((response) => {
+        res.status(200).json(response);
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else if (categoryFinal.length) {
     Product.find({ category: categoryFinal })
       .then((response) => {
         res.status(200).json(response);
@@ -97,24 +156,9 @@ const filterProduct = (req, res) => {
         serverError(res);
       });
   } else if (categoryFinal.length && tagFinal.length) {
-    console.log('cat and tag');
+    console.log("cat and tag");
     Product.find({
       $and: [{ category: categoryFinal }, { "tags.name": tagFinal }],
-    })
-      .then((response) => {
-        res.status(200).json(response);
-      })
-      .catch(() => {
-        serverError(res);
-      });
-  } else if (categoryFinal.length && tagFinal.length && search.length) {
-    console.log("test");
-    Product.find({
-      $and: [
-        { category: categoryFinal },
-        { "tags.name": tagFinal },
-        { name: { $regex: search, $options: "i" } },
-      ],
     })
       .then((response) => {
         res.status(200).json(response);

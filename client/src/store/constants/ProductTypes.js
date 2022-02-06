@@ -7,6 +7,9 @@ export const GET_PRODUCT_ERROR = "GET_PRODUCT_ERROR";
 export const FILTER_PRODUCT = "FILTER_PRODUCT";
 export const FILTER_PRODUCT_ERROR = "FILTER_PRODUCT_ERROR";
 
+export const SEARCH_TERM = "SEARCH_TERM";
+export const SEARCH_PRODUCT = "SEARCH_PRODUCT";
+
 export const HIGHT_LOW = "HIGHT_LOW";
 
 export const GET_MY_PRODUCT = "GET_MY_PRODUCT";

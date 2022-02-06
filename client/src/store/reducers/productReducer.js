@@ -6,6 +6,7 @@ const init = {
   error: {},
   isLoading: true,
   modal: false,
+  searchTerm: "",
   performSearch: [],
 };
 
@@ -24,13 +25,13 @@ const productReducer = (state = init, action) => {
       return {
         ...state,
         error: action.payload.error,
-        isLoading: true,
       };
     }
     case Types.GET_PRODUCT: {
       return {
         ...state,
         products: action.payload.product,
+        performSearch: action.payload.product,
         isLoading: false,
       };
     }
@@ -39,6 +40,24 @@ const productReducer = (state = init, action) => {
         ...state,
         error: action.payload.error,
         isLoading: true,
+      };
+    }
+    case Types.SEARCH_TERM: {
+      return {
+        ...state,
+        searchTerm: action.payload,
+      };
+    }
+    case Types.SEARCH_PRODUCT: {
+      const temp = [...state.products];
+      const findData = temp.filter((el) =>
+        el.name.toLowerCase().includes(state.searchTerm.toLowerCase())
+      );
+      console.log(findData);
+      return {
+        ...state,
+        performSearch: findData,
+        isLoading: false,
       };
     }
     case Types.FILTER_PRODUCT: {
@@ -52,7 +71,6 @@ const productReducer = (state = init, action) => {
       return {
         ...state,
         error: action.payload.error,
-        isLoading: true,
       };
     }
     case Types.GET_MY_PRODUCT: {
@@ -82,7 +100,6 @@ const productReducer = (state = init, action) => {
       return {
         ...state,
         error: action.payload,
-        isLoading: false,
       };
     }
     case Types.UPDATE_PRODUCT: {
@@ -99,7 +116,6 @@ const productReducer = (state = init, action) => {
       return {
         ...state,
         error: action.payload,
-        isLoading: false,
       };
     }
     case Types.MODAL_TOGGLE: {
@@ -113,7 +129,7 @@ const productReducer = (state = init, action) => {
         products: [],
         myProducts: [],
         error: {},
-        isLoading: true,
+        isLoading: false,
         modal: false,
       };
     }

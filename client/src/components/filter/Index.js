@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Filter from "./Filter";
-import { filterProducts } from "../../store/actions/productAction";
+import { filterProducts, searchTerm } from "../../store/actions/productAction";
 import { getCategory } from "../../store/actions/categoryAction";
 import { getTags } from "../../store/actions/tagAction";
 
 const Index = () => {
   const [categories, setCategoies] = useState({});
   const [tags, setTags] = useState({});
-  const [searchTerm, setSearchTerm] = useState("");
   const categoryReducer = useSelector((el) => el.categoryReducer);
   const tagsReducer = useSelector((el) => el.tagsReducer);
 
@@ -43,7 +42,7 @@ const Index = () => {
   };
 
   const searchTermHandler = (event) => {
-    setSearchTerm(event.target.value);
+    dispatch(searchTerm(event.target.value));
   };
 
   useEffect(() => {
@@ -54,7 +53,6 @@ const Index = () => {
   useEffect(() => {
     dispatch(
       filterProducts({
-        search: searchTerm,
         categories: {
           ...categories,
         },
@@ -63,7 +61,7 @@ const Index = () => {
         },
       })
     );
-  }, [categories, dispatch, searchTerm, tags]);
+  }, [categories, dispatch, tags]);
 
   return (
     <Filter
