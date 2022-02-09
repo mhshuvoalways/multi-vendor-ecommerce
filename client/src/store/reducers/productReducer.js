@@ -11,7 +11,7 @@ const init = {
 const productReducer = (state = init, action) => {
   switch (action.type) {
     case Types.UPLOAD_PRODUCT: {
-      const temp = [...state.products, action.payload.product];
+      const temp = [...state.myProducts, action.payload.product];
       return {
         ...state,
         myProducts: temp,
@@ -68,7 +68,7 @@ const productReducer = (state = init, action) => {
       };
     }
     case Types.DELETE_PRODUCT: {
-      const temp = [...state.products];
+      const temp = [...state.myProducts];
       const products = temp.filter((el) => el._id !== action.payload._id);
       return {
         ...state,
@@ -84,7 +84,7 @@ const productReducer = (state = init, action) => {
       };
     }
     case Types.UPDATE_PRODUCT: {
-      const temp = [...state.products];
+      const temp = [...state.myProducts];
       const findIndex = temp.findIndex((el) => el._id === action.payload.id);
       temp[findIndex] = action.payload.product;
       return {

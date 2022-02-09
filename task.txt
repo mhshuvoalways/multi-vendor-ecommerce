@@ -1,0 +1,2 @@
+1. user can not select a tag more than once
+2. vendor upload multiple photo for product

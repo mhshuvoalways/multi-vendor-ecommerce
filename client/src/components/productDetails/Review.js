@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "@reach/router";
 import { useDispatch, useSelector } from "react-redux";
 import { addReview } from "../../store/actions/reviewAction";
+import { getProducts } from "../../store/actions/productAction";
 import ReactStars from "react-rating-stars-component";
 import { Link } from "@reach/router";
 import Avatar from "../../assets/images/others/avatar.svg";
@@ -35,6 +36,7 @@ const Reviews = ({ reviewReducer }) => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     dispatch(addReview(state, params.id));
+    dispatch(getProducts);
     setState({
       rating: 5,
       comments: "",
@@ -50,14 +52,16 @@ const Reviews = ({ reviewReducer }) => {
             key={el._id}
           >
             <img
-              src={el.author.image ? el.author.image : Avatar}
+              src={el.authorId.avatar ? el.authorId.avatar.url : Avatar}
               alt=""
               className="w-24 h-24 bg-gray-200"
             />
             <div>
               <div className="flex gap-5 flex-wrap">
                 <p className="text-base font-semibold">
-                  {`${el.author.firstName} ${el.author.lastName}`}
+                  {`${el.authorId["firstName"] || el.authorId["storeName"]} ${
+                    el.authorId["lastName"] || ""
+                  }`}
                 </p>
                 <ReactStars
                   {...{

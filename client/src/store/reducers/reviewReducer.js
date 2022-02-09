@@ -8,9 +8,8 @@ const init = {
 const reviewReducer = (state = init, action) => {
   switch (action.type) {
     case Types.ADD_REVIEW: {
-      const temp = [...state.reviews, action.payload];
       return {
-        reviews: temp,
+        reviews: action.payload,
         error: {},
       };
     }
