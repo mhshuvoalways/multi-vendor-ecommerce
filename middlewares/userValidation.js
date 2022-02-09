@@ -87,8 +87,34 @@ const loginValidation = (value) => {
   };
 };
 
+const updatePassValidation = (value) => {
+  const error = {};
+  if (!value.currentPassword) {
+    error.currentPassword = "Please provide your current password";
+  } else if (value.currentPassword.length < 6) {
+    error.currentPassword =
+      "Please provide minimum 6 character of current password";
+  } else if (value.currentPassword.length > 20) {
+    error.currentPassword =
+      "Please provide maximum 20 character of current password";
+  }
+  if (!value.newPassword) {
+    error.newPassword = "Please provide your new password";
+  } else if (value.newPassword.length < 6) {
+    error.newPassword = "Please provide minimum 6 character of new password";
+  } else if (value.newPassword.length > 20) {
+    error.newPassword = "Please provide maximum 20 character of new password";
+  }
+  let isValid = Object.keys(error).length === 0;
+  return {
+    error,
+    isValid,
+  };
+};
+
 module.exports = {
   adminRegisterValidation,
   registerValidation,
   loginValidation,
+  updatePassValidation,
 };

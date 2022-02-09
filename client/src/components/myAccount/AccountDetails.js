@@ -45,6 +45,11 @@ const AccoutDetails = () => {
     const fd = new FormData();
     fd.append("avatar", state.avatar);
     dispatch(avatarAdd(fd));
+    setState({
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    });
   };
 
   return (
@@ -84,9 +89,7 @@ const AccoutDetails = () => {
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            >
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               First Name
             </label>
             <input
@@ -100,9 +103,7 @@ const AccoutDetails = () => {
             />
           </div>
           <div className="w-full md:w-1/2 px-3">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            >
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Last Name
             </label>
             <input
@@ -117,9 +118,7 @@ const AccoutDetails = () => {
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            >
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               E-mail
             </label>
             <input
@@ -134,9 +133,7 @@ const AccoutDetails = () => {
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            >
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Phone
             </label>
             <input
@@ -150,9 +147,7 @@ const AccoutDetails = () => {
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            >
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Current password
             </label>
             <input
@@ -166,9 +161,7 @@ const AccoutDetails = () => {
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            >
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               New password
             </label>
             <input
@@ -182,9 +175,7 @@ const AccoutDetails = () => {
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            >
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Confirm new password
             </label>
             <input

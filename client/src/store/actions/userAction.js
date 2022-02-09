@@ -140,12 +140,16 @@ export const updateUser = (user) => (dispatch) => {
           payload: res.data,
         });
         dispatch(alertAction("Updated!"));
+        console.log(res.data);
       })
       .catch((err) => {
         dispatch({
           type: Types.UPDATE_MYACCOUT_ERROR,
           payload: err.response,
         });
+        dispatch(alertAction(err.response.data.currentPassword));
+        dispatch(alertAction(err.response.data.newPassword));
+        dispatch(alertAction(err.response.data.message));
       });
   } else {
     dispatch(alertAction("New password and confirm password don't match"));

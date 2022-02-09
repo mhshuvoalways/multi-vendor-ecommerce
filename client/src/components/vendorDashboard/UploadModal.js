@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../store/actions/productAction";
 import Tags from "./Tags";
+import Clear from "../../assets/images/icons/clear.png";
 
 const UploadModal = ({ modal, modalHandler }) => {
   const [image, setImage] = useState(null);
@@ -108,18 +109,35 @@ const UploadModal = ({ modal, modalHandler }) => {
                   {/* Content start */}
                   <form onSubmit={onSubmit}>
                     <div className="flex gap-5 justify-between flex-wrap">
-                      <label className="w-64 flex flex-col items-center px-2 py-4 bg-white rounded-md shadow-md tracking-wide uppercase border border-blue cursor-pointer hover:bg-purple-600 hover:text-white text-purple-600 ease-linear transition-all duration-150">
-                        <i className="fas fa-cloud-upload-alt fa-3x"></i>
-                        <span className="mt-2 text-base leading-normal">
-                          Upload a Product
-                        </span>
-                        <input
-                          type="file"
-                          onChange={changeHandlerImage}
-                          className="hidden"
-                        />
-                      </label>
-
+                      {image ? (
+                        <div className="flex gap-1 flex-wrap">
+                          <img
+                            alt="not fount"
+                            className="w-64 border"
+                            src={URL.createObjectURL(image)}
+                          />
+                          <div>
+                            <img
+                              src={Clear}
+                              alt="clear"
+                              className="cursor-pointer border"
+                              onClick={() => setImage(null)}
+                            />
+                          </div>
+                        </div>
+                      ) : (
+                        <label className="w-64 flex flex-col items-center px-2 py-4 bg-white rounded-md shadow-md tracking-wide uppercase border border-blue cursor-pointer hover:bg-purple-600 hover:text-white text-purple-600 ease-linear transition-all duration-150">
+                          <i className="fas fa-cloud-upload-alt fa-3x"></i>
+                          <span className="mt-2 text-base leading-normal">
+                            Upload a Product
+                          </span>
+                          <input
+                            type="file"
+                            onChange={changeHandlerImage}
+                            className="hidden"
+                          />
+                        </label>
+                      )}
                       <div className="md:w-1/2">
                         <label
                           className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"

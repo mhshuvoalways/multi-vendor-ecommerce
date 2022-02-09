@@ -13,7 +13,8 @@ const productReducer = (state = init, action) => {
     case Types.UPLOAD_PRODUCT: {
       const temp = [...state.products, action.payload.product];
       return {
-        products: temp,
+        ...state,
+        myProducts: temp,
         error: {},
         isLoading: false,
         modal: false,
@@ -70,7 +71,8 @@ const productReducer = (state = init, action) => {
       const temp = [...state.products];
       const products = temp.filter((el) => el._id !== action.payload._id);
       return {
-        products,
+        ...state,
+        myProducts: products,
         error: {},
         isLoading: false,
       };
@@ -86,7 +88,8 @@ const productReducer = (state = init, action) => {
       const findIndex = temp.findIndex((el) => el._id === action.payload.id);
       temp[findIndex] = action.payload.product;
       return {
-        products: temp,
+        ...state,
+        myProducts: temp,
         error: {},
         isLoading: false,
       };

@@ -7,6 +7,7 @@ const {
   adminRegisterValidation,
   registerValidation,
   loginValidation,
+  updatePassValidation,
 } = require("../middlewares/userValidation");
 
 const adminRegister = (_req, res) => {
@@ -274,7 +275,9 @@ const avatarAdd = (req, res) => {
 
 const updateUser = (req, res) => {
   const { firstName, lastName, phone, currentPassword, newPassword } = req.body;
-  if (currentPassword && newPassword) {
+  const validation = updatePassValidation({ currentPassword, newPassword });
+  console.log(validation);
+  if (validation.isValid) {
     User.findOne({ _id: req.user._id })
       .then((responseOne) => {
         bcrypt.compare(
@@ -307,7 +310,7 @@ const updateUser = (req, res) => {
               });
             } else {
               res.status(400).json({
-                message: "Password doesn't match!",
+                message: "Your current password is not currect",
               });
             }
             if (error) {
@@ -320,21 +323,7 @@ const updateUser = (req, res) => {
         serverError(res);
       });
   } else {
-    const updateUser = {
-      firstName,
-      lastName,
-      phone,
-    };
-    User.findOneAndUpdate({ _id: req.user._id }, updateUser, {
-      new: true,
-    })
-      .select("-password")
-      .then((response) => {
-        res.status(200).json(response);
-      })
-      .catch(() => {
-        serverError(res);
-      });
+    res.status(400).json(validation.error);
   }
 };
 

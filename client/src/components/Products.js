@@ -38,7 +38,7 @@ const Products = () => {
             >
               <Link to={"/details/" + el._id}>
                 <img
-                  className="w-full cursor-pointer"
+                  className="w-full cursor-pointer h-80"
                   src={el.image[0].url}
                   alt="Sunset in the mountains"
                   thumbnail
