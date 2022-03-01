@@ -2,6 +2,7 @@ import React from "react";
 import Navigation from "../components/nav/Navigation";
 import Banner from "../components/Banner";
 import SomeInfo from "../components/SomeInfo";
+import SectionTitle from "../components/SectionTitle";
 import Products from "../components/Products";
 import Footer from "../components/Footer";
 
@@ -11,8 +12,7 @@ const Home = () => {
       <Navigation />
       <Banner />
       <SomeInfo />
-      <p className="text-4xl mb-1 text-center mt-36">DAILY DEALS!</p>
-      <p className="border-double border-4 border-purple-600 max-w-xs m-auto mb-10"></p>
+      <SectionTitle />
       <Products />
       <Footer />
     </div>

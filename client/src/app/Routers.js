@@ -11,6 +11,9 @@ import InWish from "../pages/InWish";
 import ComingSoon from "../pages/ComingSoon";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
+import CheckMailMsg from "../pages/CheckMailMsg";
+import FindMail from "../pages/FindMail";
+import RecoverPassword from "../pages/RecoverPassword";
 import MyAccount from "../pages/MyAccount";
 import Order from "../pages/Order";
 import UserAddress from "../pages/UserAddress";
@@ -32,13 +35,19 @@ const Routers = () => {
         <InWish path="/wishlist" />
         <Register path="/register" />
         <Login path="/login" />
+        <CheckMailMsg path="/checkmsg" />
+        <FindMail path="/findmail" />
+        <RecoverPassword path="/recoverpassword/:token" />
         <Contact path="/contact" />
         <ProtectRouter component={MyAccount} path="/my-account" />
         <ProtectRouter component={Order} path="/my-account/order" />
         <ProtectRouter component={UserAddress} path="/my-account/address" />
         <ProtectRouter component={AccountDetails} path="/my-account/details" />
         <ProtectRouter component={VendorRoutes} path="/vendor/dashboard" />
-        <ProtectRouter component={VendorProducts} path="/vendor/dashboard/products" />
+        <ProtectRouter
+          component={VendorProducts}
+          path="/vendor/dashboard/products"
+        />
         <ProtectRouter component={ComingSoon} path="/comingsoon" />
       </Router>
     </div>

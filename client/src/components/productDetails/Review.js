@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useParams } from "@reach/router";
 import { useDispatch, useSelector } from "react-redux";
 import { addReview } from "../../store/actions/reviewAction";
-import { getProducts } from "../../store/actions/productAction";
 import ReactStars from "react-rating-stars-component";
 import { Link } from "@reach/router";
 import Avatar from "../../assets/images/others/avatar.svg";
@@ -36,7 +35,6 @@ const Reviews = ({ reviewReducer }) => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     dispatch(addReview(state, params.id));
-    dispatch(getProducts);
     setState({
       rating: 5,
       comments: "",

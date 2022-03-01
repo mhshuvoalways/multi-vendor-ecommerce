@@ -1,7 +1,7 @@
 import React from "react";
 import Navigation from "../components/nav/Navigation";
 import PageLocation from "../components/utils/PageLocation";
-import CartComponent from "../components/Cart";
+import CartComponent from "../components/cart/Cart";
 import Footer from "../components/Footer";
 
 const Cart = () => {

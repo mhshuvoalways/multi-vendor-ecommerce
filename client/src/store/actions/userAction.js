@@ -81,6 +81,49 @@ export const userLogin = (user) => (dispatch) => {
     });
 };
 
+export const findMail = (email, navigate) => (dispatch) => {
+  axios
+    .post("/user/findmail", email)
+    .then(() => {
+      dispatch({
+        type: Types.FIND_MAIL,
+        payload: true,
+      });
+      navigate("/checkmsg");
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.FIND_MAIL_ERROR,
+        payload: false,
+      });
+      dispatch(alertAction(err.response.data));
+    });
+};
+
+export const recoverPass = (value, navigate) => (dispatch) => {
+  if (value.password === value.confirmPassword) {
+    axios
+      .post("/user/recoverpass", value)
+      .then(() => {
+        dispatch({
+          type: Types.RECOVER_PASS,
+          payload: true,
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        dispatch({
+          type: Types.RECOVER_PASS_ERROR,
+          payload: false,
+        });
+        dispatch(alertAction(err.response.data.password));
+        dispatch(alertAction(err.response.data.message));
+      });
+  } else {
+    dispatch(alertAction("New password and confirm password don't match"));
+  }
+};
+
 export const isAuthenticate = () => (dispatch) => {
   const token = localStorage.getItem("token");
   if (token) {

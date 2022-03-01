@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "@reach/router";
 import { adminRegister, userLogin } from "../../store/actions/userAction";
 import ActiveLink from "../utils/ActiveLink";
 
@@ -73,9 +74,11 @@ const Login = () => {
               <span className="ml-2">Remember me</span>
             </label>
             <label>
-              <span className="ml-2 cursor-pointer hover:text-purple-500">
-                Forgot Password?
-              </span>
+              <Link to="/findmail">
+                <span className="ml-2 cursor-pointer hover:text-purple-500">
+                  Forgot Password?
+                </span>
+              </Link>
             </label>
           </div>
           <button className="bg-purple-600 text-white py-2 mt-5 w-full hover:bg-gray-900">

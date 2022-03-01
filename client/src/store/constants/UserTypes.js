@@ -6,6 +6,10 @@ export const LOGIN_USER = "LOGIN_USER";
 export const LOGIN_USER_ERROR = "LOGIN_USER_ERROR";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const ISAUTHENTICATE = "ISAUTHENTICATE";
+export const FIND_MAIL = "FIND_MAIL";
+export const FIND_MAIL_ERROR = "FIND_MAIL_ERROR";
+export const RECOVER_PASS = "RECOVER_PASS";
+export const RECOVER_PASS_ERROR = "RECOVER_PASS_ERROR";
 export const GET_MYACCOUT = "GET_MYACCOUT";
 export const GET_MYACCOUT_ERROR = "GET_MYACCOUT_ERROR";
 

@@ -7,8 +7,12 @@ const {
   adminRegisterValidation,
   registerValidation,
   loginValidation,
+  findMailValidation,
+  recoverPassValidation,
   updatePassValidation,
 } = require("../middlewares/userValidation");
+const transporter = require("../mail/transporter");
+const { recoverPass } = require("../mail/templates");
 
 const adminRegister = (_req, res) => {
   const email = process.env.adminEmail;
@@ -173,6 +177,84 @@ const login = (req, res) => {
   }
 };
 
+const findMail = (req, res) => {
+  const { email } = req.body;
+  const validation = findMailValidation(email);
+  if (validation.isValid) {
+    User.findOne({ email })
+      .select("-password")
+      .then((response) => {
+        const token = jwt.sign(
+          {
+            _id: response._id,
+            email: response.email,
+          },
+          process.env.SECRET,
+          { expiresIn: "1h" }
+        );
+
+        if (response) {
+          transporter(
+            email,
+            recoverPass,
+            response.firstName + " " + response.lastName || response.username,
+            token
+          );
+          res.status(200).json(response);
+        } else {
+          res.status(400).json("User not found!");
+        }
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else {
+    res.status(400).json(validation.error);
+  }
+};
+
+const recoverPassword = (req, res) => {
+  const { token, password } = req.body;
+  const validation = recoverPassValidation(password);
+  if (validation.isValid) {
+    jwt.verify(token, process.env.SECRET, function (err, decode) {
+      if (decode) {
+        User.findOne({ _id: decode._id })
+          .then((response) => {
+            if (response) {
+              bcrypt.hash(password, 7, function (err, hash) {
+                if (hash) {
+                  const updateWithPass = {
+                    password: hash,
+                  };
+                  User.findOneAndUpdate({ _id: decode._id }, updateWithPass, {
+                    new: true,
+                  })
+                    .select("-password")
+                    .then((response) => {
+                      res.status(200).json(response);
+                    })
+                    .catch(() => {
+                      serverError(res);
+                    });
+                } else if (err) {
+                  serverError(res);
+                }
+              });
+            }
+          })
+          .catch(() => {
+            serverError(res);
+          });
+      } else if (err) {
+        serverError(res);
+      }
+    });
+  } else {
+    res.status(400).json(validation.error);
+  }
+};
+
 const getUser = (req, res) => {
   User.find()
     .select("-password")
@@ -276,7 +358,6 @@ const avatarAdd = (req, res) => {
 const updateUser = (req, res) => {
   const { firstName, lastName, phone, currentPassword, newPassword } = req.body;
   const validation = updatePassValidation({ currentPassword, newPassword });
-  console.log(validation);
   if (validation.isValid) {
     User.findOne({ _id: req.user._id })
       .then((responseOne) => {
@@ -342,6 +423,8 @@ module.exports = {
   adminRegister,
   register,
   login,
+  findMail,
+  recoverPassword,
   getUser,
   getMyAccount,
   updateUser,

@@ -12,6 +12,7 @@ import {
 import { getTags } from "../../store/actions/tagAction";
 import { getCategory } from "../../store/actions/categoryAction";
 import { getCartItem } from "../../store/actions/inCartAction";
+import AddSearch from "./AddSearch";
 
 const Products = () => {
   const productReducer = useSelector((el) => el.productReducer);
@@ -32,22 +33,7 @@ const Products = () => {
 
   return (
     <div className="overflow-x-auto md:overflow-x-hidden">
-      <div className="flex justify-between mb-2">
-        <div>
-          <input
-            type="text"
-            placeholder="Search Product..."
-            className="w-4/5 max-w-lg p-2 placeholder-gray-400 text-gray-600 bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
-            onChange={(e) => setInputValue(e.target.value)}
-          />
-        </div>
-        <button
-          className="bg-purple-600 text-white p-2 rounded hover:bg-gray-900"
-          onClick={() => dispatch(modalToggle())}
-        >
-          Add Product
-        </button>
-      </div>
+      <AddSearch setInputValue={setInputValue} modalToggle={modalToggle} />
       <table className="border-collapse w-full text-left">
         <tr>
           <th className="p-2 bg-gray-100">IMAGE</th>

@@ -4,6 +4,7 @@ const init = {
   isAuthenticate: false,
   user: {},
   error: null,
+  findMail: false,
 };
 
 const userReudcer = (state = init, action) => {
@@ -30,6 +31,7 @@ const userReudcer = (state = init, action) => {
     }
     case Types.REGISTER_USER_ERROR: {
       return {
+        ...state,
         isAuthenticate: false,
         user: {},
         error: action.payload.error,
@@ -38,6 +40,7 @@ const userReudcer = (state = init, action) => {
 
     case Types.LOGIN_USER: {
       return {
+        ...state,
         isAuthenticate: Object.keys(action.payload.user).length > 0,
         user: action.payload.user,
         error: null,
@@ -45,9 +48,36 @@ const userReudcer = (state = init, action) => {
     }
     case Types.LOGIN_USER_ERROR: {
       return {
+        ...state,
         isAuthenticate: false,
         user: {},
         error: action.payload.error,
+      };
+    }
+
+    case Types.FIND_MAIL: {
+      return {
+        ...state,
+        findMail: action.payload,
+      };
+    }
+    case Types.FIND_MAIL_ERROR: {
+      return {
+        ...state,
+        findMail: action.payload,
+      };
+    }
+
+    case Types.RECOVER_PASS: {
+      return {
+        ...state,
+        findMail: action.payload,
+      };
+    }
+    case Types.RECOVER_PASS_ERROR: {
+      return {
+        ...state,
+        findMail: action.payload,
       };
     }
 
@@ -62,6 +92,7 @@ const userReudcer = (state = init, action) => {
         isAuthenticate: action.payload.isAuthenticate,
         user: {},
         error: null,
+        findMail: false,
       };
     }
     case Types.GET_MYACCOUT: {
@@ -105,6 +136,7 @@ const userReudcer = (state = init, action) => {
         isAuthenticate: false,
         user: {},
         error: null,
+        findMail: false,
       };
     }
     default:

@@ -30,8 +30,11 @@ const Address = () => {
         country: userAddressReducer.address.country,
         streetAddress: userAddressReducer.address.streetAddress,
       });
+  }, [userAddressReducer.address]);
+
+  useEffect(() => {
     dispatch(getAddress());
-  }, [dispatch, userAddressReducer.address]);
+  }, [dispatch]);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();

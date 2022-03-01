@@ -87,6 +87,30 @@ const loginValidation = (value) => {
   };
 };
 
+const findMailValidation = (value) => {
+  const error = {};
+  if (!value) {
+    error.email = "Please provide your email";
+  }
+  let isValid = Object.keys(error).length === 0;
+  return {
+    error,
+    isValid,
+  };
+};
+
+const recoverPassValidation = (value) => {
+  const error = {};
+  if (!value) {
+    error.password = "Please provide your password";
+  }
+  let isValid = Object.keys(error).length === 0;
+  return {
+    error,
+    isValid,
+  };
+};
+
 const updatePassValidation = (value) => {
   const error = {};
   if (!value.currentPassword) {
@@ -116,5 +140,7 @@ module.exports = {
   adminRegisterValidation,
   registerValidation,
   loginValidation,
+  findMailValidation,
+  recoverPassValidation,
   updatePassValidation,
 };
