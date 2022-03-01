@@ -188,6 +188,7 @@ const findMail = (req, res) => {
           {
             _id: response._id,
             email: response.email,
+            username: response.username,
           },
           process.env.SECRET,
           { expiresIn: "1h" }
@@ -222,7 +223,7 @@ const recoverPassword = (req, res) => {
         User.findOne({ _id: decode._id })
           .then((response) => {
             if (response) {
-              bcrypt.hash(password, 7, function (err, hash) {
+              bcrypt.hash(password, 10, function (err, hash) {
                 if (hash) {
                   const updateWithPass = {
                     password: hash,
@@ -231,8 +232,8 @@ const recoverPassword = (req, res) => {
                     new: true,
                   })
                     .select("-password")
-                    .then((response) => {
-                      res.status(200).json(response);
+                    .then(() => {
+                      res.status(200).json(token);
                     })
                     .catch(() => {
                       serverError(res);

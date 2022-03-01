@@ -103,6 +103,10 @@ const recoverPassValidation = (value) => {
   const error = {};
   if (!value) {
     error.password = "Please provide your password";
+  } else if (value.length < 6) {
+    error.password = "Please provide minimum 6 character";
+  } else if (value.length > 20) {
+    error.password = "Please provide maximum 20 character";
   }
   let isValid = Object.keys(error).length === 0;
   return {

@@ -71,13 +71,17 @@ const userReudcer = (state = init, action) => {
     case Types.RECOVER_PASS: {
       return {
         ...state,
-        findMail: action.payload,
+        isAuthenticate: Object.keys(action.payload.user).length > 0,
+        user: action.payload.user,
+        error: null,
       };
     }
     case Types.RECOVER_PASS_ERROR: {
       return {
         ...state,
-        findMail: action.payload,
+        isAuthenticate: false,
+        user: {},
+        error: action.payload.error,
       };
     }
 

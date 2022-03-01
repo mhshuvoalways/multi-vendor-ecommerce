@@ -66,7 +66,7 @@ export const userLogin = (user) => (dispatch) => {
       });
       setAuthToken(response.data.token);
       localStorage.setItem("token", response.data.token);
-      dispatch(alertAction("Welcome back!"));
+      dispatch(alertAction("Welcome to our application!"));
     })
     .catch((err) => {
       dispatch({
@@ -104,17 +104,25 @@ export const recoverPass = (value, navigate) => (dispatch) => {
   if (value.password === value.confirmPassword) {
     axios
       .post("/user/recoverpass", value)
-      .then(() => {
+      .then((response) => {
+        const decoded = jwt_decode(response.data);
         dispatch({
           type: Types.RECOVER_PASS,
-          payload: true,
+          payload: {
+            user: decoded,
+          },
         });
+        setAuthToken(response.data);
+        localStorage.setItem("token", response.data);
+        dispatch(alertAction("Welcome to our application!"));
         navigate("/");
       })
       .catch((err) => {
         dispatch({
           type: Types.RECOVER_PASS_ERROR,
-          payload: false,
+          payload: {
+            error: err.response,
+          },
         });
         dispatch(alertAction(err.response.data.password));
         dispatch(alertAction(err.response.data.message));
