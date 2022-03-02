@@ -1,13 +1,12 @@
-1. user can not select a tag more than once
-2. vendor upload multiple photo for product
-3. active account task has to be done
-4. visit store and setting pages have to be done
-5. contact form has to be done
-6. more proucts in details page has to be done
-7. individual visit store
-8. additional info component has to be done
-9. rating has to be done in mobile device
-10. search with suggestions
-11. chat system add
-12. apply coupon
-13. login with google and facebook
+user can not select a tag more than once
+vendor upload multiple photo for product
+visit store and setting pages have to be done
+contact form has to be done
+more proucts in details page has to be done
+individual visit store
+additional info component has to be done
+rating has to be done in mobile device
+search with suggestions
+chat system add
+apply coupon
+login with google and facebook
