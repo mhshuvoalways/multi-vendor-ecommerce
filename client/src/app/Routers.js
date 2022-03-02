@@ -11,6 +11,7 @@ import InWish from "../pages/InWish";
 import ComingSoon from "../pages/ComingSoon";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
+import ActiveAccount from "../pages/ActiveAccount";
 import CheckMailMsg from "../pages/CheckMailMsg";
 import FindMail from "../pages/FindMail";
 import RecoverPassword from "../pages/RecoverPassword";
@@ -35,6 +36,7 @@ const Routers = () => {
         <InWish path="/wishlist" />
         <Register path="/register" />
         <Login path="/login" />
+        <ActiveAccount path="/active/:token" />
         <CheckMailMsg path="/checkmsg" />
         <FindMail path="/findmail" />
         <RecoverPassword path="/recoverpassword/:token" />

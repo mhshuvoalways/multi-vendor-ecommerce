@@ -3,6 +3,7 @@ const {
   adminRegister,
   register,
   login,
+  activeAccountController,
   findMail,
   recoverPassword,
   getUser,
@@ -17,6 +18,7 @@ const fileUploader = require("../middlewares/fileUploader");
 router.post("/adminregister", adminRegister);
 router.post("/register", register);
 router.post("/login", login);
+router.post("/active", activeAccountController);
 router.post("/findmail", findMail);
 router.post("/recoverpass", recoverPassword);
 router.get("/get", authenticate, getUser);

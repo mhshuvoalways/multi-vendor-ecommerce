@@ -6,8 +6,9 @@ import ActiveLink from "../utils/ActiveLink";
 
 const Login = () => {
   const [state, setState] = useState({
-    email: "",
-    password: "",
+    email: localStorage.getItem("email") || "",
+    password: localStorage.getItem("password") || "",
+    checked: false,
   });
 
   const dispatch = useDispatch();
@@ -23,14 +24,26 @@ const Login = () => {
     });
   };
 
+  const onChangeRemember = (event) => {
+    if (event.target.checked) {
+      localStorage.setItem("email", state.email);
+      localStorage.setItem("password", state.password);
+      setState({ ...state, checked: event.target.checked });
+    } else {
+      localStorage.removeItem("email");
+      localStorage.removeItem("password");
+      setState({ ...state, checked: event.target.checked });
+    }
+  };
+
   const onSubmit = (event) => {
     event.preventDefault();
     const { email, password } = state;
     dispatch(userLogin({ email, password }));
-    setState({
-      email: "",
-      password: "",
-    });
+    if (!state.checked) {
+      localStorage.removeItem("email");
+      localStorage.removeItem("password");
+    }
   };
 
   return (
@@ -70,8 +83,13 @@ const Login = () => {
           </label>
           <div className="flex mt-6 justify-between">
             <label className="flex items-center">
-              <input type="checkbox" className="form-checkbox cursor-pointer" />
-              <span className="ml-2">Remember me</span>
+              <input
+                type="checkbox"
+                className="form-checkbox cursor-pointer"
+                onChange={onChangeRemember}
+                checked={state.checked}
+              />
+              <span className="ml-2 cursor-pointer">Remember me</span>
             </label>
             <label>
               <Link to="/findmail">

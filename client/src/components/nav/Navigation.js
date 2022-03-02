@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { isAuthenticate } from "../../store/actions/userAction";
 import { getCartItem } from "../../store/actions/inCartAction";
 import { freshCart } from "../../store/actions/inCartAction";
+import { freshWish } from "../../store/actions/wishListAction";
 import { freshProduct } from "../../store/actions/productAction";
 import CartPopUp from "./CartPopUp";
 import AccountPopUp from "./AccountPopUp";
@@ -27,6 +28,7 @@ export default function Navigation() {
     dispatch(getCartItem());
     if (!userReducer.isAuthenticate) {
       dispatch(freshCart());
+      dispatch(freshWish());
       dispatch(freshProduct());
     }
   }, [dispatch, userReducer.isAuthenticate]);

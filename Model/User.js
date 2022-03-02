@@ -42,6 +42,10 @@ const userSchema = new Schema(
       public_id: String,
       url: String,
     },
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

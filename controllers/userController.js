@@ -12,7 +12,7 @@ const {
   updatePassValidation,
 } = require("../middlewares/userValidation");
 const transporter = require("../mail/transporter");
-const { recoverPass } = require("../mail/templates");
+const { recoverPass, activeAccount } = require("../mail/templates");
 
 const adminRegister = (_req, res) => {
   const email = process.env.adminEmail;
@@ -38,6 +38,7 @@ const adminRegister = (_req, res) => {
                 storeName,
                 password: hash,
                 role: "admin",
+                isActive: true,
               };
               new User(user)
                 .save()
@@ -90,6 +91,16 @@ const register = (req, res) => {
               if (err) {
                 serverError(res);
               } else {
+                const token = jwt.sign(
+                  {
+                    email: email,
+                    username: username,
+                  },
+                  process.env.SECRET,
+                  { expiresIn: "1h" }
+                );
+                transporter(email, activeAccount, username, token);
+
                 const vendor = {
                   email,
                   username,
@@ -139,30 +150,36 @@ const login = (req, res) => {
     User.findOne({ email })
       .then((response) => {
         if (response) {
-          bcrypt.compare(password, response.password, function (err, result) {
-            if (result) {
-              const token = jwt.sign(
-                {
-                  _id: response._id,
-                  email: response.email,
-                  username: response.username,
-                },
-                process.env.SECRET,
-                { expiresIn: "1h" }
-              );
-              res.status(200).json({
-                message: "Welcome back!",
-                token,
-              });
-            } else {
-              res.status(400).json({
-                message: "Password doesn't match!",
-              });
-            }
-            if (err) {
-              serverError(res);
-            }
-          });
+          if (response.isActive) {
+            bcrypt.compare(password, response.password, function (err, result) {
+              if (result) {
+                const token = jwt.sign(
+                  {
+                    _id: response._id,
+                    email: response.email,
+                    username: response.username,
+                  },
+                  process.env.SECRET,
+                  { expiresIn: "1h" }
+                );
+                res.status(200).json({
+                  message: "Welcome back!",
+                  token,
+                });
+              } else {
+                res.status(400).json({
+                  message: "Password doesn't match!",
+                });
+              }
+              if (err) {
+                serverError(res);
+              }
+            });
+          } else {
+            res.status(400).json({
+              message: "Please active your account and try again",
+            });
+          }
         } else {
           res.status(400).json({
             message: "User not found!",
@@ -174,6 +191,30 @@ const login = (req, res) => {
       });
   } else {
     res.status(400).json(validation.error);
+  }
+};
+
+const activeAccountController = (req, res) => {
+  const { token } = req.body;
+  try {
+    const decode = jwt.verify(token, process.env.SECRET);
+    User.findOneAndUpdate(
+      { email: decode.email },
+      {
+        isActive: true,
+      },
+      { new: true }
+    )
+      .then(() => {
+        res.status(200).json("Thanks for Activating your account!");
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } catch {
+    res.status(400).json({
+      message: "Something is wrong!",
+    });
   }
 };
 
@@ -248,7 +289,7 @@ const recoverPassword = (req, res) => {
             serverError(res);
           });
       } else if (err) {
-        serverError(res);
+        res.status(400).json("Something is wrong!");
       }
     });
   } else {
@@ -424,6 +465,7 @@ module.exports = {
   adminRegister,
   register,
   login,
+  activeAccountController,
   findMail,
   recoverPassword,
   getUser,

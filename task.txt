@@ -1,6 +1,6 @@
 1. user can not select a tag more than once
 2. vendor upload multiple photo for product
-3. remember me, active account and reset password task have to be done
+3. active account task has to be done
 4. visit store and setting pages have to be done
 5. contact form has to be done
 6. more proucts in details page has to be done
@@ -9,3 +9,5 @@
 9. rating has to be done in mobile device
 10. search with suggestions
 11. chat system add
+12. apply coupon
+13. login with google and facebook

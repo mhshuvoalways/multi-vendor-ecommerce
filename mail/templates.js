@@ -3,7 +3,7 @@ const recoverPass = (name, link) => {
     process.env.NODE_ENV === "production"
       ? process.env.frontend_url_production
       : process.env.frontend_url;
-  return `<div style="background-color: #efefef; padding: 20px">
+  return `<div style="background-color: #efefef; padding: 30px">
     <h2>Hello ${name},</h2>
     <p>
       Forgot your password? Don't worry. Click the link below and recover your
@@ -13,6 +13,21 @@ const recoverPass = (name, link) => {
 </div>`;
 };
 
+const activeAccount = (name, link) => {
+  const frontend_url =
+    process.env.NODE_ENV === "production"
+      ? process.env.frontend_url_production
+      : process.env.frontend_url;
+  return `<div style="background-color: #efefef; padding: 30px">
+    <h2>Hello ${name},</h2>
+    <p>
+     Please click the link below and active your account.
+    </p>
+    <a href=${frontend_url}/active/${link}>${frontend_url}/active/${link}</a>
+</div>`;
+};
+
 module.exports = {
   recoverPass,
+  activeAccount,
 };

@@ -81,6 +81,24 @@ export const userLogin = (user) => (dispatch) => {
     });
 };
 
+export const activeAccount = (token, navigate) => (dispatch) => {
+  axios
+    .post("/user/active", token)
+    .then((response) => {
+      dispatch({
+        type: Types.ACTIVE_ACCOUNT,
+        payload: response.data,
+      });
+      navigate("/login");
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.ACTIVE_ACCOUNT_ERROR,
+        payload: err.response.data.message,
+      });
+    });
+};
+
 export const findMail = (email, navigate) => (dispatch) => {
   axios
     .post("/user/findmail", email)
@@ -96,7 +114,7 @@ export const findMail = (email, navigate) => (dispatch) => {
         type: Types.FIND_MAIL_ERROR,
         payload: false,
       });
-      dispatch(alertAction(err.response.data));
+      dispatch(alertAction(err.response.data.email));
     });
 };
 
@@ -125,7 +143,7 @@ export const recoverPass = (value, navigate) => (dispatch) => {
           },
         });
         dispatch(alertAction(err.response.data.password));
-        dispatch(alertAction(err.response.data.message));
+        dispatch(alertAction(err.response.data));
       });
   } else {
     dispatch(alertAction("New password and confirm password don't match"));
@@ -238,5 +256,6 @@ export const logout = (navigate) => (dispatch) => {
     },
   });
   localStorage.removeItem("token");
+  setAuthToken("");
   navigate("/login");
 };

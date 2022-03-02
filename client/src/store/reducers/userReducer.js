@@ -5,6 +5,7 @@ const init = {
   user: {},
   error: null,
   findMail: false,
+  activeAccountMsg: "",
 };
 
 const userReudcer = (state = init, action) => {
@@ -52,6 +53,19 @@ const userReudcer = (state = init, action) => {
         isAuthenticate: false,
         user: {},
         error: action.payload.error,
+      };
+    }
+
+    case Types.ACTIVE_ACCOUNT: {
+      return {
+        ...state,
+        activeAccountMsg: action.payload,
+      };
+    }
+    case Types.ACTIVE_ACCOUNT_ERROR: {
+      return {
+        ...state,
+        activeAccountMsg: action.payload,
       };
     }
 
