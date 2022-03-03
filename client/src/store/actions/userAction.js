@@ -81,6 +81,32 @@ export const userLogin = (user) => (dispatch) => {
     });
 };
 
+export const loginWithGoogle = (user) => (dispatch) => {
+  axios
+    .post("/user/google", user)
+    .then((response) => {
+      const decoded = jwt_decode(response.data.token);
+      dispatch({
+        type: Types.LOGIN_WITH_GOOGLE,
+        payload: {
+          user: decoded,
+        },
+      });
+      setAuthToken(response.data.token);
+      localStorage.setItem("token", response.data.token);
+      dispatch(alertAction(response.data.message));
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.LOGIN_WITH_GOOGLE_ERROR,
+        payload: {
+          error: err.response,
+        },
+      });
+      dispatch(alertAction(err.response.data.message));
+    });
+};
+
 export const activeAccount = (token, navigate) => (dispatch) => {
   axios
     .post("/user/active", token)
@@ -200,16 +226,35 @@ export const getMyAccount = () => (dispatch) => {
 };
 
 export const updateUser = (user) => (dispatch) => {
+  axios
+    .put("/user/edituser", user)
+    .then((res) => {
+      dispatch({
+        type: Types.UPDATE_USER,
+        payload: res.data,
+      });
+      dispatch(alertAction("Updated!"));
+      console.log(res.data);
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.UPDATE_USER_ERROR,
+        payload: err.response,
+      });
+      dispatch(alertAction(err.response.data.message));
+    });
+};
+
+export const updateUserPass = (user) => (dispatch) => {
   if (user.newPassword === user.confirmPassword) {
     axios
-      .put("/user/edit", user)
+      .put("/user/editpass", user)
       .then((res) => {
         dispatch({
           type: Types.UPDATE_MYACCOUT,
           payload: res.data,
         });
         dispatch(alertAction("Updated!"));
-        console.log(res.data);
       })
       .catch((err) => {
         dispatch({

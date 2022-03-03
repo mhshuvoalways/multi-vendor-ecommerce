@@ -10,3 +10,4 @@ search with suggestions
 chat system add
 apply coupon
 login with google and facebook
+when change avatar then it will show instantly and after clicking update button it will update

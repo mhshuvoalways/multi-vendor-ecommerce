@@ -3,11 +3,13 @@ const {
   adminRegister,
   register,
   login,
+  loginWithGoogle,
   activeAccountController,
   findMail,
+  updateUser,
   recoverPassword,
   getUser,
-  updateUser,
+  updateUserPass,
   avatarAdd,
   getMyAccount,
   deleteUser,
@@ -17,6 +19,7 @@ const fileUploader = require("../middlewares/fileUploader");
 
 router.post("/adminregister", adminRegister);
 router.post("/register", register);
+router.post("/google", loginWithGoogle);
 router.post("/login", login);
 router.post("/active", activeAccountController);
 router.post("/findmail", findMail);
@@ -24,7 +27,8 @@ router.post("/recoverpass", recoverPassword);
 router.get("/get", authenticate, getUser);
 router.get("/getmyaccount", authenticate, getMyAccount);
 router.put("/avatar", authenticate, fileUploader.single("avatar"), avatarAdd);
-router.put("/edit", authenticate, updateUser);
+router.put("/edituser", authenticate, updateUser);
+router.put("/editpass", authenticate, updateUserPass);
 router.delete("/delete/:email", authenticate, deleteUser);
 
 module.exports = router;

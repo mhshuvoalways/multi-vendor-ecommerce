@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "@reach/router";
 import { updateUser, avatarAdd } from "../../store/actions/userAction";
 import Avatar from "../../assets/images/others/avatar.svg";
 
@@ -10,9 +11,6 @@ const AccoutDetails = () => {
     lastName: "",
     email: "",
     phone: "",
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
   });
 
   const dispatch = useDispatch();
@@ -44,17 +42,14 @@ const AccoutDetails = () => {
     dispatch(updateUser(state));
     const fd = new FormData();
     fd.append("avatar", state.avatar);
-    dispatch(avatarAdd(fd));
-    setState({
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    });
+    if (state.avatar) {
+      dispatch(avatarAdd(fd));
+    }
   };
 
   return (
     <div className="w-4/5 max-w-lg m-auto">
-      <form onSubmit={onSubmitHandler}>
+      <form>
         <div className="mb-10">
           <label>
             {userReducer.user && userReducer.user.avatar ? (
@@ -145,56 +140,24 @@ const AccoutDetails = () => {
             />
           </div>
         </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full px-3">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-              Current password
-            </label>
-            <input
-              className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              type="password"
-              value={state.currentPassword}
-              name="currentPassword"
-              onChange={onChangeHandler}
-            />
-          </div>
-        </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full px-3">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-              New password
-            </label>
-            <input
-              className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              type="password"
-              value={state.newPassword}
-              name="newPassword"
-              onChange={onChangeHandler}
-            />
-          </div>
-        </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full px-3">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-              Confirm new password
-            </label>
-            <input
-              className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              type="password"
-              value={state.confirmPassword}
-              name="confirmPassword"
-              onChange={onChangeHandler}
-            />
-          </div>
-        </div>
-        <div className="md:flex md:items-center">
-          <div className="md:w-1/3">
+        <div className="flex flex-wrap gap-3">
+          <div className="md:flex md:items-center">
             <button
               className="shadow bg-teal-400 hover:bg-gray-800 bg-purple-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-              type="submit"
+              onClick={onSubmitHandler}
             >
               Save Changes
             </button>
+          </div>
+          <div className="md:flex md:items-center">
+            <Link to="/my-account/editpassword">
+              <button
+                className="shadow bg-teal-400 hover:bg-gray-800 bg-red-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                type="button"
+              >
+                Changes Password
+              </button>
+            </Link>
           </div>
         </div>
       </form>

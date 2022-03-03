@@ -1,10 +1,8 @@
 import axios from "axios";
+import frontend_url from "./frontendUrl";
 
 const instance = axios.create({
-  baseURL:
-    process.env.NODE_ENV === "production"
-      ? "https://ecommerce-app-mhs.herokuapp.com"
-      : "http://localhost:5000",
+  baseURL: frontend_url,
 });
 
 export default instance;

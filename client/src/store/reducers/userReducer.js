@@ -56,6 +56,23 @@ const userReudcer = (state = init, action) => {
       };
     }
 
+    case Types.LOGIN_WITH_GOOGLE: {
+      return {
+        ...state,
+        isAuthenticate: Object.keys(action.payload.user).length > 0,
+        user: action.payload.user,
+        error: null,
+      };
+    }
+    case Types.LOGIN_WITH_GOOGLE_ERROR: {
+      return {
+        ...state,
+        isAuthenticate: false,
+        user: {},
+        error: action.payload.error,
+      };
+    }
+
     case Types.ACTIVE_ACCOUNT: {
       return {
         ...state,
@@ -132,6 +149,18 @@ const userReudcer = (state = init, action) => {
       };
     }
     case Types.AVATAR_UPDATE_ERROR: {
+      return {
+        ...state,
+        error: action.payload,
+      };
+    }
+    case Types.UPDATE_USER: {
+      return {
+        ...state,
+        user: action.payload,
+      };
+    }
+    case Types.UPDATE_USER_ERROR: {
       return {
         ...state,
         error: action.payload,

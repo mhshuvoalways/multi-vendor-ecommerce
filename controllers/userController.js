@@ -194,6 +194,69 @@ const login = (req, res) => {
   }
 };
 
+const loginWithGoogle = (req, res) => {
+  const { imageUrl, email, givenName, familyName } = req.body;
+  const username = email.substring(0, email.lastIndexOf("@"));
+  User.findOne({ email })
+    .then((response) => {
+      const customer = {
+        email: email,
+        username: username,
+        firstName: givenName,
+        lastName: familyName,
+        avatar: {
+          url: imageUrl,
+        },
+        strategy: "google",
+      };
+      if (response) {
+        if (response.strategy === "google") {
+          const token = jwt.sign(
+            {
+              _id: response._id,
+              email: response.email,
+              username: response.username,
+            },
+            process.env.SECRET,
+            { expiresIn: "1h" }
+          );
+          res.status(200).json({
+            message: "Welcome to our application!",
+            token,
+          });
+        } else {
+          res.status(400).json({
+            message: `You have already an account with ${response.strategy}`,
+          });
+        }
+      } else {
+        new User(customer)
+          .save()
+          .then((response) => {
+            const token = jwt.sign(
+              {
+                _id: response._id,
+                email: response.email,
+                username: response.username,
+              },
+              process.env.SECRET,
+              { expiresIn: "1h" }
+            );
+            res.status(200).json({
+              message: "Welcome to our application!",
+              token,
+            });
+          })
+          .catch(() => {
+            serverError(res);
+          });
+      }
+    })
+    .catch(() => {
+      serverError(res);
+    });
+};
+
 const activeAccountController = (req, res) => {
   const { token } = req.body;
   try {
@@ -398,7 +461,26 @@ const avatarAdd = (req, res) => {
 };
 
 const updateUser = (req, res) => {
-  const { firstName, lastName, phone, currentPassword, newPassword } = req.body;
+  const { firstName, lastName, phone } = req.body;
+  const update = {
+    firstName,
+    lastName,
+    phone,
+  };
+  User.findOneAndUpdate({ _id: req.user._id }, update, {
+    new: true,
+  })
+    .select("-password")
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch(() => {
+      serverError(res);
+    });
+};
+
+const updateUserPass = (req, res) => {
+  const { currentPassword, newPassword } = req.body;
   const validation = updatePassValidation({ currentPassword, newPassword });
   if (validation.isValid) {
     User.findOne({ _id: req.user._id })
@@ -410,13 +492,10 @@ const updateUser = (req, res) => {
             if (result) {
               bcrypt.hash(newPassword, 10, function (err, hash) {
                 if (hash) {
-                  const updateWithPass = {
-                    firstName,
-                    lastName,
-                    phone,
+                  const updatePass = {
                     password: hash,
                   };
-                  User.findOneAndUpdate({ _id: req.user._id }, updateWithPass, {
+                  User.findOneAndUpdate({ _id: req.user._id }, updatePass, {
                     new: true,
                   })
                     .select("-password")
@@ -465,12 +544,14 @@ module.exports = {
   adminRegister,
   register,
   login,
+  loginWithGoogle,
   activeAccountController,
   findMail,
   recoverPassword,
   getUser,
   getMyAccount,
   updateUser,
+  updateUserPass,
   avatarAdd,
   deleteUser,
 };

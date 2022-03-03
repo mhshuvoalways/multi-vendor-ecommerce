@@ -17,6 +17,7 @@ import FindMail from "../pages/FindMail";
 import RecoverPassword from "../pages/RecoverPassword";
 import MyAccount from "../pages/MyAccount";
 import Order from "../pages/Order";
+import EditePassword from "../pages/EditePassword";
 import UserAddress from "../pages/UserAddress";
 import AccountDetails from "../pages/AccountDetails";
 import Contact from "../pages/Contact";
@@ -43,6 +44,7 @@ const Routers = () => {
         <Contact path="/contact" />
         <ProtectRouter component={MyAccount} path="/my-account" />
         <ProtectRouter component={Order} path="/my-account/order" />
+        <ProtectRouter component={EditePassword} path="/my-account/editpassword" />
         <ProtectRouter component={UserAddress} path="/my-account/address" />
         <ProtectRouter component={AccountDetails} path="/my-account/details" />
         <ProtectRouter component={VendorRoutes} path="/vendor/dashboard" />

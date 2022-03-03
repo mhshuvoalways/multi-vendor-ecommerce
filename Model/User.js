@@ -9,7 +9,6 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
       min: 6,
       max: 20,
     },
@@ -42,9 +41,10 @@ const userSchema = new Schema(
       public_id: String,
       url: String,
     },
-    isActive: {
-      type: Boolean,
-      default: false,
+    isActive: false,
+    strategy: {
+      type: String,
+      default: "email",
     },
   },
   {
