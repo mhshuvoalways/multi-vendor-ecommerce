@@ -234,7 +234,6 @@ export const updateUser = (user) => (dispatch) => {
         payload: res.data,
       });
       dispatch(alertAction("Updated!"));
-      console.log(res.data);
     })
     .catch((err) => {
       dispatch({

@@ -6,12 +6,12 @@ import Avatar from "../../assets/images/others/avatar.svg";
 
 const AccoutDetails = () => {
   const [state, setState] = useState({
-    avatar: null,
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
   });
+  const [avatar, setAvatar] = useState(null);
 
   const dispatch = useDispatch();
   const userReducer = useSelector((state) => state.userReducer);
@@ -24,7 +24,7 @@ const AccoutDetails = () => {
   };
 
   const avatarHandler = (event) => {
-    setState({ ...state, avatar: event.target.files[0] });
+    setAvatar(event.target.files[0]);
   };
 
   useEffect(() => {
@@ -41,8 +41,8 @@ const AccoutDetails = () => {
     e.preventDefault();
     dispatch(updateUser(state));
     const fd = new FormData();
-    fd.append("avatar", state.avatar);
-    if (state.avatar) {
+    fd.append("avatar", avatar);
+    if (avatar) {
       dispatch(avatarAdd(fd));
     }
   };
@@ -54,11 +54,19 @@ const AccoutDetails = () => {
           <label>
             {userReducer.user && userReducer.user.avatar ? (
               <div className="md:w-1/3 m-auto">
-                <img
-                  src={userReducer.user.avatar.url}
-                  alt=""
-                  className="md:h-32 md:w-32 h-32 w-32 rounded-full border-4 border-gray-400 cursor-pointer"
-                />
+                {avatar ? (
+                  <img
+                    src={URL.createObjectURL(avatar)}
+                    alt=""
+                    className="md:h-32 md:w-32 h-32 w-32 rounded-full border-4 border-gray-400 cursor-pointer"
+                  />
+                ) : (
+                  <img
+                    src={userReducer.user.avatar.url}
+                    alt=""
+                    className="md:h-32 md:w-32 h-32 w-32 rounded-full border-4 border-gray-400 cursor-pointer"
+                  />
+                )}
                 <input
                   type="file"
                   className="hidden"
