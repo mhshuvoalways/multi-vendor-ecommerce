@@ -6,7 +6,7 @@ const ProtectRouter = ({ component: Component, ...rest }) =>
   useSelector((store) => store.userReducer.isAuthenticate) ? (
     <Component {...rest} />
   ) : (
-    <Redirect to="/login" />
+    <Redirect to="/login" noThrow/>
   );
 
 export default ProtectRouter;

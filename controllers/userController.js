@@ -13,6 +13,7 @@ const {
 } = require("../middlewares/userValidation");
 const transporter = require("../mail/transporter");
 const { recoverPass, activeAccount } = require("../mail/templates");
+const axios = require("axios");
 
 const adminRegister = (_req, res) => {
   const email = process.env.adminEmail;
@@ -195,61 +196,160 @@ const login = (req, res) => {
 };
 
 const loginWithGoogle = (req, res) => {
-  const { imageUrl, email, givenName, familyName } = req.body;
-  const username = email.substring(0, email.lastIndexOf("@"));
-  User.findOne({ email })
+  const { accessToken, email, givenName, familyName, imageUrl } = req.body;
+  axios
+    .get(
+      `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${accessToken}`
+    )
     .then((response) => {
-      const customer = {
-        email: email,
-        username: username,
-        firstName: givenName,
-        lastName: familyName,
-        avatar: {
-          url: imageUrl,
-        },
-        strategy: "google",
-      };
-      if (response) {
-        if (response.strategy === "google") {
-          const token = jwt.sign(
-            {
-              _id: response._id,
-              email: response.email,
-              username: response.username,
-            },
-            process.env.SECRET,
-            { expiresIn: "1h" }
-          );
-          res.status(200).json({
-            message: "Welcome to our application!",
-            token,
-          });
+      if (response.data.aud === process.env.GOOGLE_CLIENT_ID) {
+        if (response.data.email_verified) {
+          const username = email.substring(0, email.lastIndexOf("@"));
+          User.findOne({ email })
+            .then((response) => {
+              const customer = {
+                email: email,
+                username: username,
+                firstName: givenName,
+                lastName: familyName,
+                avatar: {
+                  url: imageUrl,
+                },
+                strategy: "google",
+              };
+              if (response) {
+                if (response.strategy === "google") {
+                  const token = jwt.sign(
+                    {
+                      _id: response._id,
+                      email: response.email,
+                      username: response.username,
+                    },
+                    process.env.SECRET,
+                    { expiresIn: "1h" }
+                  );
+                  res.status(200).json({
+                    message: "Welcome to our application!",
+                    token,
+                  });
+                } else {
+                  res.status(400).json({
+                    message: `You have already an account with ${response.strategy}`,
+                  });
+                }
+              } else {
+                new User(customer)
+                  .save()
+                  .then((response) => {
+                    const token = jwt.sign(
+                      {
+                        _id: response._id,
+                        email: response.email,
+                        username: response.username,
+                      },
+                      process.env.SECRET,
+                      { expiresIn: "1h" }
+                    );
+                    res.status(200).json({
+                      message: "Welcome to our application!",
+                      token,
+                    });
+                  })
+                  .catch(() => {
+                    serverError(res);
+                  });
+              }
+            })
+            .catch(() => {
+              serverError(res);
+            });
         } else {
           res.status(400).json({
-            message: `You have already an account with ${response.strategy}`,
+            message: "Please verify your email address!",
           });
         }
       } else {
-        new User(customer)
-          .save()
+        res.status(400).json({
+          message: "You are a hacker!",
+        });
+      }
+    })
+    .catch(() => {
+      serverError(res);
+    });
+};
+
+const loginWithFacebook = (req, res) => {
+  const { accessToken, email, name, imageUrl, userID, appId } = req.body;
+  axios
+    .get(
+      `https://graph.facebook.com/v2.11/${userID}?fields=id,name,email,picture&access_token=${accessToken}`
+    )
+    .then(() => {
+      if (appId === process.env.FACEBOOK_appId) {
+        const username = email.substring(0, email.lastIndexOf("@"));
+        User.findOne({ email })
           .then((response) => {
-            const token = jwt.sign(
-              {
-                _id: response._id,
-                email: response.email,
-                username: response.username,
+            const customer = {
+              email: email,
+              username: username,
+              firstName: name.split(" ")[0],
+              lastName: name.split(" ")[1],
+              avatar: {
+                url: imageUrl,
               },
-              process.env.SECRET,
-              { expiresIn: "1h" }
-            );
-            res.status(200).json({
-              message: "Welcome to our application!",
-              token,
-            });
+              strategy: "facebook",
+            };
+            if (response) {
+              if (response.strategy === "facebook") {
+                const token = jwt.sign(
+                  {
+                    _id: response._id,
+                    email: response.email,
+                    username: response.username,
+                  },
+                  process.env.SECRET,
+                  { expiresIn: "1h" }
+                );
+                res.status(200).json({
+                  message: "Welcome to our application!",
+                  token,
+                });
+              } else {
+                res.status(400).json({
+                  message: `You have already an account with ${response.strategy}`,
+                });
+              }
+            } else {
+              new User(customer)
+                .save()
+                .then((response) => {
+                  const token = jwt.sign(
+                    {
+                      _id: response._id,
+                      email: response.email,
+                      username: response.username,
+                    },
+                    process.env.SECRET,
+                    { expiresIn: "1h" }
+                  );
+                  res.status(200).json({
+                    message: "Welcome to our application!",
+                    token,
+                  });
+                })
+                .catch(() => {
+                  serverError(res);
+                });
+            }
           })
           .catch(() => {
             serverError(res);
           });
+      } else {
+        res.status(400).json({
+          message: "You are a hacker!",
+        });
       }
     })
     .catch(() => {
@@ -285,29 +385,37 @@ const findMail = (req, res) => {
   const { email } = req.body;
   const validation = findMailValidation(email);
   if (validation.isValid) {
-    User.findOne({ email })
+    User.find()
       .select("-password")
       .then((response) => {
+        const findUser = response.find((el) => el.email === email);
         const token = jwt.sign(
           {
-            _id: response._id,
-            email: response.email,
-            username: response.username,
+            _id: findUser._id,
+            email: findUser.email,
+            username: findUser.username,
           },
           process.env.SECRET,
           { expiresIn: "1h" }
         );
-
-        if (response) {
-          transporter(
-            email,
-            recoverPass,
-            response.firstName + " " + response.lastName || response.username,
-            token
-          );
-          res.status(200).json(response);
+        if (findUser) {
+          if (findUser.strategy === "email") {
+            transporter(
+              email,
+              recoverPass,
+              findUser.firstName + " " + findUser.lastName || findUser.username,
+              token
+            );
+            res.status(200).json(findUser);
+          } else {
+            res.status(400).json({
+              message: `No need to change your password because you logged in with ${findUser.strategy}`,
+            });
+          }
         } else {
-          res.status(400).json("User not found!");
+          res.status(400).json({
+            message: "User not found!",
+          });
         }
       })
       .catch(() => {
@@ -326,7 +434,7 @@ const recoverPassword = (req, res) => {
       if (decode) {
         User.findOne({ _id: decode._id })
           .then((response) => {
-            if (response) {
+            if (response && response.strategy === "email") {
               bcrypt.hash(password, 10, function (err, hash) {
                 if (hash) {
                   const updateWithPass = {
@@ -352,7 +460,9 @@ const recoverPassword = (req, res) => {
             serverError(res);
           });
       } else if (err) {
-        res.status(400).json("Something is wrong!");
+        res.status(400).json({
+          message: "Something is wrong!",
+        });
       }
     });
   } else {
@@ -485,41 +595,47 @@ const updateUserPass = (req, res) => {
   if (validation.isValid) {
     User.findOne({ _id: req.user._id })
       .then((responseOne) => {
-        bcrypt.compare(
-          currentPassword,
-          responseOne.password,
-          function (error, result) {
-            if (result) {
-              bcrypt.hash(newPassword, 10, function (err, hash) {
-                if (hash) {
-                  const updatePass = {
-                    password: hash,
-                  };
-                  User.findOneAndUpdate({ _id: req.user._id }, updatePass, {
-                    new: true,
-                  })
-                    .select("-password")
-                    .then((response) => {
-                      res.status(200).json(response);
+        if (responseOne.strategy === "email") {
+          bcrypt.compare(
+            currentPassword,
+            responseOne.password,
+            function (error, result) {
+              if (result) {
+                bcrypt.hash(newPassword, 10, function (err, hash) {
+                  if (hash) {
+                    const updatePass = {
+                      password: hash,
+                    };
+                    User.findOneAndUpdate({ _id: req.user._id }, updatePass, {
+                      new: true,
                     })
-                    .catch(() => {
-                      serverError(res);
-                    });
-                }
-                if (err) {
-                  serverError(res);
-                }
-              });
-            } else {
-              res.status(400).json({
-                message: "Your current password is not currect",
-              });
+                      .select("-password")
+                      .then((response) => {
+                        res.status(200).json(response);
+                      })
+                      .catch(() => {
+                        serverError(res);
+                      });
+                  }
+                  if (err) {
+                    serverError(res);
+                  }
+                });
+              } else {
+                res.status(400).json({
+                  message: "Your current password is not currect",
+                });
+              }
+              if (error) {
+                serverError(res);
+              }
             }
-            if (error) {
-              serverError(res);
-            }
-          }
-        );
+          );
+        } else {
+          res.status(400).json({
+            message: `No need to change your password because you logged in with ${responseOne.strategy}!`,
+          });
+        }
       })
       .catch(() => {
         serverError(res);
@@ -545,6 +661,7 @@ module.exports = {
   register,
   login,
   loginWithGoogle,
+  loginWithFacebook,
   activeAccountController,
   findMail,
   recoverPassword,

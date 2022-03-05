@@ -5,9 +5,11 @@ import {
   adminRegister,
   userLogin,
   loginWithGoogle,
+  loginWithFacebook,
 } from "../../store/actions/userAction";
 import ActiveLink from "../utils/ActiveLink";
 import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login";
 
 const Login = () => {
   const [state, setState] = useState({
@@ -52,7 +54,30 @@ const Login = () => {
   };
 
   const responseGoogle = (response) => {
-    dispatch(loginWithGoogle(response.profileObj));
+    const { email, givenName, familyName, imageUrl } = response.profileObj;
+    dispatch(
+      loginWithGoogle({
+        accessToken: response.accessToken,
+        email,
+        givenName,
+        familyName,
+        imageUrl,
+      })
+    );
+  };
+
+  const responseFacebook = (response) => {
+    const { email, name, accessToken, userID } = response;
+    dispatch(
+      loginWithFacebook({
+        email,
+        name,
+        imageUrl: response.picture.data.url,
+        accessToken,
+        userID,
+        appId: process.env.REACT_APP_appId,
+      })
+    );
   };
 
   return (
@@ -116,18 +141,28 @@ const Login = () => {
           </button>
           <p className="mt-1">Or, login with</p>
           <GoogleLogin
-            clientId="228609618632-h20glb9q3975ejlptkketud2t67oa8tv.apps.googleusercontent.com"
+            clientId={process.env.REACT_APP_google_clientId}
             render={(renderProps) => (
               <button
                 className="bg-red-500 text-white py-2 mt-2 w-full hover:bg-gray-900"
                 onClick={renderProps.onClick}
-                disabled={renderProps.disabled}
               >
                 GOOGLE
               </button>
             )}
+            icon={true}
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
+          />
+          <FacebookLogin
+            appId={process.env.REACT_APP_appId}
+            fields="name,email,picture"
+            callback={responseFacebook}
+            textButton="FACEBOOK"
+            cssClass="bg-blue-600 text-white py-2 mt-2 w-full hover:bg-gray-900"
+            render={(renderProps) => (
+              <button onClick={renderProps.onClick}></button>
+            )}
           />
         </div>
       </form>

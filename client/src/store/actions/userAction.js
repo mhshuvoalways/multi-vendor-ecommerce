@@ -107,6 +107,32 @@ export const loginWithGoogle = (user) => (dispatch) => {
     });
 };
 
+export const loginWithFacebook = (user) => (dispatch) => {
+  axios
+    .post("/user/facebook", user)
+    .then((response) => {
+      const decoded = jwt_decode(response.data.token);
+      dispatch({
+        type: Types.LOGIN_WITH_FACEBOOK,
+        payload: {
+          user: decoded,
+        },
+      });
+      setAuthToken(response.data.token);
+      localStorage.setItem("token", response.data.token);
+      dispatch(alertAction(response.data.message));
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.LOGIN_WITH_FACEBOOK_ERROR,
+        payload: {
+          error: err.response,
+        },
+      });
+      dispatch(alertAction(err.response.data.message));
+    });
+};
+
 export const activeAccount = (token, navigate) => (dispatch) => {
   axios
     .post("/user/active", token)
@@ -141,6 +167,7 @@ export const findMail = (email, navigate) => (dispatch) => {
         payload: false,
       });
       dispatch(alertAction(err.response.data.email));
+      dispatch(alertAction(err.response.data.message));
     });
 };
 
@@ -169,7 +196,7 @@ export const recoverPass = (value, navigate) => (dispatch) => {
           },
         });
         dispatch(alertAction(err.response.data.password));
-        dispatch(alertAction(err.response.data));
+        dispatch(alertAction(err.response.data.message));
       });
   } else {
     dispatch(alertAction("New password and confirm password don't match"));

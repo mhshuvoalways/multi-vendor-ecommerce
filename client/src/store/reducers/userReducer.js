@@ -73,6 +73,23 @@ const userReudcer = (state = init, action) => {
       };
     }
 
+    case Types.LOGIN_WITH_FACEBOOK: {
+      return {
+        ...state,
+        isAuthenticate: Object.keys(action.payload.user).length > 0,
+        user: action.payload.user,
+        error: null,
+      };
+    }
+    case Types.LOGIN_WITH_FACEBOOK_ERROR: {
+      return {
+        ...state,
+        isAuthenticate: false,
+        user: {},
+        error: action.payload.error,
+      };
+    }
+
     case Types.ACTIVE_ACCOUNT: {
       return {
         ...state,

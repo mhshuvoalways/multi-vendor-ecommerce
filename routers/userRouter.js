@@ -4,6 +4,7 @@ const {
   register,
   login,
   loginWithGoogle,
+  loginWithFacebook,
   activeAccountController,
   findMail,
   updateUser,
@@ -20,6 +21,7 @@ const fileUploader = require("../middlewares/fileUploader");
 router.post("/adminregister", adminRegister);
 router.post("/register", register);
 router.post("/google", loginWithGoogle);
+router.post("/facebook", loginWithFacebook);
 router.post("/login", login);
 router.post("/active", activeAccountController);
 router.post("/findmail", findMail);
