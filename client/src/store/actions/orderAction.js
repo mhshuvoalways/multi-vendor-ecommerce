@@ -12,6 +12,7 @@ export const orderProduct = (body, navigate) => (dispatch) => {
       });
       dispatch(alertAction("Thanks for order. Happy shopping!"));
       navigate("/my-account/order");
+      dispatch(applyCouponAction(false));
     })
     .catch((err) => {
       dispatch({
@@ -37,4 +38,11 @@ export const getOderDetails = () => (dispatch) => {
         payload: err.response,
       });
     });
+};
+
+export const applyCouponAction = (value) => (dispatch) => {
+  dispatch({
+    type: Types.APPLY_COUPON,
+    payload: value,
+  });
 };

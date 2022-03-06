@@ -6,6 +6,7 @@ import {
   deleteCartItem,
   deleteAllCartItem,
 } from "../../store/actions/inCartAction";
+import { applyCouponAction } from "../../store/actions/orderAction";
 import { Link } from "@reach/router";
 import CartTotals from "./CartTotal";
 import Clear from "../../assets/images/icons/clear.png";
@@ -16,10 +17,12 @@ const Cart = () => {
   const [calculate, setCalculate] = useState({
     proTotal: 0,
     grandTotal: 0,
+    couponCode: "",
   });
 
   const dispatch = useDispatch();
   const cartReducer = useSelector((item) => item.inCartReducer);
+  const orderReducer = useSelector((item) => item.orderReducer);
 
   const productTotal = useCallback(() => {
     let proTotal = 0;
@@ -36,6 +39,19 @@ const Cart = () => {
     setCart(cartReducer.cart);
     productTotal();
   }, [cartReducer.cart, productTotal]);
+
+  const applyCoupon = () => {
+    if (
+      calculate.couponCode === "e-Shop" &&
+      orderReducer.applyCoupon === false
+    ) {
+      dispatch(applyCouponAction(true));
+    }
+  };
+
+  const getCodeHandler = (e) => {
+    setCalculate({ ...calculate, couponCode: e.target.value });
+  };
 
   const reverseCart = [...cart];
 
@@ -129,7 +145,11 @@ const Cart = () => {
                   CLEAR SHOPPING CART
                 </button>
               </div>
-              <CartTotals calculate={calculate} />
+              <CartTotals
+                calculate={calculate}
+                applyCoupon={applyCoupon}
+                getCodeHandler={getCodeHandler}
+              />
             </div>
           ) : (
             <p className="text-2xl my-36 text-center">No items found in cart</p>

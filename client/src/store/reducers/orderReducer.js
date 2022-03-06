@@ -3,6 +3,7 @@ import * as Types from "../constants/OrderType";
 const init = {
   order: [],
   error: {},
+  applyCoupon: false,
 };
 
 const orderReducer = (state = init, action) => {
@@ -30,6 +31,12 @@ const orderReducer = (state = init, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    }
+    case Types.APPLY_COUPON: {
+      return {
+        ...state,
+        applyCoupon: action.payload,
       };
     }
     default:

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAddress } from "../../store/actions/userAddressAction";
 import { orderProduct } from "../../store/actions/orderAction";
 import { navigate } from "@reach/router";
+import ApplyCoupon from "../ApplyCoupon";
 
 const PlaceOrder = ({ state }) => {
   const [calculate, setCalculate] = useState(0);
@@ -45,14 +46,24 @@ const PlaceOrder = ({ state }) => {
           <p className="mb-5 text-base">Shipping</p>
           <p className="mb-5">Free shipping</p>
         </div>
+        <div className="flex justify-between my-5 border-b border-gray-400">
+          <p className="mb-5 text-base">Coupon discount</p>
+          <p className="mb-5 flex items-center">
+            $ <ApplyCoupon calculate={calculate} />
+          </p>
+        </div>
         <div className="flex justify-between text-xl">
           <p>Total</p>
-          <p className="text-purple-600">${calculate}</p>
+          <p className="text-purple-600 flex items-center">
+            $ <ApplyCoupon calculate={calculate} />
+          </p>
         </div>
       </div>
       <button
         className="bg-purple-600 text-white py-3 w-full hover:bg-gray-600 mt-10 rounded-full"
-        onClick={() => dispatch(orderProduct(state, navigate))}
+        onClick={() => {
+          dispatch(orderProduct(state, navigate));
+        }}
       >
         PLACE ORDER
       </button>

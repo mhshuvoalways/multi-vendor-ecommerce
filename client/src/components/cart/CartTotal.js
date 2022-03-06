@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "@reach/router";
+import ApplyCoupon from "../ApplyCoupon";
 
-const cartTotal = ({calculate}) => {
+const cartTotal = ({ calculate, applyCoupon, getCodeHandler }) => {
   return (
     <div className="bg-gray-100 md:w-96 sm:w-auto ml-auto rounded-lg p-8 mt-10">
       <p className="text-2xl">Cart Total</p>
@@ -13,16 +14,20 @@ const cartTotal = ({calculate}) => {
       <div className="flex justify-between gap-2">
         <input
           type="text"
-          placeholder="Apply coupon"
+          placeholder="Code : e-Shop"
           className="p-2 placeholder-gray-400 text-gray-600 bg-white text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-2/4"
+          onChange={getCodeHandler}
         />
-        <button className="bg-purple-600 text-white py-2 hover:bg-gray-600 w-2/4">
+        <button
+          className="bg-purple-600 text-white py-2 hover:bg-gray-600 w-2/4"
+          onClick={applyCoupon}
+        >
           APPLY COUPON
         </button>
       </div>
       <div className="flex justify-between text-2xl text-purple-600 font-medium my-5">
         <p>Grand Total</p>
-        <p>${calculate.grandTotal}</p>
+        <ApplyCoupon calculate={calculate.grandTotal} />
       </div>
       <Link to="/checkout">
         <button className="bg-purple-600 text-white py-2 w-full hover:bg-gray-600">

@@ -50,7 +50,9 @@ const orderPlace = (req, res) => {
                     productId,
                     billingaddressId: billResponse._id,
                     quantity,
-                    subTotal,
+                    subTotal: process.env.DISCOUNT_COUPON
+                      ? subTotal - (subTotal * process.env.DISCOUNT_COUPON) / 100
+                      : subTotal,
                   };
                   new Order(order)
                     .save()
@@ -82,7 +84,9 @@ const orderPlace = (req, res) => {
                     productId,
                     billingaddressId: billingUpdate._id,
                     quantity,
-                    subTotal,
+                    subTotal: process.env.DISCOUNT_COUPON
+                      ? subTotal - (subTotal * process.env.DISCOUNT_COUPON) / 100
+                      : subTotal,
                   };
                   new Order(order)
                     .save()
