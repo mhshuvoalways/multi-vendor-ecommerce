@@ -1,16 +1,28 @@
 import React from "react";
 import { Link } from "@reach/router";
-import ApplyCoupon from "../ApplyCoupon";
+import Discount from "../Coupon/Discount";
+import GrandTotal from "../Coupon/GrandTotal";
 
-const cartTotal = ({ calculate, applyCoupon, getCodeHandler }) => {
+const cartTotal = ({
+  calculate,
+  applyCoupon,
+  getCodeHandler,
+  orderReducer,
+}) => {
   return (
     <div className="bg-gray-100 md:w-96 sm:w-auto ml-auto rounded-lg p-8 mt-10">
       <p className="text-2xl">Cart Total</p>
-      <p className="border border-gray-200 my-2"></p>
-      <div className="flex justify-between py-5">
+      <p className="border border-gray-200 my-5"></p>
+      <div className="flex justify-between pb-5">
         <p className="text-xl">Total Products</p>
         <p className="text-xl">${calculate.proTotal}</p>
       </div>
+      {orderReducer.applyCoupon && (
+        <div className="flex justify-between mb-5">
+          <p>Coupon Discount</p>
+          <Discount calculate={calculate.grandTotal} />
+        </div>
+      )}
       <div className="flex justify-between gap-2">
         <input
           type="text"
@@ -27,7 +39,7 @@ const cartTotal = ({ calculate, applyCoupon, getCodeHandler }) => {
       </div>
       <div className="flex justify-between text-2xl text-purple-600 font-medium my-5">
         <p>Grand Total</p>
-        <ApplyCoupon calculate={calculate.grandTotal} />
+        <GrandTotal calculate={calculate.grandTotal} />
       </div>
       <Link to="/checkout">
         <button className="bg-purple-600 text-white py-2 w-full hover:bg-gray-600">

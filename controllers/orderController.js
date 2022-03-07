@@ -14,8 +14,8 @@ const orderPlace = (req, res) => {
     country,
     zipCode,
     streetAddress,
+    discount
   } = req.body;
-
   InCart.find({ authorId: req.user._id })
     .then((cartResponse) => {
       if (cartResponse) {
@@ -50,8 +50,8 @@ const orderPlace = (req, res) => {
                     productId,
                     billingaddressId: billResponse._id,
                     quantity,
-                    subTotal: process.env.DISCOUNT_COUPON
-                      ? subTotal - (subTotal * process.env.DISCOUNT_COUPON) / 100
+                    subTotal: discount
+                      ? subTotal - (subTotal * discount) / 100
                       : subTotal,
                   };
                   new Order(order)
@@ -84,8 +84,8 @@ const orderPlace = (req, res) => {
                     productId,
                     billingaddressId: billingUpdate._id,
                     quantity,
-                    subTotal: process.env.DISCOUNT_COUPON
-                      ? subTotal - (subTotal * process.env.DISCOUNT_COUPON) / 100
+                    subTotal: discount
+                      ? subTotal - (subTotal * discount) / 100
                       : subTotal,
                   };
                   new Order(order)

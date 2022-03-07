@@ -8,6 +8,5 @@ additional info component has to be done
 rating has to be done in mobile device
 search with suggestions
 chat system add
-login with google and facebook
-when change avatar then it will show instantly and after clicking update button it will update
 in description has to add text editor
+after login go to previous page with react router dom

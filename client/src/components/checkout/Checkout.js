@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import PlaceOrder from "./PlaceOrder";
 
 const Checkout = () => {
@@ -14,11 +14,12 @@ const Checkout = () => {
     country: "",
     streetAddress: "",
     additionalInfo: "",
+    discount: false,
   });
 
-  const dispatch = useDispatch();
   const userReducer = useSelector((state) => state.userReducer);
   const userAddressReducer = useSelector((state) => state.userAddressReducer);
+  const orderReducer = useSelector((item) => item.orderReducer);
 
   useEffect(() => {
     userAddressReducer.address &&
@@ -33,8 +34,11 @@ const Checkout = () => {
         state: userAddressReducer.address.state,
         country: userAddressReducer.address.country,
         streetAddress: userAddressReducer.address.streetAddress,
+        discount: orderReducer.applyCoupon
+          ? process.env.REACT_APP_DISCOUNT_COUPON
+          : false,
       });
-  }, [dispatch, userAddressReducer.address, userReducer.user]);
+  }, [orderReducer.applyCoupon, userAddressReducer.address, userReducer.user]);
 
   const onChangeHandler = (event) => {
     setState({

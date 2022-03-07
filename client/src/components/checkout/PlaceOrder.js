@@ -3,13 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAddress } from "../../store/actions/userAddressAction";
 import { orderProduct } from "../../store/actions/orderAction";
 import { navigate } from "@reach/router";
-import ApplyCoupon from "../ApplyCoupon";
+import Discount from "../Coupon/Discount";
+import GrandTotal from "../Coupon/GrandTotal";
 
 const PlaceOrder = ({ state }) => {
   const [calculate, setCalculate] = useState(0);
 
   const dispatch = useDispatch();
   const cartReducer = useSelector((item) => item.inCartReducer);
+  const orderReducer = useSelector((item) => item.orderReducer);
 
   const productTotal = useCallback(() => {
     let proTotal = 0;
@@ -46,16 +48,18 @@ const PlaceOrder = ({ state }) => {
           <p className="mb-5 text-base">Shipping</p>
           <p className="mb-5">Free shipping</p>
         </div>
-        <div className="flex justify-between my-5 border-b border-gray-400">
-          <p className="mb-5 text-base">Coupon discount</p>
-          <p className="mb-5 flex items-center">
-            $ <ApplyCoupon calculate={calculate} />
-          </p>
-        </div>
+        {orderReducer.applyCoupon && (
+          <div className="flex justify-between my-5 border-b border-gray-400">
+            <p className="mb-5 text-base">Coupon discount</p>
+            <p className="mb-5 flex items-center">
+              <Discount calculate={calculate}/>
+            </p>
+          </div>
+        )}
         <div className="flex justify-between text-xl">
           <p>Total</p>
           <p className="text-purple-600 flex items-center">
-            $ <ApplyCoupon calculate={calculate} />
+            <GrandTotal calculate={calculate} />
           </p>
         </div>
       </div>

@@ -149,6 +149,7 @@ const Cart = () => {
                 calculate={calculate}
                 applyCoupon={applyCoupon}
                 getCodeHandler={getCodeHandler}
+                orderReducer={orderReducer}
               />
             </div>
           ) : (
