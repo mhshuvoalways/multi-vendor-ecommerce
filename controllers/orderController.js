@@ -2,6 +2,7 @@ const Order = require("../Model/Order");
 const BillingAddress = require("../Model/BillingAddress");
 const InCart = require("../Model/InCart");
 const serverError = require("../utils/serverError");
+const orderValidation = require("../validations/orderValidation");
 
 const orderPlace = (req, res) => {
   const {
@@ -14,108 +15,125 @@ const orderPlace = (req, res) => {
     country,
     zipCode,
     streetAddress,
-    discount
+    discount,
   } = req.body;
-  InCart.find({ authorId: req.user._id })
-    .then((cartResponse) => {
-      if (cartResponse) {
-        const billing = {
-          authorId: req.user._id,
-          firstName,
-          lastName,
-          email,
-          phone,
-          city,
-          state,
-          country,
-          zipCode,
-          streetAddress,
-        };
-        const productId = [];
-        let quantity = 0;
-        let subTotal = 0;
-        cartResponse.map((product) => {
-          productId.push(product.productId.toString());
-          quantity += product.quantity;
-          subTotal += product.subTotal;
-        });
-        BillingAddress.findOne({ authorId: req.user._id })
-          .then((billFindRes) => {
-            if (!billFindRes) {
-              new BillingAddress(billing)
-                .save()
-                .then((billResponse) => {
-                  const order = {
-                    authorId: req.user._id,
-                    productId,
-                    billingaddressId: billResponse._id,
-                    quantity,
-                    subTotal: discount
-                      ? subTotal - (subTotal * discount) / 100
-                      : subTotal,
-                  };
-                  new Order(order)
-                    .save()
-                    .then((orderResponse) => {
-                      InCart.deleteMany({ authorId: req.user._id })
-                        .then(() => {
-                          res.status(200).json(orderResponse);
-                        })
-                        .catch(() => {
-                          serverError(res);
-                        });
-                    })
-                    .catch(() => {
-                      serverError(res);
-                    });
-                })
-                .catch(() => {
-                  serverError(res);
-                });
-            } else {
-              BillingAddress.findOneAndUpdate(
-                { authorId: req.user._id },
-                billing,
-                { new: true }
-              )
-                .then((billingUpdate) => {
-                  const order = {
-                    authorId: req.user._id,
-                    productId,
-                    billingaddressId: billingUpdate._id,
-                    quantity,
-                    subTotal: discount
-                      ? subTotal - (subTotal * discount) / 100
-                      : subTotal,
-                  };
-                  new Order(order)
-                    .save()
-                    .then((orderResponse) => {
-                      InCart.deleteMany({ authorId: req.user._id })
-                        .then(() => {
-                          res.status(200).json(orderResponse);
-                        })
-                        .catch(() => {
-                          serverError(res);
-                        });
-                    })
-                    .catch(() => {
-                      serverError(res);
-                    });
-                })
-                .catch(() => {
-                  serverError(res);
-                });
-            }
-          })
-          .catch(() => {
-            serverError(res);
+
+  const validation = orderValidation({
+    firstName,
+    lastName,
+    email,
+    phone,
+    city,
+    state,
+    country,
+    zipCode,
+    streetAddress,
+    discount,
+  });
+  if (validation.isValid) {
+    InCart.find({ authorId: req.user._id })
+      .then((cartResponse) => {
+        if (cartResponse) {
+          const billing = {
+            authorId: req.user._id,
+            firstName,
+            lastName,
+            email,
+            phone,
+            city,
+            state,
+            country,
+            zipCode,
+            streetAddress,
+          };
+          const productId = [];
+          let quantity = 0;
+          let subTotal = 0;
+          cartResponse.map((product) => {
+            productId.push(product.productId.toString());
+            quantity += product.quantity;
+            subTotal += product.subTotal;
           });
-      }
-    })
-    .catch(() => {
-      serverError(res);
-    });
+          BillingAddress.findOne({ authorId: req.user._id })
+            .then((billFindRes) => {
+              if (!billFindRes) {
+                new BillingAddress(billing)
+                  .save()
+                  .then((billResponse) => {
+                    const order = {
+                      authorId: req.user._id,
+                      productId,
+                      billingaddressId: billResponse._id,
+                      quantity,
+                      subTotal: discount
+                        ? subTotal - (subTotal * discount) / 100
+                        : subTotal,
+                    };
+                    new Order(order)
+                      .save()
+                      .then((orderResponse) => {
+                        InCart.deleteMany({ authorId: req.user._id })
+                          .then(() => {
+                            res.status(200).json(orderResponse);
+                          })
+                          .catch(() => {
+                            serverError(res);
+                          });
+                      })
+                      .catch(() => {
+                        serverError(res);
+                      });
+                  })
+                  .catch(() => {
+                    serverError(res);
+                  });
+              } else {
+                BillingAddress.findOneAndUpdate(
+                  { authorId: req.user._id },
+                  billing,
+                  { new: true }
+                )
+                  .then((billingUpdate) => {
+                    const order = {
+                      authorId: req.user._id,
+                      productId,
+                      billingaddressId: billingUpdate._id,
+                      quantity,
+                      subTotal: discount
+                        ? subTotal - (subTotal * discount) / 100
+                        : subTotal,
+                    };
+                    new Order(order)
+                      .save()
+                      .then((orderResponse) => {
+                        InCart.deleteMany({ authorId: req.user._id })
+                          .then(() => {
+                            res.status(200).json(orderResponse);
+                          })
+                          .catch(() => {
+                            serverError(res);
+                          });
+                      })
+                      .catch(() => {
+                        serverError(res);
+                      });
+                  })
+                  .catch(() => {
+                    serverError(res);
+                  });
+              }
+            })
+            .catch(() => {
+              serverError(res);
+            });
+        }
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else {
+    res.status(400).json(validation.error);
+  }
 };
 
 const getOderDetails = (req, res) => {

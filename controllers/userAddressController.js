@@ -2,15 +2,14 @@ const UserAddress = require("../Model/UserAddress");
 const serverError = require("../utils/serverError");
 
 const addAddress = (req, res) => {
-  const { city, state, country, zipCode, streetAddress } =
-    req.body;
+  const { city, state, country, zipCode, streetAddress } = req.body;
   const address = {
     authorId: req.user._id,
     city,
     state,
     country,
     zipCode,
-    streetAddress
+    streetAddress,
   };
   UserAddress.findOne({ authorId: req.user._id })
     .then((response) => {
@@ -42,6 +41,7 @@ const addAddress = (req, res) => {
 
 const getAddress = (req, res) => {
   UserAddress.findOne({ authorId: req.user._id })
+    .populate("authorId")
     .then((response) => {
       res.status(200).json(response);
     })

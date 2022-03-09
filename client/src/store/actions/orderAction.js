@@ -19,7 +19,16 @@ export const orderProduct = (body, navigate) => (dispatch) => {
         type: Types.ORDER_PRODUCT_ERROR,
         payload: err.response,
       });
-      dispatch(alertAction("Opps! Something is wrong. Please try again!"));
+      dispatch(alertAction(err.response.data.firstName));
+      dispatch(alertAction(err.response.data.lastName));
+      dispatch(alertAction(err.response.data.email));
+      dispatch(alertAction(err.response.data.phone));
+      dispatch(alertAction(err.response.data.city));
+      dispatch(alertAction(err.response.data.state));
+      dispatch(alertAction(err.response.data.country));
+      dispatch(alertAction(err.response.data.zipCode));
+      dispatch(alertAction(err.response.data.streetAddress));
+      dispatch(alertAction(err.response.data.message));
     });
 };
 
@@ -46,3 +55,10 @@ export const applyCouponAction = (value) => (dispatch) => {
     payload: value,
   });
 };
+
+
+export const freshData = () => (dispatch) => {
+  dispatch({
+    type: Types.FRESH_DATA
+  })
+}

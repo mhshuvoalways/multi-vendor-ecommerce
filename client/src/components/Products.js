@@ -5,7 +5,7 @@ import { getProducts } from "../store/actions/productAction";
 import { addCart, modalHandler } from "../store/actions/inCartAction";
 import { addWishList, getWishItem } from "../store/actions/wishListAction";
 import ReactStars from "react-rating-stars-component";
-import ProductModal from "./ProductModal";
+import ProductShow from "./ProductShow";
 import Loading from "./utils/Loading";
 import Visibility from "../assets/images/icons/visibility.png";
 import Favorite from "../assets/images/icons/favorite.png";
@@ -133,7 +133,7 @@ const Products = () => {
           ))
         )}
       </div>
-      <ProductModal
+      <ProductShow
         state={cartReducer}
         modalHandler={modalHandler}
         productReducer={productReducer}

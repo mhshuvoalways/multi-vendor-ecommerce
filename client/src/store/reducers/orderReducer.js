@@ -39,6 +39,14 @@ const orderReducer = (state = init, action) => {
         applyCoupon: action.payload,
       };
     }
+
+    case Types.FRESH_DATA: {
+      return {
+        order: [],
+        error: {},
+        applyCoupon: false,
+      };
+    }
     default:
       return state;
   }

@@ -22,7 +22,6 @@ const WelcomeMsg = () => {
             dispatch(logout(navigate));
           }}
         >
-          {" "}
           Logout
         </span>
         )

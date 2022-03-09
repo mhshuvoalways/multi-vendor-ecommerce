@@ -8,6 +8,7 @@ import { getCartItem } from "../../store/actions/inCartAction";
 import { freshCart } from "../../store/actions/inCartAction";
 import { freshWish } from "../../store/actions/wishListAction";
 import { freshProduct } from "../../store/actions/productAction";
+import { freshData } from "../../store/actions/orderAction";
 import CartPopUp from "./CartPopUp";
 import AccountPopUp from "./AccountPopUp";
 import Cart from "../../assets/images/icons/cart.png";
@@ -30,6 +31,7 @@ export default function Navigation() {
       dispatch(freshCart());
       dispatch(freshWish());
       dispatch(freshProduct());
+      dispatch(freshData());
     }
   }, [dispatch, userReducer.isAuthenticate]);
 

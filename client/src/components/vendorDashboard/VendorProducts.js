@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import UploadModal from "./UploadModal";
+import UploadProduct from "./UploadProduct";
+import EditProduct from "./EditProduct";
 import moment from "moment";
 import Clear from "../../assets/images/icons/clear.png";
 import Edit from "../../assets/images/icons/edit.png";
@@ -8,6 +9,7 @@ import {
   deleteProduct,
   modalToggle,
   getMyProducts,
+  modalProduct,
 } from "../../store/actions/productAction";
 import { getTags } from "../../store/actions/tagAction";
 import { getCategory } from "../../store/actions/categoryAction";
@@ -72,7 +74,12 @@ const Products = () => {
             </td>
             <td className="p-2">
               <div className="flex gap-2">
-                <img src={Edit} alt="" className="cursor-pointer w-5" />
+                <img
+                  src={Edit}
+                  alt=""
+                  className="cursor-pointer w-5"
+                  onClick={() => dispatch(modalProduct(el._id))}
+                />
                 <img
                   src={Clear}
                   alt=""
@@ -88,7 +95,17 @@ const Products = () => {
         ))}
       </table>
       {productReducer.modal && (
-        <UploadModal modalHandler={modalToggle} modal={productReducer.modal} />
+        <UploadProduct
+          modalHandler={modalToggle}
+          modal={productReducer.modal}
+        />
+      )}
+      {productReducer.proModal && (
+        <EditProduct
+          modalHandler={modalProduct}
+          modal={productReducer.proModal}
+          id={productReducer.proId}
+        />
       )}
     </div>
   );

@@ -6,6 +6,8 @@ const init = {
   error: {},
   isLoading: true,
   modal: false,
+  proModal: false,
+  proId: "",
 };
 
 const productReducer = (state = init, action) => {
@@ -104,6 +106,13 @@ const productReducer = (state = init, action) => {
       return {
         ...state,
         modal: !state.modal,
+      };
+    }
+    case Types.MODAL_PRODUCT: {
+      return {
+        ...state,
+        proModal: !state.proModal,
+        proId: action.payload,
       };
     }
     case Types.FRESH_PRODUCT: {

@@ -3,55 +3,69 @@ const InCart = require("../Model/InCart");
 const User = require("../Model/User");
 const cloudinary = require("cloudinary");
 const serverError = require("../utils/serverError");
+const { productValidation } = require("../validations/productValidation");
 
 const addProduct = (req, res) => {
   const { name, category, regularPrice, salePrice, description, tags } =
     req.body;
   const { email } = req.user;
-  User.findOne({ email })
-    .then((response) => {
-      if (response.role === "admin" || response.role === "vendor") {
-        cloudinary.v2.uploader.upload(
-          req.file.path,
-          { public_id: "ecommerce-app/products/" + req.file.filename },
-          function (err, result) {
-            if (err) {
-              serverError(res);
-            } else {
-              const product = {
-                author: {
-                  authorId: response._id,
-                  storeName: response.storeName,
-                },
-                name,
-                category,
-                regularPrice,
-                salePrice,
-                description,
-                tags: JSON.parse(tags),
-                image: [
-                  {
-                    url: result.url,
-                    public_id: result.public_id,
+  const validation = productValidation({
+    image: req.file,
+    name,
+    category,
+    regularPrice,
+    salePrice,
+    description,
+    tags: JSON.parse(tags),
+  });
+  if (validation.isValid) {
+    User.findOne({ email })
+      .then((response) => {
+        if (response.role === "admin" || response.role === "vendor") {
+          cloudinary.v2.uploader.upload(
+            req.file.path,
+            { public_id: "ecommerce-app/products/" + req.file.filename },
+            function (err, result) {
+              if (err) {
+                serverError(res);
+              } else {
+                const product = {
+                  author: {
+                    authorId: response._id,
+                    storeName: response.storeName,
                   },
-                ],
-              };
-              new Product(product)
-                .save()
-                .then((response) => {
-                  res.status(200).json(response);
-                })
-                .catch(() => {
-                  serverError(res);
-                });
+                  name,
+                  category,
+                  regularPrice,
+                  salePrice,
+                  description,
+                  tags: JSON.parse(tags),
+                  image: [
+                    {
+                      url: result.url,
+                      public_id: result.public_id,
+                    },
+                  ],
+                };
+                new Product(product)
+                  .save()
+                  .then((response) => {
+                    res.status(200).json(response);
+                  })
+                  .catch(() => {
+                    serverError(res);
+                  });
+              }
             }
-          }
-        );
-      }
-    })
-    .catch(() => {
-      serverError(res);
-    });
+          );
+        }
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else {
+    res.status(400).json(validation.error);
+  }
 };
 
 const getProduct = (req, res) => {
@@ -223,23 +237,88 @@ const getMyproducts = (req, res) => {
 
 const updateProduct = (req, res) => {
   const id = req.params.id;
-  const { name, regularPrice, salePrice, description, inCart, inWish } =
-    req.body;
-  const updateProduct = {
+  const {
     name,
+    imageUrl,
+    category,
     regularPrice,
     salePrice,
     description,
-    inCart,
-    inWish,
-  };
-  Product.findOneAndUpdate({ _id: id }, updateProduct, { new: true })
-    .then((response) => {
-      res.status(200).json(response);
-    })
-    .catch(() => {
-      serverError(res);
-    });
+    tags,
+  } = req.body;
+  const validation = productValidation({
+    image: req.file || imageUrl,
+    name,
+    category,
+    regularPrice,
+    salePrice,
+    description,
+    tags: JSON.parse(tags),
+  });
+  if (validation.isValid) {
+    Product.findOne({ _id: id })
+      .then((product) => {
+        if (req.file) {
+          cloudinary.v2.uploader.destroy(product.image[0].public_id);
+          cloudinary.v2.uploader.upload(
+            req.file.path,
+            {
+              public_id: "ecommerce-app/products/" + req.file.filename,
+            },
+            function (err, result) {
+              if (err) {
+                serverError(res);
+              } else if (result) {
+                const updateProduct = {
+                  name,
+                  category,
+                  regularPrice,
+                  salePrice,
+                  description,
+                  tags: JSON.parse(tags),
+                  image: [
+                    {
+                      url: result.url,
+                      public_id: result.public_id,
+                    },
+                  ],
+                };
+                Product.findOneAndUpdate({ _id: id }, updateProduct, {
+                  new: true,
+                })
+                  .then((response) => {
+                    res.status(200).json(response);
+                  })
+                  .catch(() => {
+                    serverError(res);
+                  });
+              }
+            }
+          );
+        } else {
+          const updateProduct = {
+            name,
+            category,
+            regularPrice,
+            salePrice,
+            description,
+            tags: JSON.parse(tags),
+          };
+          Product.findOneAndUpdate({ _id: id }, updateProduct, { new: true })
+            .then((response) => {
+              res.status(200).json(response);
+            })
+            .catch(() => {
+              serverError(res);
+            });
+        }
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else {
+    res.status(400).json(validation.error);
+  }
 };
 
 const deleteProduct = (req, res) => {

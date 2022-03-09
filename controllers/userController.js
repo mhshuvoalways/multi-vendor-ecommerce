@@ -10,7 +10,7 @@ const {
   findMailValidation,
   recoverPassValidation,
   updatePassValidation,
-} = require("../middlewares/userValidation");
+} = require("../validations/userValidation");
 const transporter = require("../mail/transporter");
 const { recoverPass, activeAccount } = require("../mail/templates");
 const axios = require("axios");

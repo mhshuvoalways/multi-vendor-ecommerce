@@ -33,7 +33,6 @@ const Routers = () => {
         <Shop path="/shop" />
         <Details path="/details/:id" />
         <Cart path="/cart" />
-        <CheckOut path="/checkout" />
         <InWish path="/wishlist" />
         <Register path="/register" />
         <Login path="/login" />
@@ -42,9 +41,13 @@ const Routers = () => {
         <FindMail path="/findmail" />
         <RecoverPassword path="/recoverpassword/:token" />
         <Contact path="/contact" />
+        <ProtectRouter component={CheckOut} path="/checkout" />
         <ProtectRouter component={MyAccount} path="/my-account" />
         <ProtectRouter component={Order} path="/my-account/order" />
-        <ProtectRouter component={EditePassword} path="/my-account/editpassword" />
+        <ProtectRouter
+          component={EditePassword}
+          path="/my-account/editpassword"
+        />
         <ProtectRouter component={UserAddress} path="/my-account/address" />
         <ProtectRouter component={AccountDetails} path="/my-account/details" />
         <ProtectRouter component={VendorRoutes} path="/vendor/dashboard" />
