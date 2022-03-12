@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../store/actions/productAction";
 import Modal from "../Modal";
@@ -8,15 +8,15 @@ import Clear from "../../assets/images/icons/clear.png";
 const UploadModal = ({ modal, modalHandler }) => {
   const [image, setImage] = useState(null);
   const [product, setProduct] = useState({
-    name: "", 
+    name: "",
     category: "",
     regularPrice: "",
     salePrice: "",
     description: "",
     finalTags: [],
   });
+
   const [tags, setTags] = useState({
-    searchTerm: "",
     searchTags: [],
   });
 
@@ -35,29 +35,28 @@ const UploadModal = ({ modal, modalHandler }) => {
     });
   };
 
-  const changeHandlerTag = (e) => {
+  useEffect(() => {
     const temp = [...tagsData.tags];
+    const removeDublicate = temp.filter(
+      (val) => !product.finalTags.includes(val)
+    );
     setTags({
-      ...tags,
-      searchTerm: e.target.value,
-      searchTags: temp.filter((el) =>
-        el.name.toLowerCase().includes(e.target.value.toLowerCase())
-      ),
+      searchTags: removeDublicate,
     });
-  };
+  }, [product.finalTags, tagsData.tags]);
 
-  const onClickTags = (id) => {
+  const onClickTags = (name) => {
     const tagAr = [...tagsData.tags];
-    const obj = tagAr.find((el) => el._id === id);
-    const finalTag = [...product.finalTags, obj];
-    setProduct({
-      ...product,
-      finalTags: finalTag,
-    });
-    setTags({
-      ...tags,
-      searchTerm: "",
-    });
+    const obj = tagAr.find(
+      (el) => el.name.toLowerCase() === name.toLowerCase()
+    );
+    if (obj) {
+      const finalTag = [...product.finalTags, obj];
+      setProduct({
+        ...product,
+        finalTags: finalTag,
+      });
+    }
   };
 
   const removeTag = (id) => {
@@ -69,7 +68,7 @@ const UploadModal = ({ modal, modalHandler }) => {
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmitHandler = (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", image);
@@ -84,7 +83,7 @@ const UploadModal = ({ modal, modalHandler }) => {
 
   return (
     <Modal modal={modal} modalHandler={modalHandler}>
-      <form onSubmit={onSubmit}>
+      <form>
         <div className="flex gap-5 justify-between flex-wrap">
           {image ? (
             <div className="flex gap-1 flex-wrap">
@@ -186,10 +185,8 @@ const UploadModal = ({ modal, modalHandler }) => {
         <Tags
           product={product}
           removeTag={removeTag}
-          changeHandlerTag={changeHandlerTag}
           tags={tags}
           onClickTags={onClickTags}
-          value={tags.searchTerm}
         />
         <div className="mt-5">
           <textarea
@@ -202,7 +199,8 @@ const UploadModal = ({ modal, modalHandler }) => {
         <div className="mt-5 ">
           <button
             className="shadow bg-teal-400 hover:bg-gray-800 bg-purple-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full md:w-28"
-            type="submit"
+            type="button"
+            onClick={onSubmitHandler}
           >
             Create
           </button>

@@ -21,21 +21,30 @@ const Checkout = () => {
   const orderReducer = useSelector((item) => item.orderReducer);
 
   useEffect(() => {
-    setState({
-      firstName: userAddressReducer.address.authorId.firstName,
-      lastName: userAddressReducer.address.authorId.lastName,
-      email: userAddressReducer.address.authorId.email,
-      phone: userAddressReducer.address.authorId.phone,
-      zipCode: userAddressReducer.address.zipCode,
-      city: userAddressReducer.address.city,
-      state: userAddressReducer.address.state,
-      country: userAddressReducer.address.country,
-      streetAddress: userAddressReducer.address.streetAddress,
-      discount: orderReducer.applyCoupon
-        ? process.env.REACT_APP_DISCOUNT_COUPON
-        : false,
-    });
-  }, [orderReducer.applyCoupon, userAddressReducer.address]);
+    userAddressReducer.address.authorId &&
+      setState({
+        firstName: userAddressReducer.address.authorId.firstName,
+        lastName: userAddressReducer.address.authorId.lastName,
+        email: userAddressReducer.address.authorId.email,
+        phone: userAddressReducer.address.authorId.phone,
+        zipCode: userAddressReducer.address.zipCode,
+        city: userAddressReducer.address.city,
+        state: userAddressReducer.address.state,
+        country: userAddressReducer.address.country,
+        streetAddress: userAddressReducer.address.streetAddress,
+        discount: orderReducer.applyCoupon
+          ? process.env.REACT_APP_DISCOUNT_COUPON
+          : false,
+      });
+  }, [
+    orderReducer.applyCoupon,
+    userAddressReducer.address.authorId,
+    userAddressReducer.address.city,
+    userAddressReducer.address.country,
+    userAddressReducer.address.state,
+    userAddressReducer.address.streetAddress,
+    userAddressReducer.address.zipCode,
+  ]);
 
   const onChangeHandler = (event) => {
     setState({

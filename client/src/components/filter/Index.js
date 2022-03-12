@@ -10,6 +10,8 @@ const Index = () => {
   const [tags, setTags] = useState({});
   const [logHighValue, setlogHighValue] = useState();
   const [searchTerm, setSearchTerm] = useState("");
+
+  const productReducer = useSelector((el) => el.productReducer);
   const categoryReducer = useSelector((el) => el.categoryReducer);
   const tagsReducer = useSelector((el) => el.tagsReducer);
 
@@ -43,8 +45,8 @@ const Index = () => {
     }
   };
 
-  const searchTermHandler = (event) => {
-    setSearchTerm(event.target.value);
+  const searchTermHandler = (value) => {
+    setSearchTerm(value);
   };
 
   const lowHigh = (v) => {
@@ -73,6 +75,7 @@ const Index = () => {
 
   return (
     <Filter
+      productReducer={productReducer}
       categoryReducer={categoryReducer}
       onChangeHandler={onChangeHandler}
       searchTermHandler={searchTermHandler}

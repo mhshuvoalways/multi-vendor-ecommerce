@@ -1,6 +1,8 @@
 import React from "react";
+import AutosuggestComponent from "../../utils/AutoSuggest";
 
 const Filter = ({
+  productReducer,
   categoryReducer,
   onChangeHandler,
   searchTermHandler,
@@ -15,11 +17,12 @@ const Filter = ({
       <div className="flex flex-wrap gap-8 md:justify-between justify-around w-11/12 m-auto">
         <div>
           <p className="text-xl mt-10 mb-2">Search or Select</p>
-          <input
-            type="text"
-            placeholder="Search Product..."
-            className="px-2 py-2 my-1 placeholder-gray-400 text-gray-600 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
-            onChange={searchTermHandler}
+          <AutosuggestComponent
+            searchTermHandler={searchTermHandler}
+            data={productReducer.products}
+            search={true}
+            classNameProps="px-2 py-2 my-1 placeholder-gray-400 text-gray-600 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"
+            placeholderProps="Search product..."
           />
           <div className="my-1">
             <label>
