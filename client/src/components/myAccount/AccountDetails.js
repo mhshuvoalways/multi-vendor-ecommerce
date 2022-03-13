@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "@reach/router";
 import { updateUser, avatarAdd } from "../../store/actions/userAction";
-import Avatar from "../../assets/images/others/avatar.svg";
 
 const AccoutDetails = () => {
   const [state, setState] = useState({
@@ -52,7 +51,7 @@ const AccoutDetails = () => {
       <form>
         <div className="mb-10">
           <label>
-            {userReducer.user && userReducer.user.avatar ? (
+            {(userReducer.user && userReducer.user.avatar) || avatar ? (
               <div className="md:w-1/3 m-auto">
                 {avatar ? (
                   <img
@@ -75,11 +74,9 @@ const AccoutDetails = () => {
               </div>
             ) : (
               <div className="md:w-1/3 m-auto">
-                <img
-                  src={Avatar}
-                  alt=""
-                  className="md:h-32 md:w-32 h-32 w-32 rounded-full border-4 border-gray-400 cursor-pointer"
-                />
+                <p className="md:h-32 md:w-32 h-32 w-32 rounded-full border-4 border-gray-400 cursor-pointer text-gray-100 font-bold text-5xl bg-gray-700 flex items-center justify-center">
+                  {state.firstName && state.firstName.split("")[0]}
+                </p>
                 <input
                   type="file"
                   className="hidden"

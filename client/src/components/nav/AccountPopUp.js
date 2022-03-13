@@ -23,7 +23,11 @@ const AccountPopUp = () => {
               className="h-8 w-8 rounded-full"
             />
           ) : (
-            <i className="far fa-user h-8 w-8 rounded-full p-1 text-lg"></i>
+            <p className="md:h-8 md:w-8 h-8 w-8 rounded-full border-4 border-gray-400 cursor-pointer text-gray-100 font-bold bg-gray-700 flex items-center justify-center text-lg p-1">
+              {userState.user &&
+                userState.user.firstName &&
+                userState.user.firstName.split("")[0]}
+            </p>
           )}
         </Menu.Button>
       </div>

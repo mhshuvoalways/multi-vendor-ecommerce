@@ -36,7 +36,7 @@ class Autosuggestion extends React.Component {
   };
 
   onKeyPressHandler = (e) => {
-    if (!this.props.search) {
+    if (this.props.tagsProps) {
       if (e.key === "Enter") {
         this.props.onClickTags(this.state.value);
         this.setState({
@@ -66,6 +66,7 @@ class Autosuggestion extends React.Component {
       onChange: this.onChange,
       onKeyDown: this.onKeyPressHandler,
       className: this.props.classNameProps,
+      type: "text"
     };
 
     return (
