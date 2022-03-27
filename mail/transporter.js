@@ -2,18 +2,15 @@ const nodemailer = require("nodemailer");
 
 module.exports = (sendto, templateName, name, link) => {
   const transporter = nodemailer.createTransport({
-    service: "gmail",
-    // port: 587,
-    // secure: false,
+    service: "SendinBlue",
     auth: {
-      user: process.env.node_mailer_user,
-      pass: process.env.node_mailer_password,
+      user: process.env.SENDINBLUE_USER,
+      pass: process.env.SENDINBLUE_PASS,
     },
-    enableSsl: true
   });
 
   const mailOptions = {
-    from: process.env.node_mailer_user,
+    from: process.env.SENDINBLUE_USER,
     to: sendto,
     subject: "Message from e-Shop",
     html: templateName(name, link),
