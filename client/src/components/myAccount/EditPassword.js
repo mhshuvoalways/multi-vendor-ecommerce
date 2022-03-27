@@ -76,7 +76,7 @@ const EditPassword = () => {
         <div className="md:flex md:items-center">
           <div className="md:w-1/3">
             <button
-              className="shadow bg-teal-400 hover:bg-gray-800 bg-purple-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+              className="shadow hover:bg-gray-800 bg-purple-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
               type="submit"
             >
               Save Changes
