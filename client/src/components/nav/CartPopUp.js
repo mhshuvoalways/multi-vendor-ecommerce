@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Link } from "@reach/router";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteCartItem } from "../../store/actions/inCartAction";
 import Clear from "../../assets/images/icons/clear.png";
@@ -35,7 +35,7 @@ const CartPopUp = () => {
       {cart.length ? (
         <div>
           {reverseCart.reverse().map((el) => (
-            <div className="flex justify-between gap-1 text-sm text-gray-700 p-8 hover:bg-gray-100">
+            <div className="flex justify-between gap-1 text-sm text-gray-700 p-8 hover:bg-gray-100" key={el._id}>
               <div className="w-20">
                 <Link to={`/details/${el.productId}`}>
                   <img src={el.image} alt="" className="cursor-pointer" />

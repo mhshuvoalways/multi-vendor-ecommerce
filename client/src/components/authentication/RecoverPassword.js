@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { recoverPass } from "../../store/actions/userAction";
-import { navigate, useParams } from "@reach/router";
+import { useNavigate, useParams } from "react-router-dom";
 
 const RecoverPassword = () => {
   const params = useParams();
@@ -12,6 +12,7 @@ const RecoverPassword = () => {
     token: params.token,
   });
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onChange = (event) => {

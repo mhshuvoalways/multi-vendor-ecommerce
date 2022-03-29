@@ -1,6 +1,7 @@
 import * as Types from "../constants/InCartType";
 import axios from "../../utils/axios";
 import alertAction from "./AlertAction";
+import enableBtn from "./enableBtnAction";
 
 export const addCart = (id, body) => (dispatch) => {
   axios
@@ -13,6 +14,7 @@ export const addCart = (id, body) => (dispatch) => {
           cartItem: res.data,
         },
       });
+      dispatch(enableBtn(true));
       dispatch(alertAction("Item added in cart"));
     })
     .catch((err) => {
@@ -20,6 +22,7 @@ export const addCart = (id, body) => (dispatch) => {
         type: Types.CART_ADD_ERROR,
         payload: err.response,
       });
+      dispatch(enableBtn(true));
     });
 };
 
@@ -104,11 +107,12 @@ export const deleteCartItem = (id) => (dispatch) => {
 export const deleteAllCartItem = () => (dispatch) => {
   axios
     .delete("/cart/deleteall")
-    .then((res) => {
+    .then(() => {
       dispatch({
         type: Types.DELETEALL_ITEM,
         payload: [],
       });
+      dispatch(enableBtn(true));
       dispatch(alertAction("Remove all items from cart"));
     })
     .catch((err) => {
@@ -116,6 +120,7 @@ export const deleteAllCartItem = () => (dispatch) => {
         type: Types.DELETEALL_ITEM_ERROR,
         payload: err.response,
       });
+      dispatch(enableBtn(true));
     });
 };
 
@@ -143,11 +148,5 @@ export const modalHandler = (id) => (dispatch) => {
   dispatch({
     type: Types.MODAL_HANDLER,
     payload: id,
-  });
-};
-
-export const freshCart = () => (dispatch) => {
-  dispatch({
-    type: Types.FRESH_CART,
   });
 };

@@ -3,27 +3,7 @@ import setAuthToken from "../../utils/setAuthToken";
 import axios from "../../utils/axios";
 import jwt_decode from "jwt-decode";
 import alertAction from "./AlertAction";
-
-export const adminRegister = () => (dispatch) => {
-  axios
-    .post("/user/adminregister")
-    .then((response) => {
-      dispatch({
-        type: Types.ADMIN_REGISTER_USER,
-        payload: {
-          user: response.data,
-        },
-      });
-    })
-    .catch((err) => {
-      dispatch({
-        type: Types.ADMIN_REGISTER_USER_ERROR,
-        payload: {
-          error: err.response,
-        },
-      });
-    });
-};
+import enableBtn from "./enableBtnAction";
 
 export const userRegister = (user, navigate) => (dispatch) => {
   axios
@@ -35,8 +15,13 @@ export const userRegister = (user, navigate) => (dispatch) => {
           user: response.data,
         },
       });
-      dispatch(alertAction("Thanks for register!"));
+      dispatch(
+        alertAction(
+          "Thanks for register! Please check your email and active your account."
+        )
+      );
       navigate("/login");
+      dispatch(enableBtn(true));
     })
     .catch((err) => {
       dispatch({
@@ -45,6 +30,7 @@ export const userRegister = (user, navigate) => (dispatch) => {
           error: err.response.data,
         },
       });
+      dispatch(enableBtn(true));
       dispatch(alertAction(err.response.data.email));
       dispatch(alertAction(err.response.data.password));
       dispatch(alertAction(err.response.data.storeName));
@@ -53,7 +39,7 @@ export const userRegister = (user, navigate) => (dispatch) => {
     });
 };
 
-export const userLogin = (user) => (dispatch) => {
+export const userLogin = (user, navigate, form) => (dispatch) => {
   axios
     .post("/user/login", user)
     .then((response) => {
@@ -64,9 +50,11 @@ export const userLogin = (user) => (dispatch) => {
           user: decoded,
         },
       });
+      dispatch(enableBtn(true));
       setAuthToken(response.data.token);
       localStorage.setItem("token", response.data.token);
       dispatch(alertAction("Welcome to our application!"));
+      navigate(form);
     })
     .catch((err) => {
       dispatch({
@@ -75,6 +63,7 @@ export const userLogin = (user) => (dispatch) => {
           error: err.response,
         },
       });
+      dispatch(enableBtn(true));
       dispatch(alertAction(err.response.data.email));
       dispatch(alertAction(err.response.data.password));
       dispatch(alertAction(err.response.data.message));
@@ -92,6 +81,7 @@ export const loginWithGoogle = (user) => (dispatch) => {
           user: decoded,
         },
       });
+      dispatch(enableBtn(true));
       setAuthToken(response.data.token);
       localStorage.setItem("token", response.data.token);
       dispatch(alertAction(response.data.message));
@@ -103,6 +93,7 @@ export const loginWithGoogle = (user) => (dispatch) => {
           error: err.response,
         },
       });
+      dispatch(enableBtn(true));
       dispatch(alertAction(err.response.data.message));
     });
 };
@@ -118,6 +109,7 @@ export const loginWithFacebook = (user) => (dispatch) => {
           user: decoded,
         },
       });
+      dispatch(enableBtn(true));
       setAuthToken(response.data.token);
       localStorage.setItem("token", response.data.token);
       dispatch(alertAction(response.data.message));
@@ -129,6 +121,7 @@ export const loginWithFacebook = (user) => (dispatch) => {
           error: err.response,
         },
       });
+      dispatch(enableBtn(true));
       dispatch(alertAction(err.response.data.message));
     });
 };
@@ -160,12 +153,14 @@ export const findMail = (email, navigate) => (dispatch) => {
         payload: true,
       });
       navigate("/checkmsg");
+      dispatch(enableBtn(true));
     })
     .catch((err) => {
       dispatch({
         type: Types.FIND_MAIL_ERROR,
         payload: false,
       });
+      dispatch(enableBtn(true));
       dispatch(alertAction(err.response.data.email));
       dispatch(alertAction(err.response.data.message));
     });
@@ -183,6 +178,7 @@ export const recoverPass = (value, navigate) => (dispatch) => {
             user: decoded,
           },
         });
+        dispatch(enableBtn(true));
         setAuthToken(response.data);
         localStorage.setItem("token", response.data);
         dispatch(alertAction("Welcome to our application!"));
@@ -195,6 +191,7 @@ export const recoverPass = (value, navigate) => (dispatch) => {
             error: err.response,
           },
         });
+        dispatch(enableBtn(true));
         dispatch(alertAction(err.response.data.password));
         dispatch(alertAction(err.response.data.message));
       });
@@ -260,6 +257,7 @@ export const updateUser = (user) => (dispatch) => {
         type: Types.UPDATE_USER,
         payload: res.data,
       });
+      dispatch(enableBtn(true));
       dispatch(alertAction("Updated!"));
     })
     .catch((err) => {
@@ -267,6 +265,7 @@ export const updateUser = (user) => (dispatch) => {
         type: Types.UPDATE_USER_ERROR,
         payload: err.response,
       });
+      dispatch(enableBtn(true));
       dispatch(alertAction(err.response.data.message));
     });
 };
@@ -280,6 +279,7 @@ export const updateUserPass = (user) => (dispatch) => {
           type: Types.UPDATE_MYACCOUT,
           payload: res.data,
         });
+        dispatch(enableBtn(true));
         dispatch(alertAction("Updated!"));
       })
       .catch((err) => {
@@ -287,6 +287,7 @@ export const updateUserPass = (user) => (dispatch) => {
           type: Types.UPDATE_MYACCOUT_ERROR,
           payload: err.response,
         });
+        dispatch(enableBtn(true));
         dispatch(alertAction(err.response.data.currentPassword));
         dispatch(alertAction(err.response.data.newPassword));
         dispatch(alertAction(err.response.data.message));
@@ -319,7 +320,7 @@ export const freshData = () => (dispatch) => {
   });
 };
 
-export const logout = (navigate) => (dispatch) => {
+export const logout = () => (dispatch) => {
   dispatch({
     type: Types.LOGOUT_USER,
     payload: {
@@ -328,5 +329,4 @@ export const logout = (navigate) => (dispatch) => {
   });
   localStorage.removeItem("token");
   setAuthToken("");
-  navigate("/login");
 };

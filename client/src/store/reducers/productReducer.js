@@ -115,15 +115,6 @@ const productReducer = (state = init, action) => {
         proId: action.payload,
       };
     }
-    case Types.FRESH_PRODUCT: {
-      return {
-        products: [],
-        myProducts: [],
-        error: {},
-        isLoading: false,
-        modal: false,
-      };
-    }
     default:
       return state;
   }

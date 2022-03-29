@@ -19,9 +19,10 @@ const Checkout = () => {
 
   const userAddressReducer = useSelector((state) => state.userAddressReducer);
   const orderReducer = useSelector((item) => item.orderReducer);
+  const userReducer = useSelector((item) => item.userReducer);
 
   useEffect(() => {
-    userAddressReducer.address.authorId &&
+    if (userAddressReducer.address) {
       setState({
         firstName: userAddressReducer.address.authorId.firstName,
         lastName: userAddressReducer.address.authorId.lastName,
@@ -36,14 +37,24 @@ const Checkout = () => {
           ? process.env.REACT_APP_DISCOUNT_COUPON
           : false,
       });
+    } else {
+      setState({
+        firstName: userReducer.user.firstName,
+        lastName: userReducer.user.lastName,
+        email: userReducer.user.email,
+        phone: userReducer.user.phone,
+        discount: orderReducer.applyCoupon
+          ? process.env.REACT_APP_DISCOUNT_COUPON
+          : false,
+      });
+    }
   }, [
     orderReducer.applyCoupon,
-    userAddressReducer.address.authorId,
-    userAddressReducer.address.city,
-    userAddressReducer.address.country,
-    userAddressReducer.address.state,
-    userAddressReducer.address.streetAddress,
-    userAddressReducer.address.zipCode,
+    userAddressReducer.address,
+    userReducer.user.email,
+    userReducer.user.firstName,
+    userReducer.user.lastName,
+    userReducer.user.phone,
   ]);
 
   const onChangeHandler = (event) => {

@@ -1,6 +1,6 @@
 const frontend_url =
   process.env.NODE_ENV === "production"
     ? process.env.REACT_APP_BACKENDURL_PRODUCTION
-    : process.env.REACT_APP_BACKENDURL;
+    : process.env.REACT_APP_BACKENDURL_DEV;
 
 export default frontend_url;

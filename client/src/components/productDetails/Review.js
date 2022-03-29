@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { useParams } from "@reach/router";
+import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addReview } from "../../store/actions/reviewAction";
 import ReactStars from "react-rating-stars-component";
-import { Link } from "@reach/router";
 import Avatar from "../../assets/images/others/avatar.svg";
 
 const Reviews = ({ reviewReducer }) => {

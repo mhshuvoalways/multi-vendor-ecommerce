@@ -7,19 +7,7 @@ module.exports = (app) => {
     .connect(process.env.MONGODB_URL)
     .then(() => {
       app.listen(port, () => {
-        if (
-          process.env.adminEmail &&
-          process.env.adminPassword &&
-          process.env.storeName
-        ) {
-          console.log(chalk.green(`App listening at : ${port}`));
-        } else {
-          console.log(
-            chalk.red(
-              `If you want to run this app you must provide all the env of admin`
-            )
-          );
-        }
+        console.log(chalk.green(`App listening at : ${port}`));
       });
     })
     .catch(() => {

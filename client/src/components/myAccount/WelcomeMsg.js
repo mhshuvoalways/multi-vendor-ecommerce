@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, navigate } from "@reach/router";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getMyAccount, logout } from "../../store/actions/userAction";
 
@@ -10,6 +10,8 @@ const WelcomeMsg = () => {
   useEffect(() => {
     dispatch(getMyAccount());
   }, [dispatch]);
+
+  const navigate = useNavigate();
 
   return (
     <div className="shadow-md rounded-md p-5">
@@ -26,7 +28,7 @@ const WelcomeMsg = () => {
         </span>
         )
       </p>
-      <Link to="/vendor/dashboard">
+      <Link to="/vendor">
         {userReducer.user &&
           (userReducer.user.role === "admin" ||
             userReducer.user.role === "vendor") && (

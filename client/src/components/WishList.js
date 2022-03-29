@@ -5,13 +5,15 @@ import {
   deleteWishItem,
   deleteAllWishItem,
 } from "../store/actions/wishListAction";
-import { Link } from "@reach/router";
+import enableBtn from "../store/actions/enableBtnAction";
+import { Link } from "react-router-dom";
 import Loading from "./utils/Loading";
 import Clear from "../assets/images/icons/clear.png";
 
 const InWishList = () => {
   const dispatch = useDispatch();
   const wishListReducer = useSelector((item) => item.wishListReducer);
+  const btnReducer = useSelector((store) => store.btnReducer);
 
   useEffect(() => {
     dispatch(getWishItem());
@@ -81,12 +83,24 @@ const InWishList = () => {
                     CONTINUE SHOPPING
                   </button>
                 </Link>
-                <button
-                  className="bg-gray-100 text-gray-900 py-3 w-60 hover:bg-purple-600 hover:text-white rounded-full"
-                  onClick={() => dispatch(deleteAllWishItem())}
-                >
-                  CLEAR WISHLIST
-                </button>
+                {btnReducer ? (
+                  <button
+                    className="bg-gray-100 text-gray-900 py-3 w-60 hover:bg-purple-600 hover:text-white rounded-full"
+                    onClick={() => {
+                      dispatch(deleteAllWishItem());
+                      dispatch(enableBtn(false));
+                    }}
+                  >
+                    CLEAR WISHLIST
+                  </button>
+                ) : (
+                  <button
+                    className="bg-gray-600 cursor-not-allowed opacity-50 text-gray-900 py-3 w-60 hover:bg-purple-600 hover:text-white rounded-full"
+                    type="button"
+                  >
+                    CLEAR WISHLIST
+                  </button>
+                )}
               </div>
             </div>
           ) : (

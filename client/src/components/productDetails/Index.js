@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "@reach/router";
+import { useParams } from "react-router-dom";
 import { getReview } from "../../store/actions/reviewAction";
 import Details from "./Details";
 import TabRoute from "./TabRoute";

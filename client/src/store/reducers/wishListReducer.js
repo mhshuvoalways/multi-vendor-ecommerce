@@ -3,7 +3,7 @@ import * as Types from "../constants/WishListType";
 const init = {
   wishlist: [],
   isLoading: true,
-  error: {}
+  error: {},
 };
 
 const addCart = (state = init, action) => {
@@ -49,7 +49,7 @@ const addCart = (state = init, action) => {
         error: action.payload,
       };
     }
-    case Types.DELETE_ITEM: {
+    case Types.DELETE_ITEM_WISHLIST: {
       const temp = [...state.wishlist];
       const newTemp = temp.filter((el) => el._id !== action.payload.id);
       return {
@@ -58,30 +58,23 @@ const addCart = (state = init, action) => {
         error: {},
       };
     }
-    case Types.DELETE_ITEM_ERROR: {
+    case Types.DELETE_ITEM_WISHLIST_ERROR: {
       return {
         ...state,
         error: action.payload,
       };
     }
-    case Types.DELETEALL_ITEM: {
+    case Types.DELETEALL_ITEM_WISHLIST: {
       return {
         ...state,
         wishlist: action.payload,
         error: {},
       };
     }
-    case Types.DELETEALL_ITEM_ERROR: {
+    case Types.DELETEALL_ITEM_WISHLIST_ERROR: {
       return {
         ...state,
         error: action.payload,
-      };
-    }
-    case Types.FRESH_WISHLIST: {
-      return {
-        wishlist: [],
-        isLoading: false,
-        error: {},
       };
     }
     default:

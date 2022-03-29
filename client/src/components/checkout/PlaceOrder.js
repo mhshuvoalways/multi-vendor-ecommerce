@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAddress } from "../../store/actions/userAddressAction";
 import { orderProduct } from "../../store/actions/orderAction";
-import { navigate } from "@reach/router";
+import { useNavigate } from "react-router-dom";
 import Discount from "../Coupon/Discount";
 import GrandTotal from "../Coupon/GrandTotal";
 
@@ -12,6 +12,7 @@ const PlaceOrder = ({ state }) => {
   const dispatch = useDispatch();
   const cartReducer = useSelector((item) => item.inCartReducer);
   const orderReducer = useSelector((item) => item.orderReducer);
+  const navigate = useNavigate();
 
   const productTotal = useCallback(() => {
     let proTotal = 0;
@@ -52,7 +53,7 @@ const PlaceOrder = ({ state }) => {
           <div className="flex justify-between my-5 border-b border-gray-400">
             <p className="mb-5 text-base">Coupon discount</p>
             <p className="mb-5 flex items-center">
-              <Discount calculate={calculate}/>
+              <Discount calculate={calculate} />
             </p>
           </div>
         )}

@@ -20,4 +20,3 @@ export const UPDATE_ITEM = "UPDATE_ITEM";
 export const UPDATE_ITEM_ERROR = "UPDATE_ITEM_ERROR";
 
 export const MODAL_HANDLER = 'MODAL_HANDLER'
-export const FRESH_CART = "FRESH_CART";

@@ -1,63 +1,162 @@
 import React from "react";
-import { Router } from "@reach/router";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Tostify from "../components/utils/Tostify";
-import ProtectRouter from "./ProtectRouter";
+import RequireAuth from "./RequireAuth";
 import Home from "../pages/Home";
 import Details from "../pages/ProductDetails";
 import Shop from "../pages/Shop";
 import Cart from "../pages/Cart";
 import CheckOut from "../pages/CheckOut";
 import InWish from "../pages/InWish";
-import ComingSoon from "../pages/ComingSoon";
+import ComingSoon from "../components/CommingSoon";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import ActiveAccount from "../pages/ActiveAccount";
 import CheckMailMsg from "../pages/CheckMailMsg";
 import FindMail from "../pages/FindMail";
 import RecoverPassword from "../pages/RecoverPassword";
-import MyAccount from "../pages/MyAccount";
-import Order from "../pages/Order";
-import EditePassword from "../pages/EditePassword";
-import UserAddress from "../pages/UserAddress";
-import AccountDetails from "../pages/AccountDetails";
 import Contact from "../pages/Contact";
+
+import MyAccount from "../pages/MyAccount";
+import WelcomeMsg from "../components/myAccount/WelcomeMsg";
+import Order from "../components/myAccount/Order";
+import EditePassword from "../components/myAccount/EditPassword";
+import UserAddress from "../components/myAccount/UserAddress";
+import AccountDetails from "../components/myAccount/AccountDetails";
+
 import VendorRoutes from "../pages/VendorRoutes";
-import VendorProducts from "../pages/VendorProducts";
+import VendorDashboard from "../components/vendorDashboard/Dashboard";
+import VendorProducts from "../components/vendorDashboard/VendorProducts";
 
 const Routers = () => {
   return (
-    <div>
+    <BrowserRouter>
       <Tostify />
-      <Router>
-        <Home path="/" />
-        <Shop path="/shop" />
-        <Details path="/details/:id" />
-        <Cart path="/cart" />
-        <InWish path="/wishlist" />
-        <Register path="/register" />
-        <Login path="/login" />
-        <ActiveAccount path="/active/:token" />
-        <CheckMailMsg path="/checkmsg" />
-        <FindMail path="/findmail" />
-        <RecoverPassword path="/recoverpassword/:token" />
-        <Contact path="/contact" />
-        <ProtectRouter component={CheckOut} path="/checkout" />
-        <ProtectRouter component={MyAccount} path="/my-account" />
-        <ProtectRouter component={Order} path="/my-account/order" />
-        <ProtectRouter
-          component={EditePassword}
-          path="/my-account/editpassword"
+      <Routes>
+        <Route path="" element={<Home />} />
+        <Route path="shop" element={<Shop />} />
+        <Route path="details/:id" element={<Details />} />
+        <Route path="cart" element={<Cart />} />
+        <Route path="wishlist" element={<InWish />} />
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
+        <Route path="wishlist" element={<InWish />} />
+        <Route path="active/:token" element={<ActiveAccount />} />
+        <Route path="checkmsg" element={<CheckMailMsg />} />
+        <Route path="findmail" element={<FindMail />} />
+        <Route path="recoverpassword/:token" element={<RecoverPassword />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="findmail" element={<FindMail />} />
+        <Route
+          path="checkout"
+          element={
+            <RequireAuth>
+              <CheckOut />
+            </RequireAuth>
+          }
         />
-        <ProtectRouter component={UserAddress} path="/my-account/address" />
-        <ProtectRouter component={AccountDetails} path="/my-account/details" />
-        <ProtectRouter component={VendorRoutes} path="/vendor/dashboard" />
-        <ProtectRouter
-          component={VendorProducts}
-          path="/vendor/dashboard/products"
-        />
-        <ProtectRouter component={ComingSoon} path="/comingsoon" />
-      </Router>
-    </div>
+
+        <Route
+          path="my-account"
+          element={
+            <RequireAuth>
+              <MyAccount />
+            </RequireAuth>
+          }
+        >
+          <Route
+            path=""
+            element={
+              <RequireAuth>
+                <WelcomeMsg />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="dashboard"
+            element={
+              <RequireAuth>
+                <WelcomeMsg />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="order"
+            element={
+              <RequireAuth>
+                <Order />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="editpassword"
+            element={
+              <RequireAuth>
+                <EditePassword />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="address"
+            element={
+              <RequireAuth>
+                <UserAddress />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="details"
+            element={
+              <RequireAuth>
+                <AccountDetails />
+              </RequireAuth>
+            }
+          />
+        </Route>
+
+        <Route
+          path="vendor"
+          element={
+            <RequireAuth>
+              <VendorRoutes />
+            </RequireAuth>
+          }
+        >
+          <Route
+            path=""
+            element={
+              <RequireAuth>
+                <VendorDashboard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="dashboard"
+            element={
+              <RequireAuth>
+                <VendorDashboard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="products"
+            element={
+              <RequireAuth>
+                <VendorProducts />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="comingsoon"
+            element={
+              <RequireAuth>
+                <ComingSoon />
+              </RequireAuth>
+            }
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 

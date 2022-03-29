@@ -16,7 +16,7 @@ const fileUpload = multer({
   },
   fileFilter: (_req, file, cb) => {
     // filter out accepted file types
-    const types = /jpeg|jpg|png|gif/;
+    const types = /jpeg|jpg|png|gif|webp/;
     const extName = types.test(path.extname(file.originalname).toLowerCase());
     const mimeType = types.test(file.mimetype);
 

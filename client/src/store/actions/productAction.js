@@ -143,12 +143,6 @@ export const updateProduct = (id, product) => (dispatch) => {
     });
 };
 
-export const freshProduct = () => (dispatch) => {
-  dispatch({
-    type: Types.FRESH_PRODUCT,
-  });
-};
-
 export const modalToggle = () => (dispatch) => {
   dispatch({
     type: Types.MODAL_TOGGLE,

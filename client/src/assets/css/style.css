@@ -27,7 +27,7 @@ body {
   display: flex;
   border-radius: 5px;
   position: absolute;
-  bottom: 25%;
+  bottom: 30%;
   padding: 5px 44px;
   transition: 1s;
   visibility: visible;

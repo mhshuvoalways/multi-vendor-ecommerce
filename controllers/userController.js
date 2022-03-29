@@ -16,13 +16,13 @@ const { recoverPass, activeAccount } = require("../mail/templates");
 const axios = require("axios");
 
 const adminRegister = (_req, res) => {
-  const email = process.env.adminEmail;
-  const password = process.env.adminPassword;
-  const storeName = process.env.storeName;
+  const { email, password, storeName, recaptch, agree } = req.body;
   const validation = adminRegisterValidation({
     email,
     password,
     storeName,
+    recaptch,
+    agree,
   });
   const username = email.substring(0, email.lastIndexOf("@"));
   if (validation.isValid) {
@@ -286,7 +286,7 @@ const loginWithFacebook = (req, res) => {
       `https://graph.facebook.com/v2.11/${userID}?fields=id,name,email,picture&access_token=${accessToken}`
     )
     .then(() => {
-      if (appId === process.env.FACEBOOK_appId) {
+      if (appId === process.env.FACEBOOK_APPID) {
         const username = email.substring(0, email.lastIndexOf("@"));
         User.findOne({ email })
           .then((response) => {

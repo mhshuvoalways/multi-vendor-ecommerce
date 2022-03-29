@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "@reach/router";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../store/actions/productAction";
 import { addCart, modalHandler } from "../store/actions/inCartAction";
@@ -10,6 +10,7 @@ import Loading from "./utils/Loading";
 import Visibility from "../assets/images/icons/visibility.png";
 import Favorite from "../assets/images/icons/favorite.png";
 import Cart from "../assets/images/icons/cart.png";
+import enableBtn from "../store/actions/enableBtnAction";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const Products = () => {
   const productReducer = useSelector((el) => el.productReducer);
   const cartReducer = useSelector((el) => el.inCartReducer);
   const wishListReducer = useSelector((el) => el.wishListReducer);
+  const btnReducer = useSelector((store) => store.btnReducer);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -38,7 +40,7 @@ const Products = () => {
             >
               <Link to={"/details/" + el._id}>
                 <img
-                  className="w-full cursor-pointer h-80"
+                  className="w-full cursor-pointer h-64"
                   src={el.image[0].url}
                   alt="Sunset in the mountains"
                   thumbnail
@@ -62,15 +64,18 @@ const Products = () => {
                     className={
                       wishListReducer.wishlist.length
                         ? wishListReducer.wishlist.map((item) => {
-                            return item.authorId === userReducer.user._id &&
-                              item.productId === el._id
-                              ? "rounded-full mx-3 bg-purple-400 cursor-not-allowed p-1"
-                              : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1";
+                            return btnReducer
+                              ? item.authorId === userReducer.user._id &&
+                                item.productId === el._id
+                                ? "rounded-full mx-3 bg-purple-400 cursor-not-allowed p-1"
+                                : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
+                              : "rounded-full mx-3 bg-purple-400 cursor-not-allowed p-1";
                           })
                         : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
                     }
                     onClick={() => {
                       dispatch(addWishList(el._id));
+                      dispatch(enableBtn(false));
                     }}
                   />
                 ) : (
@@ -89,15 +94,18 @@ const Products = () => {
                     className={
                       cartReducer.cart.length
                         ? cartReducer.cart.map((item) => {
-                            return item.authorId === userReducer.user._id &&
-                              item.productId === el._id
-                              ? "rounded-full mx-3 bg-purple-400 cursor-not-allowed p-1"
-                              : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1";
+                            return btnReducer
+                              ? item.authorId === userReducer.user._id &&
+                                item.productId === el._id
+                                ? "rounded-full mx-3 bg-purple-400 cursor-not-allowed p-1"
+                                : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
+                              : "rounded-full mx-3 bg-purple-400 cursor-not-allowed p-1";
                           })
                         : "rounded-full mx-3 bg-white hover:bg-purple-400 cursor-pointer p-1"
                     }
                     onClick={() => {
                       dispatch(addCart(el._id));
+                      dispatch(enableBtn(false));
                     }}
                   />
                 ) : (

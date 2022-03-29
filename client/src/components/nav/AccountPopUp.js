@@ -1,8 +1,9 @@
 import React, { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { Link, navigate } from "@reach/router";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../store/actions/userAction";
+import Avatar from "../../assets/images/others/avatar.svg";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -16,18 +17,24 @@ const AccountPopUp = () => {
     <Menu as="div" className="ml-3 relative">
       <div>
         <Menu.Button className="bg-gray-200 flex p-1 rounded-full">
-          {userState.user && userState.user.avatar ? (
-            <img
-              src={userState.user.avatar.url}
-              alt=""
-              className="h-8 w-8 rounded-full"
-            />
+          {userState.isAuthenticate ? (
+            userState.user && userState.user.avatar ? (
+              <img
+                src={userState.user.avatar.url}
+                alt=""
+                className="h-8 w-8 rounded-full"
+              />
+            ) : userState.user && userState.user.firstName ? (
+              <p className="md:h-8 md:w-8 h-8 w-8 rounded-full border-4 border-gray-400 cursor-pointer text-gray-100 font-bold bg-gray-700 flex items-center justify-center text-lg p-1">
+                {userState.user &&
+                  userState.user.firstName &&
+                  userState.user.firstName.split("")[0]}
+              </p>
+            ) : (
+              <img src={Avatar} alt="" className="h-8 w-8 rounded-full" />
+            )
           ) : (
-            <p className="md:h-8 md:w-8 h-8 w-8 rounded-full border-4 border-gray-400 cursor-pointer text-gray-100 font-bold bg-gray-700 flex items-center justify-center text-lg p-1">
-              {userState.user &&
-                userState.user.firstName &&
-                userState.user.firstName.split("")[0]}
-            </p>
+            <img src={Avatar} alt="" className="h-8 w-8 rounded-full" />
           )}
         </Menu.Button>
       </div>
@@ -58,17 +65,18 @@ const AccountPopUp = () => {
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <p
+                  <a
+                    href="/login"
                     className={classNames(
                       active ? "bg-gray-100 cursor-pointer" : "",
                       "block px-4 py-2 text-sm text-gray-700"
                     )}
                     onClick={() => {
-                      dispatch(logout(navigate));
+                      dispatch(logout());
                     }}
                   >
                     Logout
-                  </p>
+                  </a>
                 )}
               </Menu.Item>
             </div>

@@ -55,10 +55,3 @@ export const applyCouponAction = (value) => (dispatch) => {
     payload: value,
   });
 };
-
-
-export const freshData = () => (dispatch) => {
-  dispatch({
-    type: Types.FRESH_DATA
-  })
-}

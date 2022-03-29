@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "@reach/router";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReactStars from "react-rating-stars-component";
 import { addCart } from "../store/actions/inCartAction";

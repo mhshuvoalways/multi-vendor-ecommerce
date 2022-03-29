@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import { Link, navigate } from "@reach/router";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getMyAccount, logout } from "../../store/actions/userAction";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const userReducer = useSelector((store) => store.userReducer);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getMyAccount());
@@ -22,7 +23,6 @@ const Dashboard = () => {
             dispatch(logout(navigate));
           }}
         >
-          {" "}
           Logout
         </span>
         )

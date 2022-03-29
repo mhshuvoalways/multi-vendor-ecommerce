@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "@reach/router";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate, NavLink } from "react-router-dom";
 import {
-  adminRegister,
   userLogin,
   loginWithGoogle,
   loginWithFacebook,
 } from "../../store/actions/userAction";
-import ActiveLink from "../utils/ActiveLink";
+import enableBtn from "../../store/actions/enableBtnAction";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 
@@ -18,11 +17,12 @@ const Login = () => {
     checked: false,
   });
 
-  const dispatch = useDispatch();
+  const btnReducer = useSelector((store) => store.btnReducer);
 
-  useEffect(() => {
-    dispatch(adminRegister());
-  }, [dispatch]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const onChange = (event) => {
     setState({
@@ -46,7 +46,8 @@ const Login = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     const { email, password } = state;
-    dispatch(userLogin({ email, password }));
+    dispatch(userLogin({ email, password }, navigate, from));
+    dispatch(enableBtn(false));
     if (!state.checked) {
       localStorage.removeItem("email");
       localStorage.removeItem("password");
@@ -64,6 +65,7 @@ const Login = () => {
         imageUrl,
       })
     );
+    dispatch(enableBtn(false));
   };
 
   const responseFacebook = (response) => {
@@ -75,21 +77,28 @@ const Login = () => {
         imageUrl: response.picture.data.url,
         accessToken,
         userID,
-        appId: process.env.REACT_APP_appId,
+        appId: process.env.REACT_APP_FACEBOOK_APPID,
       })
     );
+    dispatch(enableBtn(false));
   };
 
   return (
     <div className="mt-12 max-w-sm m-auto">
       <div className="flex justify-center mb-5">
-        <ActiveLink to="/register">
+        <NavLink
+          to="/register"
+          className={({ isActive }) => isActive && "text-purple-600"}
+        >
           <button className="py-2 mt-5 text-2xl font-bold">Register</button>
-        </ActiveLink>
+        </NavLink>
         <p className="py-2 mt-5 text-2xl mx-2">|</p>
-        <ActiveLink to="/login">
+        <NavLink
+          to="/login"
+          className={({ isActive }) => isActive && "text-purple-600"}
+        >
           <button className="py-2 mt-5 text-2xl font-bold">Login</button>
-        </ActiveLink>
+        </NavLink>
       </div>
       <form>
         <div className="shadow-md rounded-md text-left p-10">
@@ -133,37 +142,65 @@ const Login = () => {
               </Link>
             </label>
           </div>
-          <button
-            className="bg-purple-600 text-white py-2 mt-5 w-full hover:bg-gray-900"
-            onClick={onSubmit}
-          >
-            LOGIN
-          </button>
+          {btnReducer ? (
+            <button
+              className="bg-purple-600 text-white py-2 mt-5 w-full hover:bg-gray-900"
+              onClick={onSubmit}
+            >
+              LOGIN
+            </button>
+          ) : (
+            <button
+              className="bg-gray-600 cursor-not-allowed opacity-50 text-white py-2 mt-5 w-full hover:bg-gray-900"
+              type="button"
+            >
+              LOGIN
+            </button>
+          )}
+
           <p className="mt-1">Or, login with</p>
           <GoogleLogin
-            clientId={process.env.REACT_APP_google_clientId}
-            render={(renderProps) => (
-              <button
-                className="bg-red-500 text-white py-2 mt-2 w-full hover:bg-gray-900"
-                onClick={renderProps.onClick}
-              >
-                GOOGLE
-              </button>
-            )}
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+            render={(renderProps) =>
+              btnReducer ? (
+                <button
+                  className="bg-red-500 text-white py-2 mt-2 w-full hover:bg-gray-900"
+                  onClick={renderProps.onClick}
+                >
+                  GOOGLE
+                </button>
+              ) : (
+                <button
+                  className="bg-gray-600 cursor-not-allowed opacity-50 text-white py-2 mt-2 w-full hover:bg-gray-900"
+                  type="button"
+                >
+                  GOOGLE
+                </button>
+              )
+            }
             icon={true}
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
           />
-          <FacebookLogin
-            appId={process.env.REACT_APP_appId}
-            fields="name,email,picture"
-            callback={responseFacebook}
-            textButton="FACEBOOK"
-            cssClass="bg-blue-600 text-white py-2 mt-2 w-full hover:bg-gray-900"
-            render={(renderProps) => (
-              <button onClick={renderProps.onClick}></button>
-            )}
-          />
+          {btnReducer ? (
+            <FacebookLogin
+              appId={process.env.REACT_APP_FACEBOOK_APPID}
+              fields="name,email,picture"
+              callback={responseFacebook}
+              textButton="FACEBOOK"
+              cssClass="bg-blue-600 text-white py-2 mt-2 w-full hover:bg-gray-900"
+              render={(renderProps) => (
+                <button onClick={renderProps.onClick}></button>
+              )}
+            />
+          ) : (
+            <button
+              className="bg-gray-600 cursor-not-allowed opacity-50 text-white py-2 mt-2 w-full hover:bg-gray-900"
+              type="button"
+            >
+              FACEBOOK
+            </button>
+          )}
         </div>
       </form>
     </div>

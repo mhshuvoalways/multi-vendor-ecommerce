@@ -7,7 +7,8 @@ import {
   deleteAllCartItem,
 } from "../../store/actions/inCartAction";
 import { applyCouponAction } from "../../store/actions/orderAction";
-import { Link } from "@reach/router";
+import enableBtn from "../../store/actions/enableBtnAction";
+import { Link } from "react-router-dom";
 import CartTotals from "./CartTotal";
 import Clear from "../../assets/images/icons/clear.png";
 import Loading from "../utils/Loading";
@@ -23,6 +24,7 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cartReducer = useSelector((item) => item.inCartReducer);
   const orderReducer = useSelector((item) => item.orderReducer);
+  const btnReducer = useSelector((store) => store.btnReducer);
 
   const productTotal = useCallback(() => {
     let proTotal = 0;
@@ -138,12 +140,24 @@ const Cart = () => {
                     CONTINUE SHOPPING
                   </button>
                 </Link>
-                <button
-                  className="bg-gray-100 text-gray-900 py-3 w-60 hover:bg-purple-600 hover:text-white rounded-full"
-                  onClick={() => dispatch(deleteAllCartItem())}
-                >
-                  CLEAR SHOPPING CART
-                </button>
+                {btnReducer ? (
+                  <button
+                    className="bg-gray-100 text-gray-900 py-3 w-60 hover:bg-purple-600 hover:text-white rounded-full"
+                    onClick={() => {
+                      dispatch(deleteAllCartItem());
+                      dispatch(enableBtn(false));
+                    }}
+                  >
+                    CLEAR SHOPPING CART
+                  </button>
+                ) : (
+                  <button
+                    className="bg-gray-600 cursor-not-allowed opacity-50 text-gray-900 py-3 w-60 hover:bg-purple-600 hover:text-white rounded-full"
+                    type="button"
+                  >
+                    CLEAR SHOPPING CART
+                  </button>
+                )}
               </div>
               <CartTotals
                 calculate={calculate}

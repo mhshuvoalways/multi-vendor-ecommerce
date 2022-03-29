@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { findMail } from "../../store/actions/userAction";
-import { Link, navigate } from "@reach/router";
+import { Link, useNavigate } from "react-router-dom";
 
 const FindEmail = () => {
   const [state, setState] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     setState(e.target.value);

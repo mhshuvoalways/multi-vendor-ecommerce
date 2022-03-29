@@ -10,6 +10,7 @@ import userAddressReducer from "./reducers/userAddressReducer";
 import orderReducer from "./reducers/orderReducer";
 import reviewReducer from "./reducers/reviewReducer";
 import alertReducer from "./reducers/alertReducer";
+import btnReducer from "./reducers/enableBtnReducer";
 import thunk from "redux-thunk";
 
 const middlewares = [thunk];
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   orderReducer,
   reviewReducer,
   alertReducer,
+  btnReducer,
 });
 
 const store = createStore(rootReducer, composedEnhancers);

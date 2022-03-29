@@ -137,15 +137,6 @@ const addCart = (state = init, action) => {
         id: action.payload,
       };
     }
-    case Types.FRESH_CART: {
-      return {
-        cart: [],
-        isLoading: false,
-        error: {},
-        modal: false,
-        id: "",
-      };
-    }
     default:
       return state;
   }

@@ -1,8 +1,13 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import Routers from "./Routers";
+import { useDispatch } from "react-redux";
+import { isAuthenticate } from "../store/actions/userAction";
 
 const App = () => {
+  const dispatch = useDispatch();
+  dispatch(isAuthenticate());
+
   return (
     <div>
       <Helmet>

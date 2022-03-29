@@ -10,19 +10,6 @@ const init = {
 
 const userReudcer = (state = init, action) => {
   switch (action.type) {
-    case Types.ADMIN_REGISTER_USER: {
-      return {
-        ...state,
-        user: action.payload.user,
-        error: null,
-      };
-    }
-    case Types.ADMIN_REGISTER_USER_ERROR: {
-      return {
-        ...state,
-        error: action.payload.error,
-      };
-    }
     case Types.REGISTER_USER: {
       return {
         ...state,

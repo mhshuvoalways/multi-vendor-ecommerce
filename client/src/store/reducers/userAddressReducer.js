@@ -1,7 +1,7 @@
 import * as Types from "../constants/UserAddressType";
 
 const init = {
-  address: {},
+  address: null,
   error: {},
 };
 

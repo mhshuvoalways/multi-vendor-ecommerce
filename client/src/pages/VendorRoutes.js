@@ -1,8 +1,8 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import Navigation from "../components/nav/Navigation";
 import PageLocation from "../components/utils/PageLocation";
 import VendorRoutesCompo from "../components/vendorDashboard/VendorRoutes";
-import Dashboard from "../components/vendorDashboard/Dashboard";
 import Footer from "../components/Footer";
 
 const VendorRoutes = () => {
@@ -13,7 +13,7 @@ const VendorRoutes = () => {
       <div className="w-4/5 m-auto mt-20 bg-gray-200 py-16 flex gap-5 flex-wrap justify-center">
         <VendorRoutesCompo />
         <div className="w-8/12">
-          <Dashboard />
+          <Outlet />
         </div>
       </div>
       <Footer />
