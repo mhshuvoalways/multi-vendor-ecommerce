@@ -1,6 +1,7 @@
 import * as Types from "../constants/ProductTypes";
 import axios from "../../utils/axios";
 import alertAction from "./AlertAction";
+import enableBtn from "./enableBtnAction";
 
 export const createProduct = (formData) => (dispatch) => {
   axios
@@ -13,6 +14,7 @@ export const createProduct = (formData) => (dispatch) => {
         },
       });
       dispatch(alertAction("Product added"));
+      dispatch(enableBtn(true));
     })
     .catch((err) => {
       dispatch({
@@ -21,6 +23,7 @@ export const createProduct = (formData) => (dispatch) => {
           error: err.response.data,
         },
       });
+      dispatch(enableBtn(true));
       dispatch(alertAction(err.response.data.image));
       dispatch(alertAction(err.response.data.name));
       dispatch(alertAction(err.response.data.regularPrice));
@@ -124,6 +127,7 @@ export const updateProduct = (id, product) => (dispatch) => {
           product: response.data,
         },
       });
+      dispatch(enableBtn(true));
       dispatch(alertAction("Update product!"));
       dispatch(modalProduct());
     })
@@ -132,6 +136,7 @@ export const updateProduct = (id, product) => (dispatch) => {
         type: Types.UPDATE_PRODUCT_ERROR,
         payload: err.response.data,
       });
+      dispatch(enableBtn(true));
       dispatch(alertAction(err.response.data.image));
       dispatch(alertAction(err.response.data.name));
       dispatch(alertAction(err.response.data.regularPrice));

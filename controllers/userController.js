@@ -389,16 +389,16 @@ const findMail = (req, res) => {
       .select("-password")
       .then((response) => {
         const findUser = response.find((el) => el.email === email);
-        const token = jwt.sign(
-          {
-            _id: findUser._id,
-            email: findUser.email,
-            username: findUser.username,
-          },
-          process.env.SECRET,
-          { expiresIn: "1h" }
-        );
         if (findUser) {
+          const token = jwt.sign(
+            {
+              _id: findUser._id,
+              email: findUser.email,
+              username: findUser.username,
+            },
+            process.env.SECRET,
+            { expiresIn: "1h" }
+          );
           if (findUser.strategy === "email") {
             transporter(
               email,

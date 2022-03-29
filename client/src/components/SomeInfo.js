@@ -6,7 +6,7 @@ import Off from "../assets/images/somedetails/off.png";
 
 const SomeInfo = () => {
   return (
-    <div className="w-11/12 m-auto mt-20 flex gap-10 flex-wrap justify-between">
+    <div className="w-11/12 m-auto mt-20 flex gap-3 flex-wrap justify-between">
       <div className="flex gap-4 items-center">
         <img src={Bus} alt="" />
         <div>
@@ -18,21 +18,21 @@ const SomeInfo = () => {
         <img src={Service24} alt="" />
         <div>
           <p className="font-bold text-xl">Support 24/7</p>
-          <p>Free shipping on all order</p>
+          <p>Contact us 24 hours a day, 7 days a week</p>
         </div>
       </div>
       <div className="flex gap-4 items-center">
         <img src={Sign} alt="" />
         <div>
           <p className="font-bold text-xl">Money Return</p>
-          <p>Free shipping on all order</p>
+          <p>Return within 30 days for an exchange</p>
         </div>
       </div>
       <div className="flex gap-4 items-center">
         <img src={Off} alt="" />
         <div>
           <p className="font-bold text-xl">Order Discount</p>
-          <p>Free shipping on all order</p>
+          <p>5% discount on your order</p>
         </div>
       </div>
     </div>

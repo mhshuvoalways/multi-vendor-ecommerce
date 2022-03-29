@@ -4,6 +4,7 @@ import Banner from "../components/Banner";
 import SomeInfo from "../components/SomeInfo";
 import SectionTitle from "../components/SectionTitle";
 import Products from "../components/Products";
+import Clientfeedback from "../components/Clientfeedback";
 import Footer from "../components/Footer";
 
 const Home = () => {
@@ -12,8 +13,10 @@ const Home = () => {
       <Navigation />
       <Banner />
       <SomeInfo />
-      <SectionTitle />
+      <SectionTitle title="DAILY DEALS!" />
       <Products />
+      <SectionTitle title="CLIENT REVIEW" />
+      <Clientfeedback />
       <Footer />
     </div>
   );

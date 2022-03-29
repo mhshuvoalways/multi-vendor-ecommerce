@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../store/actions/productAction";
+import enableBtn from "../../store/actions/enableBtnAction";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import Modal from "../Modal";
 import Tags from "./Tags";
 import Clear from "../../assets/images/icons/clear.png";
@@ -23,6 +26,7 @@ const UploadModal = ({ modal, modalHandler }) => {
   const dispatch = useDispatch();
   const tagsData = useSelector((data) => data.tagsReducer);
   const categoryData = useSelector((data) => data.categoryReducer);
+  const btnReducer = useSelector((store) => store.btnReducer);
 
   const changeHandlerImage = (event) => {
     setImage(event.target.files[0]);
@@ -32,6 +36,13 @@ const UploadModal = ({ modal, modalHandler }) => {
     setProduct({
       ...product,
       [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleChange = (value) => {
+    setProduct({
+      ...product,
+      description: value,
     });
   };
 
@@ -79,6 +90,7 @@ const UploadModal = ({ modal, modalHandler }) => {
     formData.append("description", product.description);
     formData.append("tags", JSON.stringify(product.finalTags));
     dispatch(createProduct(formData));
+    dispatch(enableBtn(false));
   };
 
   return (
@@ -189,21 +201,28 @@ const UploadModal = ({ modal, modalHandler }) => {
           onClickTags={onClickTags}
         />
         <div className="mt-5">
-          <textarea
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            placeholder="Enter some short description about this product"
-            name="description"
-            onChange={changeHandler}
+          <ReactQuill
+            onChange={handleChange}
+            className="bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-64 pb-10"
           />
         </div>
         <div className="mt-5 ">
-          <button
-            className="shadow bg-teal-400 hover:bg-gray-800 bg-purple-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full md:w-28"
-            type="button"
-            onClick={onSubmitHandler}
-          >
-            Create
-          </button>
+          {btnReducer ? (
+            <button
+              className="shadow bg-teal-400 hover:bg-gray-800 bg-purple-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full md:w-28"
+              type="button"
+              onClick={onSubmitHandler}
+            >
+              Create
+            </button>
+          ) : (
+            <button
+              className="shadow bg-teal-400 hover:bg-gray-800 bg-gray-600 cursor-not-allowed opacity-50 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full md:w-28"
+              type="button"
+            >
+              Create
+            </button>
+          )}
         </div>
       </form>
     </Modal>

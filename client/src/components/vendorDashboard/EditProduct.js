@@ -1,30 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProduct } from "../../store/actions/productAction";
+import enableBtn from "../../store/actions/enableBtnAction";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import Modal from "../Modal";
 import Tags from "./Tags";
 import Clear from "../../assets/images/icons/clear.png";
 
 const EditProduct = ({ modal, modalHandler, id }) => {
+  const productReducer = useSelector((data) => data.productReducer);
+  const editPro = productReducer.myProducts.find(
+    (product) => product._id === id
+  );
+
   const [image, setImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState();
+  const [imageUrl, setImageUrl] = useState(editPro.image[0].url);
   const [product, setProduct] = useState({
-    name: "",
-    category: "",
-    regularPrice: "",
-    salePrice: "",
-    description: "",
-    finalTags: [],
+    name: editPro.name,
+    category: editPro.category,
+    regularPrice: editPro.regularPrice,
+    salePrice: editPro.salePrice,
+    description: editPro.description,
+    finalTags: editPro.tags,
   });
+
   const [tags, setTags] = useState({
-    searchTerm: "",
     searchTags: [],
   });
 
   const dispatch = useDispatch();
   const tagsData = useSelector((data) => data.tagsReducer);
   const categoryData = useSelector((data) => data.categoryReducer);
-  const productReducer = useSelector((data) => data.productReducer);
+  const btnReducer = useSelector((store) => store.btnReducer);
 
   const changeHandlerImage = (event) => {
     setImage(event.target.files[0]);
@@ -37,29 +45,35 @@ const EditProduct = ({ modal, modalHandler, id }) => {
     });
   };
 
-  const changeHandlerTag = (e) => {
-    const temp = [...tagsData.tags];
-    setTags({
-      ...tags,
-      searchTerm: e.target.value,
-      searchTags: temp.filter((el) =>
-        el.name.toLowerCase().includes(e.target.value.toLowerCase())
-      ),
+  const handleChange = (value) => {
+    setProduct({
+      ...product,
+      description: value,
     });
   };
 
-  const onClickTags = (id) => {
-    const tagAr = [...tagsData.tags];
-    const obj = tagAr.find((el) => el._id === id);
-    const finalTag = [...product.finalTags, obj];
-    setProduct({
-      ...product,
-      finalTags: finalTag,
-    });
+  useEffect(() => {
+    const temp = [...tagsData.tags];
+    const removeDublicate = temp.filter(
+      (val) => !product.finalTags.find((el) => el._id === val._id)
+    );
     setTags({
-      ...tags,
-      searchTerm: "",
+      searchTags: removeDublicate,
     });
+  }, [product.finalTags, tagsData.tags]);
+
+  const onClickTags = (name) => {
+    const tagAr = [...tagsData.tags];
+    const obj = tagAr.find(
+      (el) => el.name.toLowerCase() === name.toLowerCase()
+    );
+    if (obj) {
+      const finalTag = [...product.finalTags, obj];
+      setProduct({
+        ...product,
+        finalTags: finalTag,
+      });
+    }
   };
 
   const removeTag = (id) => {
@@ -69,37 +83,6 @@ const EditProduct = ({ modal, modalHandler, id }) => {
       ...product,
       finalTags: filterTags,
     });
-  };
-
-  const editPro = productReducer.myProducts.find(
-    (product) => product._id === id
-  );
-
-  useEffect(() => {
-    setProduct({
-      name: editPro.name,
-      category: editPro.category,
-      regularPrice: editPro.regularPrice,
-      salePrice: editPro.salePrice,
-      description: editPro.description,
-      finalTags: editPro.tags,
-    });
-    setImageUrl(editPro.image[0].url);
-  }, [editPro]);
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    image
-      ? formData.append("image", image)
-      : formData.append("imageUrl", imageUrl);
-    formData.append("name", product.name);
-    formData.append("category", product.category);
-    formData.append("regularPrice", product.regularPrice);
-    formData.append("salePrice", product.salePrice);
-    formData.append("description", product.description);
-    formData.append("tags", JSON.stringify(product.finalTags));
-    dispatch(updateProduct(id, formData));
   };
 
   const imageView = () => {
@@ -148,16 +131,29 @@ const EditProduct = ({ modal, modalHandler, id }) => {
     }
   };
 
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    image
+      ? formData.append("image", image)
+      : formData.append("imageUrl", imageUrl);
+    formData.append("name", product.name);
+    formData.append("category", product.category);
+    formData.append("regularPrice", product.regularPrice);
+    formData.append("salePrice", product.salePrice);
+    formData.append("description", product.description);
+    formData.append("tags", JSON.stringify(product.finalTags));
+    dispatch(updateProduct(id, formData));
+    dispatch(enableBtn(false));
+  };
+
   return (
     <Modal modal={modal} modalHandler={modalHandler}>
-      <form onSubmit={onSubmit}>
+      <form>
         <div className="flex gap-5 justify-between flex-wrap">
           {imageView()}
           <div className="md:w-1/2">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              for="grid-last-name"
-            >
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Product Name
             </label>
             <input
@@ -172,10 +168,7 @@ const EditProduct = ({ modal, modalHandler, id }) => {
         </div>
         <div className="flex gap-5 mt-5 flex-wrap justify-between">
           <div className="md:w-1/5">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              for="grid-last-name"
-            >
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Regular Price
             </label>
             <input
@@ -188,10 +181,7 @@ const EditProduct = ({ modal, modalHandler, id }) => {
             />
           </div>
           <div className="md:w-1/5">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              for="grid-last-name"
-            >
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Sale Price
             </label>
             <input
@@ -205,10 +195,7 @@ const EditProduct = ({ modal, modalHandler, id }) => {
           </div>
         </div>
         <div className="mt-5">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-last-name"
-          >
+          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
             Select a category
           </label>
           <label>
@@ -216,7 +203,6 @@ const EditProduct = ({ modal, modalHandler, id }) => {
               className="py-3 px-4 w-full text-gray-600 relative bg-gray-200 rounded text-sm border border-gray-400 outline-none border-none focus:outline-none focus:bg-white focus:border-gray-500"
               name="category"
               onChange={changeHandler}
-              value={product.category}
             >
               <option>Default</option>
               {categoryData.categories.map((el) => (
@@ -228,27 +214,33 @@ const EditProduct = ({ modal, modalHandler, id }) => {
         <Tags
           product={product}
           removeTag={removeTag}
-          changeHandlerTag={changeHandlerTag}
           tags={tags}
           onClickTags={onClickTags}
-          value={tags.searchTerm}
         />
         <div className="mt-5">
-          <textarea
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            placeholder="Enter some short description about this product"
-            name="description"
-            onChange={changeHandler}
+          <ReactQuill
+            onChange={handleChange}
+            className="bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-64 pb-10"
             value={product.description}
           />
         </div>
         <div className="mt-5 ">
-          <button
-            className="shadow bg-teal-400 hover:bg-gray-800 bg-purple-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full md:w-28"
-            type="submit"
-          >
-            Create
-          </button>
+          {btnReducer ? (
+            <button
+              className="shadow bg-teal-400 hover:bg-gray-800 bg-purple-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full md:w-28"
+              type="button"
+              onClick={onSubmitHandler}
+            >
+              Update
+            </button>
+          ) : (
+            <button
+              className="shadow bg-teal-400 hover:bg-gray-800 bg-gray-600 cursor-not-allowed opacity-50 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full md:w-28"
+              type="button"
+            >
+              Update
+            </button>
+          )}
         </div>
       </form>
     </Modal>

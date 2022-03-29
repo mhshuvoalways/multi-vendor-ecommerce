@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReactStars from "react-rating-stars-component";
+import parse from "html-react-parser";
 import { addCart } from "../../store/actions/inCartAction";
 import { getWishItem, addWishList } from "../../store/actions/wishListAction";
 import Loading from "../utils/Loading";
@@ -67,7 +68,7 @@ const Details = () => {
                 }}
               />
             </div>
-            <p className="mt-5 text-base">{products.description}</p>
+            <p className="mt-5 text-base">{parse(products.description)}</p>
             <p className="border-solid bg-gray-100 border-2 my-10"></p>
             <div className="flex gap-4 items-center">
               <div className="flex gap-5 border-solid border border-gray-300 cursor-pointer p-2">
