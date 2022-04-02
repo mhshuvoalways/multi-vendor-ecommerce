@@ -1,4 +1,5 @@
 import * as Types from "../constants/UserAddressType";
+import * as ClearDataTypes from "../constants/ClearDataTypes";
 
 const init = {
   address: null,
@@ -29,6 +30,12 @@ const addressReducer = (state = init, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    }
+    case ClearDataTypes.CLEAR_DATA: {
+      return {
+        address: null,
+        error: {},
       };
     }
     default:

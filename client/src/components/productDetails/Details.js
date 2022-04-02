@@ -6,6 +6,7 @@ import parse from "html-react-parser";
 import { addCart } from "../../store/actions/inCartAction";
 import { getWishItem, addWishList } from "../../store/actions/wishListAction";
 import Loading from "../utils/Loading";
+import ProductShare from "./ProductShare";
 
 const Details = () => {
   const [products, setProducts] = useState();
@@ -133,12 +134,7 @@ const Details = () => {
                   <p>{el.name}</p>
                 ))}
               </p>
-              <div className="mt-10 flex gap-8">
-                <i className="fab fa-facebook cursor-pointer text-2xl"></i>
-                <i className="fab fa-instagram cursor-pointer text-2xl"></i>
-                <i className="fab fa-linkedin-in cursor-pointer text-2xl"></i>
-                <i className="fab fa-twitter cursor-pointer text-2xl"></i>
-              </div>
+              <ProductShare products={products} productUrl={params.id}/>
             </div>
             <p className="border-solid bg-gray-100 border-2 my-10"></p>
             <div className="border-solid border-2 border-gray-100">

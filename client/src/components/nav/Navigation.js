@@ -3,6 +3,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { NavLink, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import clearReduxData from "../../store/actions/clearAction";
 import { isAuthenticate } from "../../store/actions/userAction";
 import { getCartItem } from "../../store/actions/inCartAction";
 import CartPopUp from "./CartPopUp";
@@ -19,6 +20,9 @@ export default function Navigation() {
   useEffect(() => {
     dispatch(isAuthenticate());
     dispatch(getCartItem());
+    if (!userReducer.isAuthenticate) {
+      dispatch(clearReduxData());
+    }
   }, [dispatch, userReducer.isAuthenticate]);
 
   const navigation = [

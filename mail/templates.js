@@ -1,8 +1,9 @@
+const frontend_url =
+  process.env.NODE_ENV === "production"
+    ? process.env.FRONTEND_URL_PRODUCTION
+    : process.env.FRONTEND_URL_DEV;
+
 const recoverPass = (name, link) => {
-  const frontend_url =
-    process.env.NODE_ENV === "production"
-      ? process.env.FRONTEND_URL_PRODUCTION
-      : process.env.FRONTEND_URL_DEV;
   return `<div style="background-color: #efefef; padding: 30px">
   <h2>Hello ${name}</h2>
   <p>
@@ -16,10 +17,6 @@ const recoverPass = (name, link) => {
 };
 
 const activeAccount = (name, link) => {
-  const frontend_url =
-    process.env.NODE_ENV === "production"
-      ? process.env.FRONTEND_URL_PRODUCTION
-      : process.env.FRONTEND_URL_DEV;
   return `<div style="background-color: #efefef; padding: 30px">
     <h2>Hello ${name},</h2>
     <p>

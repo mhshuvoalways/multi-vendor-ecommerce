@@ -1,4 +1,5 @@
 import * as Types from "../constants/ProductTypes";
+import * as ClearDataTypes from "../constants/ClearDataTypes";
 
 const init = {
   products: [],
@@ -113,6 +114,17 @@ const productReducer = (state = init, action) => {
         ...state,
         proModal: !state.proModal,
         proId: action.payload,
+      };
+    }
+    case ClearDataTypes.CLEAR_DATA: {
+      return {
+        products: [],
+        myProducts: [],
+        error: {},
+        isLoading: true,
+        modal: false,
+        proModal: false,
+        proId: "",
       };
     }
     default:

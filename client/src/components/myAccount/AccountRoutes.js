@@ -1,10 +1,12 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/actions/userAction";
+import clearReduxData from "../../store/actions/clearAction";
 
 const Accounts = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -44,10 +46,11 @@ const Accounts = () => {
         <li
           className="border border-gray-300 hover:bg-purple-600 hover:text-gray-100 py-2 px-5 cursor-pointer"
           onClick={() => {
-            dispatch(logout());
+            dispatch(logout(navigate));
+            dispatch(clearReduxData());
           }}
         >
-          <a href="/login"> Logout</a>
+          Logout
         </li>
       </ul>
     </div>

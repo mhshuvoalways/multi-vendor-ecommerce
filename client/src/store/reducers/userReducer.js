@@ -1,4 +1,5 @@
 import * as Types from "../constants/UserTypes";
+import * as ClearDataTypes from "../constants/ClearDataTypes";
 
 const init = {
   isAuthenticate: false,
@@ -182,12 +183,13 @@ const userReudcer = (state = init, action) => {
         error: action.payload,
       };
     }
-    case Types.FRESH_USER: {
+    case ClearDataTypes.CLEAR_DATA: {
       return {
         isAuthenticate: false,
         user: {},
         error: null,
         findMail: false,
+        activeAccountMsg: "",
       };
     }
     default:

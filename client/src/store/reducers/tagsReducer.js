@@ -1,4 +1,5 @@
 import * as Types from "../constants/TagTypes";
+import * as ClearDataTypes from "../constants/ClearDataTypes";
 
 const init = {
   tags: [],
@@ -17,6 +18,12 @@ const productReducer = (state = init, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    }
+    case ClearDataTypes.CLEAR_DATA: {
+      return {
+        tags: [],
+        error: {},
       };
     }
     default:

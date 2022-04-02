@@ -1,8 +1,9 @@
 import React, { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../store/actions/userAction";
+import clearReduxData from "../../store/actions/clearAction";
 import Avatar from "../../assets/images/others/avatar.svg";
 
 function classNames(...classes) {
@@ -12,6 +13,7 @@ function classNames(...classes) {
 const AccountPopUp = () => {
   const userState = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <Menu as="div" className="ml-3 relative">
@@ -65,18 +67,18 @@ const AccountPopUp = () => {
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="/login"
+                  <div
                     className={classNames(
                       active ? "bg-gray-100 cursor-pointer" : "",
                       "block px-4 py-2 text-sm text-gray-700"
                     )}
                     onClick={() => {
-                      dispatch(logout());
+                      dispatch(logout(navigate));
+                      dispatch(clearReduxData());
                     }}
                   >
                     Logout
-                  </a>
+                  </div>
                 )}
               </Menu.Item>
             </div>

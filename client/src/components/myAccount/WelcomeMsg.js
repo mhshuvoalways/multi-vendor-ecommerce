@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getMyAccount, logout } from "../../store/actions/userAction";
+import clearReduxData from "../../store/actions/clearAction";
 
 const WelcomeMsg = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const WelcomeMsg = () => {
           className="cursor-pointer underline text-purple-500"
           onClick={() => {
             dispatch(logout(navigate));
+            dispatch(clearReduxData());
           }}
         >
           Logout

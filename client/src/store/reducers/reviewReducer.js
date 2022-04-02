@@ -1,4 +1,5 @@
 import * as Types from "../constants/ReviewType";
+import * as ClearDataTypes from "../constants/ClearDataTypes";
 
 const init = {
   reviews: [],
@@ -29,6 +30,12 @@ const reviewReducer = (state = init, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    }
+    case ClearDataTypes.CLEAR_DATA: {
+      return {
+        reviews: [],
+        error: {},
       };
     }
     default:

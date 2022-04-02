@@ -1,4 +1,5 @@
 import * as Types from "../constants/WishListType";
+import * as ClearDataTypes from "../constants/ClearDataTypes";
 
 const init = {
   wishlist: [],
@@ -75,6 +76,13 @@ const addCart = (state = init, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    }
+    case ClearDataTypes.CLEAR_DATA: {
+      return {
+        wishlist: [],
+        isLoading: true,
+        error: {},
       };
     }
     default:

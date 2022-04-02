@@ -1,4 +1,5 @@
 import * as Types from "../constants/InCartType";
+import * as ClearDataTypes from "../constants/ClearDataTypes";
 
 const init = {
   cart: [],
@@ -135,6 +136,15 @@ const addCart = (state = init, action) => {
         ...state,
         modal: !state.modal,
         id: action.payload,
+      };
+    }
+    case ClearDataTypes.CLEAR_DATA: {
+      return {
+        cart: [],
+        isLoading: true,
+        error: {},
+        modal: false,
+        id: "",
       };
     }
     default:

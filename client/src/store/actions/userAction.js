@@ -229,6 +229,7 @@ export const isAuthenticate = () => (dispatch) => {
         isAuthenticate: false,
       },
     });
+    setAuthToken("");
   }
 };
 
@@ -314,13 +315,7 @@ export const avatarAdd = (avatar) => (dispatch) => {
     });
 };
 
-export const freshData = () => (dispatch) => {
-  dispatch({
-    type: Types.FRESH_USER,
-  });
-};
-
-export const logout = () => (dispatch) => {
+export const logout = (navigate) => (dispatch) => {
   dispatch({
     type: Types.LOGOUT_USER,
     payload: {
@@ -329,4 +324,5 @@ export const logout = () => (dispatch) => {
   });
   localStorage.removeItem("token");
   setAuthToken("");
+  navigate("/login");
 };

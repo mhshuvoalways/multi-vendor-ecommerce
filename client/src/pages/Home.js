@@ -13,7 +13,7 @@ const Home = () => {
       <Navigation />
       <Banner />
       <SomeInfo />
-      <SectionTitle title="DAILY DEALS!" />
+      <SectionTitle title="HIGHLIGHTS!" />
       <Products />
       <SectionTitle title="CLIENT REVIEW" />
       <Clientfeedback />

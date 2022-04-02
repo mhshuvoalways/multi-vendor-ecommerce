@@ -1,4 +1,5 @@
 import * as Types from "../constants/OrderType";
+import * as ClearDataTypes from "../constants/ClearDataTypes";
 
 const init = {
   order: [],
@@ -37,6 +38,13 @@ const orderReducer = (state = init, action) => {
       return {
         ...state,
         applyCoupon: action.payload,
+      };
+    }
+    case ClearDataTypes.CLEAR_DATA: {
+      return {
+        order: [],
+        error: {},
+        applyCoupon: false,
       };
     }
     default:

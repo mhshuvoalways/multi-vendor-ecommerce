@@ -1,4 +1,5 @@
 import * as Types from "../constants/CategoryTypes";
+import * as ClearDataTypes from "../constants/ClearDataTypes";
 
 const init = {
   categories: [],
@@ -17,6 +18,12 @@ const categoryReducer = (state = init, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    }
+    case ClearDataTypes.CLEAR_DATA: {
+      return {
+        categories: [],
+        error: {},
       };
     }
     default:
