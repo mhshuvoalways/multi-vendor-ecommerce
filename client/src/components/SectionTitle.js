@@ -3,8 +3,7 @@ import React from "react";
 const SectionTitle = ({ title }) => {
   return (
     <div>
-      <p className="text-3xl mb-1 text-center mt-36">{title}</p>
-      <p className="border border-purple-600 max-w-xs m-auto mb-10"></p>
+      <p className="text-2xl text-center mt-36 mb-10">{title}</p>
     </div>
   );
 };

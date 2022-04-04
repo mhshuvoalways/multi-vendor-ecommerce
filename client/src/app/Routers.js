@@ -1,20 +1,24 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Tostify from "../components/utils/Tostify";
+
 import RequireAuth from "./RequireAuth";
-import Home from "../pages/Home";
-import Details from "../pages/ProductDetails";
-import Shop from "../pages/Shop";
-import Cart from "../pages/Cart";
-import CheckOut from "../pages/CheckOut";
-import InWish from "../pages/InWish";
-import ComingSoon from "../components/CommingSoon";
+
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import ActiveAccount from "../pages/ActiveAccount";
 import CheckMailMsg from "../pages/CheckMailMsg";
 import FindMail from "../pages/FindMail";
 import RecoverPassword from "../pages/RecoverPassword";
+
+import Tostify from "../components/utils/Tostify";
+import Home from "../pages/Home";
+import Details from "../pages/ProductDetails";
+import Shop from "../pages/Shop";
+import Cart from "../pages/Cart";
+import CheckOut from "../pages/CheckOut";
+import InWish from "../pages/InWish";
+import Category from "../pages/Category";
+import ComingSoon from "../components/CommingSoon";
 import Contact from "../pages/Contact";
 
 import MyAccount from "../pages/MyAccount";
@@ -47,6 +51,7 @@ const Routers = () => {
         <Route path="recoverpassword/:token" element={<RecoverPassword />} />
         <Route path="contact" element={<Contact />} />
         <Route path="findmail" element={<FindMail />} />
+        <Route path="category/:name" element={<Category />} />
         <Route
           path="checkout"
           element={

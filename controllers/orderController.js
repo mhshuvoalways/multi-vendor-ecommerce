@@ -1,4 +1,5 @@
 const Order = require("../Model/Order");
+const Product = require("../Model/Product");
 const BillingAddress = require("../Model/BillingAddress");
 const InCart = require("../Model/InCart");
 const serverError = require("../utils/serverError");
@@ -74,7 +75,24 @@ const orderPlace = (req, res) => {
                       .then((orderResponse) => {
                         InCart.deleteMany({ authorId: req.user._id })
                           .then(() => {
-                            res.status(200).json(orderResponse);
+                            orderResponse.productId.forEach((pro) => {
+                              Product.findOne({ _id: pro })
+                                .then((productResponse) => {
+                                  Product.findOneAndUpdate(
+                                    { _id: pro },
+                                    { appeared: productResponse.appeared + 1 }
+                                  )
+                                    .then(() => {
+                                      res.status(200).json(orderResponse);
+                                    })
+                                    .catch(() => {
+                                      serverError(res);
+                                    });
+                                })
+                                .catch(() => {
+                                  serverError(res);
+                                });
+                            });
                           })
                           .catch(() => {
                             serverError(res);
@@ -108,7 +126,24 @@ const orderPlace = (req, res) => {
                       .then((orderResponse) => {
                         InCart.deleteMany({ authorId: req.user._id })
                           .then(() => {
-                            res.status(200).json(orderResponse);
+                            orderResponse.productId.forEach((pro) => {
+                              Product.findOne({ _id: pro })
+                                .then((productResponse) => {
+                                  Product.findOneAndUpdate(
+                                    { _id: pro },
+                                    { appeared: productResponse.appeared + 1 }
+                                  )
+                                    .then(() => {
+                                      res.status(200).json(orderResponse);
+                                    })
+                                    .catch(() => {
+                                      serverError(res);
+                                    });
+                                })
+                                .catch(() => {
+                                  serverError(res);
+                                });
+                            });
                           })
                           .catch(() => {
                             serverError(res);

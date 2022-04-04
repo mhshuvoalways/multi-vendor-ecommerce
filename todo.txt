@@ -9,3 +9,7 @@ rating has to be done in mobile device
 chat system add
 invoice add
 react chatbot add
+
+category show
+highlight product 
+our vendor show

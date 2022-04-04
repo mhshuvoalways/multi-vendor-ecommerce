@@ -1,5 +1,4 @@
 const Product = require("../Model/Product");
-const User = require("../Model/User");
 const Review = require("../Model/Review");
 const serverError = require("../utils/serverError");
 
@@ -16,24 +15,33 @@ const addReview = (req, res) => {
               rating,
               comments,
             };
-            new Review(review)
-              .save()
+            Product.findOneAndUpdate(
+              { _id: req.params.id },
+              { reviewAppeared: product.reviewAppeared + 1 }
+            )
               .then(() => {
-                Review.find({ productId: req.params.id })
-                  .populate("productId")
-                  .populate("authorId")
-                  .then((reviewRes) => {
-                    let rating = 0;
-                    reviewRes.forEach((el) => {
-                      rating += el.rating;
-                    });
-                    const review = rating / reviewRes.length;
-                    Product.findOneAndUpdate(
-                      { _id: req.params.id },
-                      { rating: review }
-                    )
-                      .then(() => {
-                        res.status(200).json(reviewRes);
+                new Review(review)
+                  .save()
+                  .then(() => {
+                    Review.find({ productId: req.params.id })
+                      .populate("productId")
+                      .populate("authorId")
+                      .then((reviewRes) => {
+                        let rating = 0;
+                        reviewRes.forEach((el) => {
+                          rating += el.rating;
+                        });
+                        const review = rating / reviewRes.length;
+                        Product.findOneAndUpdate(
+                          { _id: req.params.id },
+                          { rating: review }
+                        )
+                          .then(() => {
+                            res.status(200).json(reviewRes);
+                          })
+                          .catch(() => {
+                            serverError(res);
+                          });
                       })
                       .catch(() => {
                         serverError(res);
@@ -69,7 +77,20 @@ const getReview = (req, res) => {
     });
 };
 
+const getAllReview = (req, res) => {
+  Review.find()
+    .populate("productId")
+    .populate("authorId")
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch(() => {
+      serverError(res);
+    });
+};
+
 module.exports = {
   addReview,
   getReview,
+  getAllReview,
 };

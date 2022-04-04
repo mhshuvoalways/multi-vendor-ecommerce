@@ -6,6 +6,7 @@ import setAuthToken from "./utils/setAuthToken";
 import { Provider } from "react-redux";
 import store from "./store";
 import reportWebVitals from "./reportWebVitals";
+import "aos/dist/aos.css";
 import "./assets/css/style.css";
 
 const token = localStorage.getItem("token");

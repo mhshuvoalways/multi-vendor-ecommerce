@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import clearReduxData from "../../store/actions/clearAction";
 import { isAuthenticate } from "../../store/actions/userAction";
 import { getCartItem } from "../../store/actions/inCartAction";
+import { getWishItem } from "../../store/actions/wishListAction";
 import CartPopUp from "./CartPopUp";
 import AccountPopUp from "./AccountPopUp";
 import Cart from "../../assets/images/icons/cart.png";
@@ -20,6 +21,7 @@ export default function Navigation() {
   useEffect(() => {
     dispatch(isAuthenticate());
     dispatch(getCartItem());
+    dispatch(getWishItem());
     if (!userReducer.isAuthenticate) {
       dispatch(clearReduxData());
     }

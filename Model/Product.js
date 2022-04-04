@@ -72,6 +72,14 @@ const productSchema = new Schema(
       type: Boolean,
       default: true,
     },
+    appeared: {
+      type: Number,
+      default: 0,
+    },
+    reviewAppeared: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

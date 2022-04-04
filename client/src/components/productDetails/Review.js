@@ -49,15 +49,23 @@ const Reviews = ({ reviewReducer }) => {
             key={el._id}
           >
             <img
-              src={el.authorId.avatar ? el.authorId.avatar.url : Avatar}
+              src={
+                el.authorId && el.authorId.avatar
+                  ? el.authorId && el.authorId.avatar.url
+                  : Avatar
+              }
               alt=""
               className="w-24 h-24 bg-gray-200"
             />
             <div>
               <div className="flex gap-5 flex-wrap">
                 <p className="text-base font-semibold">
-                  {`${el.authorId["firstName"] || el.authorId["storeName"]} ${
-                    el.authorId["lastName"] || ""
+                  {`${
+                    el.authorId
+                      ? el.authorId["firstName"] || el.authorId["storeName"]
+                      : "User"
+                  } ${
+                    el.authorId ? el.authorId["lastName"] || "" : "has deleted"
                   }`}
                 </p>
                 <ReactStars

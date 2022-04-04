@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReactStars from "react-rating-stars-component";
-import { addCart } from "../store/actions/inCartAction";
-import { addWishList } from "../store/actions/wishListAction";
-import Modal from "./Modal";
-import Loading from "./utils/Loading";
+import { addCart } from "../../store/actions/inCartAction";
+import { addWishList } from "../../store/actions/wishListAction";
+import Modal from "../Modal";
+import Loading from "../utils/Loading";
 
 const ProductModal = ({ state, modalHandler, productReducer }) => {
   const [products, setProducts] = useState();

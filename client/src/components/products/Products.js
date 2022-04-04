@@ -1,42 +1,45 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../store/actions/productAction";
-import { addCart, modalHandler } from "../store/actions/inCartAction";
-import { addWishList, getWishItem } from "../store/actions/wishListAction";
+import { getProducts } from "../../store/actions/productAction";
+import { addCart, modalHandler } from "../../store/actions/inCartAction";
+import { addWishList } from "../../store/actions/wishListAction";
 import ReactStars from "react-rating-stars-component";
 import ProductShow from "./ProductShow";
-import Loading from "./utils/Loading";
-import Visibility from "../assets/images/icons/visibility.png";
-import Favorite from "../assets/images/icons/favorite.png";
-import Cart from "../assets/images/icons/cart.png";
-import enableBtn from "../store/actions/enableBtnAction";
+import Loading from "../utils/Loading";
+import Visibility from "../../assets/images/icons/visibility.png";
+import Favorite from "../../assets/images/icons/favorite.png";
+import Cart from "../../assets/images/icons/cart.png";
+import enableBtn from "../../store/actions/enableBtnAction";
 
-const Products = () => {
+const Products = ({ productReducer, allProducts, proFilter }) => {
   const dispatch = useDispatch();
   const userReducer = useSelector((el) => el.userReducer);
-  const productReducer = useSelector((el) => el.productReducer);
   const cartReducer = useSelector((el) => el.inCartReducer);
   const wishListReducer = useSelector((el) => el.wishListReducer);
   const btnReducer = useSelector((store) => store.btnReducer);
 
   useEffect(() => {
     dispatch(getProducts());
-    dispatch(getWishItem());
   }, [dispatch]);
 
-  const reverseCart = [...productReducer.products];
+  const reverseProducts = [...allProducts];
+
+  const products = proFilter
+    ? reverseProducts.reverse().slice(0, 8)
+    : reverseProducts.reverse();
 
   return (
-    <div className="w-11/12 m-auto">
+    <div>
       <div className="flex gap-8 flex-wrap justify-center">
         {productReducer.isLoading ? (
           <Loading />
-        ) : (
-          reverseCart.reverse().map((el) => (
+        ) : products.length ? (
+          products.map((el) => (
             <div
-              className="w-64 rounded shadow-lg product__card relative"
+              className="w-64 h-96 rounded shadow-md product__card relative border"
               key={el._id}
+              data-aos={proFilter && "zoom-in"}
             >
               <Link to={"/details/" + el._id}>
                 <img
@@ -139,6 +142,8 @@ const Products = () => {
               </div>
             </div>
           ))
+        ) : (
+          <p className="text-2xl">There are no products</p>
         )}
       </div>
       <ProductShow
