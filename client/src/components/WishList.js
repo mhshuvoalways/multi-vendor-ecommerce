@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  getWishItem,
   deleteWishItem,
   deleteAllWishItem,
 } from "../store/actions/wishListAction";
@@ -14,10 +13,6 @@ const InWishList = () => {
   const dispatch = useDispatch();
   const wishListReducer = useSelector((item) => item.wishListReducer);
   const btnReducer = useSelector((store) => store.btnReducer);
-
-  useEffect(() => {
-    dispatch(getWishItem());
-  }, [dispatch]);
 
   const wishListReverse = [...wishListReducer.wishlist];
 

@@ -16,10 +16,12 @@ import Details from "../pages/ProductDetails";
 import Shop from "../pages/Shop";
 import Cart from "../pages/Cart";
 import CheckOut from "../pages/CheckOut";
+import CheckoutMethod from "../pages/CheckoutMethod";
 import InWish from "../pages/InWish";
 import Category from "../pages/Category";
 import ComingSoon from "../components/CommingSoon";
 import Contact from "../pages/Contact";
+import PageNotFound from "../components/NotFound404";
 
 import MyAccount from "../pages/MyAccount";
 import WelcomeMsg from "../components/myAccount/WelcomeMsg";
@@ -52,6 +54,7 @@ const Routers = () => {
         <Route path="contact" element={<Contact />} />
         <Route path="findmail" element={<FindMail />} />
         <Route path="category/:name" element={<Category />} />
+        <Route path="*" element={<PageNotFound />} />
         <Route
           path="checkout"
           element={
@@ -60,7 +63,14 @@ const Routers = () => {
             </RequireAuth>
           }
         />
-
+        <Route
+          path="checkout-method"
+          element={
+            <RequireAuth>
+              <CheckoutMethod />
+            </RequireAuth>
+          }
+        />
         <Route
           path="my-account"
           element={

@@ -8,6 +8,16 @@ const categoriesSchema = new Schema(
       trim: true,
       required: true,
     },
+    icon: {
+      url: {
+        type: String,
+        required: true,
+      },
+      public_id: {
+        type: String,
+        required: true,
+      },
+    },
   },
   {
     timestamps: true,
@@ -17,4 +27,3 @@ const categoriesSchema = new Schema(
 const Category = model("category", categoriesSchema);
 
 module.exports = Category;
-

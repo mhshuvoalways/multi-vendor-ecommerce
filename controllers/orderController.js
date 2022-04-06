@@ -5,6 +5,41 @@ const InCart = require("../Model/InCart");
 const serverError = require("../utils/serverError");
 const orderValidation = require("../validations/orderValidation");
 
+const checkValidationOrder = (req, res) => {
+  const {
+    firstName,
+    lastName,
+    email,
+    phone,
+    city,
+    state,
+    country,
+    zipCode,
+    streetAddress,
+    discount,
+  } = req.body;
+
+  const validation = orderValidation({
+    firstName,
+    lastName,
+    email,
+    phone,
+    city,
+    state,
+    country,
+    zipCode,
+    streetAddress,
+    discount,
+  });
+  if (validation.isValid) {
+    res.status(200).json({
+      message: "Validation successful",
+    });
+  } else {
+    res.status(400).json(validation.error);
+  }
+};
+
 const orderPlace = (req, res) => {
   const {
     firstName,
@@ -80,11 +115,12 @@ const orderPlace = (req, res) => {
                                 .then((productResponse) => {
                                   Product.findOneAndUpdate(
                                     { _id: pro },
-                                    { appeared: productResponse.appeared + 1 }
+                                    {
+                                      orderAppeared:
+                                        productResponse.orderAppeared + 1,
+                                    }
                                   )
-                                    .then(() => {
-                                      res.status(200).json(orderResponse);
-                                    })
+                                    .then(() => {})
                                     .catch(() => {
                                       serverError(res);
                                     });
@@ -93,6 +129,7 @@ const orderPlace = (req, res) => {
                                   serverError(res);
                                 });
                             });
+                            res.status(200).json(orderResponse);
                           })
                           .catch(() => {
                             serverError(res);
@@ -131,11 +168,12 @@ const orderPlace = (req, res) => {
                                 .then((productResponse) => {
                                   Product.findOneAndUpdate(
                                     { _id: pro },
-                                    { appeared: productResponse.appeared + 1 }
+                                    {
+                                      orderAppeared:
+                                        productResponse.orderAppeared + 1,
+                                    }
                                   )
-                                    .then(() => {
-                                      res.status(200).json(orderResponse);
-                                    })
+                                    .then(() => {})
                                     .catch(() => {
                                       serverError(res);
                                     });
@@ -144,6 +182,7 @@ const orderPlace = (req, res) => {
                                   serverError(res);
                                 });
                             });
+                            res.status(200).json(orderResponse);
                           })
                           .catch(() => {
                             serverError(res);
@@ -184,4 +223,5 @@ const getOderDetails = (req, res) => {
 module.exports = {
   orderPlace,
   getOderDetails,
+  checkValidationOrder,
 };

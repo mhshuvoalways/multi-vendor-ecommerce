@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getCategory } from "../../store/actions/categoryAction";
-import Imgelec from "../../assets/images/icons/electronic-device.png";
+import Imgelec from "../../assets/images/icons/food.png";
 import Loading from "../utils/Loading";
 
 const Categories = () => {

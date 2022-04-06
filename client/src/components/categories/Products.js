@@ -12,7 +12,7 @@ const Products = () => {
   );
 
   return (
-    <div className="w-11/12 m-auto mt-14">
+    <div className="w-11/12 m-auto">
       <ProductsShow productReducer={productReducer} allProducts={products} />
     </div>
   );

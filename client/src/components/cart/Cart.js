@@ -77,7 +77,7 @@ const Cart = () => {
                     <th className="p-2 bg-gray-100">ACTION</th>
                   </tr>
                   {reverseCart.reverse().map((el) => (
-                    <tr className="border-gray-100 border-2">
+                    <tr className="border-gray-100 border-2" key={el._id}>
                       <td className="p-2">
                         <Link to={`/details/${el.productId}`}>
                           <img src={el.image} alt="" className="w-28" />

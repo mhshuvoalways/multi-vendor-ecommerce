@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAddress } from "../../store/actions/userAddressAction";
-import { orderProduct } from "../../store/actions/orderAction";
 import { useNavigate } from "react-router-dom";
+import { getAddress } from "../../store/actions/userAddressAction";
+import { validationcheck } from "../../store/actions/orderAction";
 import Discount from "../Coupon/Discount";
 import GrandTotal from "../Coupon/GrandTotal";
 
@@ -12,7 +12,8 @@ const PlaceOrder = ({ state }) => {
   const dispatch = useDispatch();
   const cartReducer = useSelector((item) => item.inCartReducer);
   const orderReducer = useSelector((item) => item.orderReducer);
-  const navigate = useNavigate();
+
+  const navigation = useNavigate();
 
   const productTotal = useCallback(() => {
     let proTotal = 0;
@@ -37,7 +38,7 @@ const PlaceOrder = ({ state }) => {
         </div>
         <div className="my-10 border-b border-gray-400">
           {cartReducer.cart.map((el) => (
-            <div className="flex justify-between">
+            <div className="flex justify-between" key={el._id}>
               <p className="mb-5">
                 {el.name} X {el.quantity}
               </p>
@@ -67,7 +68,15 @@ const PlaceOrder = ({ state }) => {
       <button
         className="bg-purple-600 text-white py-3 w-full hover:bg-gray-600 mt-10 rounded-full"
         onClick={() => {
-          dispatch(orderProduct(state, navigate));
+          dispatch(validationcheck(state, navigation));
+          localStorage.setItem("billingAddress", JSON.stringify(state));
+          localStorage.setItem(
+            "amount",
+            orderReducer.applyCoupon
+              ? calculate -
+                  (calculate * process.env.REACT_APP_DISCOUNT_COUPON) / 100
+              : calculate
+          );
         }}
       >
         PLACE ORDER

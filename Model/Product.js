@@ -72,7 +72,7 @@ const productSchema = new Schema(
       type: Boolean,
       default: true,
     },
-    appeared: {
+    orderAppeared: {
       type: Number,
       default: 0,
     },

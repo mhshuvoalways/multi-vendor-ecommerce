@@ -21,9 +21,9 @@ const Index = () => {
     if (filterTab === "bestsellers") {
       const temp = [...productReducer.products];
       temp.sort((a, b) => {
-        if (a.appeared > b.appeared) {
+        if (a.orderAppeared > b.orderAppeared) {
           return 1;
-        } else if (a.appeared < b.appeared) {
+        } else if (a.orderAppeared < b.orderAppeared) {
           return -1;
         } else {
           return 0;
