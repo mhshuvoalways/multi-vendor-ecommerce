@@ -31,7 +31,7 @@ const Products = ({ productReducer, allProducts, proFilter }) => {
 
   return (
     <div>
-      <div className="flex gap-8 flex-wrap justify-center">
+      <div className="flex gap-8 flex-wrap justify-center sm:justify-between">
         {productReducer.isLoading ? (
           <Loading />
         ) : products.length ? (
@@ -143,7 +143,7 @@ const Products = ({ productReducer, allProducts, proFilter }) => {
             </div>
           ))
         ) : (
-          <p className="text-2xl">There are no products</p>
+          <p className="text-2xl m-auto">There are no products</p>
         )}
       </div>
       <ProductShow

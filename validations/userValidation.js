@@ -5,6 +5,32 @@ const adminRegisterValidation = (value) => {
   if (!value.email) {
     error.email = "Please provide your email";
   }
+  if (!value.storeName) {
+    error.storeName = "Please provide your store name";
+  }
+  if (!value.password) {
+    error.password = "Please provide your password";
+  } else if (value.password.length < 6) {
+    error.password = "Please provide minimum 6 character";
+  } else if (value.password.length > 20) {
+    error.password = "Please provide maximum 20 character";
+  }
+  if (!value.agree) {
+    error.agree = "Please checked agree button";
+  }
+
+  let isValid = Object.keys(error).length === 0;
+  return {
+    error,
+    isValid,
+  };
+};
+
+const customerRegisterValidation = (value) => {
+  const error = {};
+  if (!value.email) {
+    error.email = "Please provide your email";
+  }
   if (!value.password) {
     error.password = "Please provide your password";
   } else if (value.password.length < 6) {
@@ -41,7 +67,7 @@ const adminRegisterValidation = (value) => {
   };
 };
 
-const registerValidation = (value) => {
+const vendorRegisterValidation = (value) => {
   const error = {};
   if (value.role === "vendor") {
     if (!value.storeName) {
@@ -161,7 +187,8 @@ const updatePassValidation = (value) => {
 
 module.exports = {
   adminRegisterValidation,
-  registerValidation,
+  customerRegisterValidation,
+  vendorRegisterValidation,
   loginValidation,
   findMailValidation,
   recoverPassValidation,

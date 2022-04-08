@@ -33,6 +33,7 @@ const userSchema = new Schema(
       min: 2,
       max: 50,
     },
+    storeUsername: String,
     role: {
       type: String,
       default: "customer",
@@ -41,7 +42,10 @@ const userSchema = new Schema(
       public_id: String,
       url: String,
     },
-    isActive: false,
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
     strategy: {
       type: String,
       default: "email",

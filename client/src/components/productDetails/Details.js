@@ -46,10 +46,14 @@ const Details = () => {
         <Loading />
       ) : (
         <div className="w-11/12 my-20 md:flex gap-20 m-auto">
-          <div className="flex-1">
-            <img src={products.image[0].url} alt="" />
+          <div className="w-2/5">
+            <img
+              src={products.image[0].url}
+              alt=""
+              className="w-full border p-5"
+            />
           </div>
-          <div className="my-10 md:my-0 flex-1">
+          <div className="my-10 md:my-0 w-2/4">
             <p className="mb-2 text-3xl">{products.name}</p>
             <div className="flex">
               <p className="text-2xl">${products.salePrice}</p>
@@ -134,12 +138,12 @@ const Details = () => {
                   <p>{el.name}</p>
                 ))}
               </p>
-              <ProductShare products={products} productUrl={params.id}/>
+              <ProductShare products={products} productUrl={params.id} />
             </div>
             <p className="border-solid bg-gray-100 border-2 my-10"></p>
             <div className="border-solid border-2 border-gray-100">
               <p className="p-2">Sold by</p>
-              <Link to="/shop" className="text-xl p-2">
+              <Link to={"/shop/" + products.author._id} className="text-xl p-2">
                 {products.author.storeName}
               </Link>
             </div>

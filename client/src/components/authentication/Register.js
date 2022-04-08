@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useNavigate, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userRegister } from "../../store/actions/userAction";
+import { userRegister, vendorRegister } from "../../store/actions/userAction";
 import enableBtn from "../../store/actions/enableBtnAction";
 
 const Register = () => {
@@ -51,19 +51,35 @@ const Register = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     const { email, password, storeName, recaptch, role, agree } = state;
-    dispatch(
-      userRegister(
-        {
-          email,
-          password,
-          storeName,
-          recaptch,
-          role,
-          agree,
-        },
-        navigate
-      )
-    );
+    if (state.role === "customer") {
+      dispatch(
+        userRegister(
+          {
+            email,
+            password,
+            recaptch,
+            role,
+            agree,
+          },
+          navigate
+        )
+      );
+    } else {
+      dispatch(
+        vendorRegister(
+          {
+            email,
+            password,
+            storeName,
+            recaptch,
+            role,
+            agree,
+          },
+          navigate
+        )
+      );
+    }
+
     dispatch(enableBtn(false));
     setState({
       email: "",
@@ -102,6 +118,7 @@ const Register = () => {
               name="email"
               onChange={onChange}
               value={state.email}
+              required
             />
           </label>
           <label className="block">
@@ -113,6 +130,7 @@ const Register = () => {
               name="password"
               onChange={onChange}
               value={state.password}
+              required
             />
           </label>
           {state.role === "vendor" && (
@@ -125,6 +143,7 @@ const Register = () => {
                 name="storeName"
                 onChange={onChange}
                 value={state.storeName}
+                required
               />
             </label>
           )}

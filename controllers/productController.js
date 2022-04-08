@@ -30,10 +30,7 @@ const addProduct = (req, res) => {
                 serverError(res);
               } else {
                 const product = {
-                  author: {
-                    authorId: response._id,
-                    storeName: response.storeName,
-                  },
+                  author: response._id,
                   name,
                   category,
                   regularPrice,
@@ -70,6 +67,7 @@ const addProduct = (req, res) => {
 
 const getProduct = (req, res) => {
   Product.find()
+    .populate("author")
     .then((response) => {
       res.status(200).json(response);
     })
@@ -226,7 +224,7 @@ const filterProduct = (req, res) => {
 };
 
 const getMyproducts = (req, res) => {
-  Product.find({ "author.authorId": req.user._id })
+  Product.find({ author: req.user._id })
     .then((response) => {
       res.status(200).json(response);
     })

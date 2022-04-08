@@ -20,7 +20,7 @@ export const createProduct = (formData) => (dispatch) => {
       dispatch({
         type: Types.UPLOAD_PRODUCT_ERROR,
         payload: {
-          error: err.response.data,
+          error: err.response,
         },
       });
       dispatch(enableBtn(true));

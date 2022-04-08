@@ -1,8 +1,8 @@
 import axios from "axios";
-import frontend_url from "./frontendUrl";
+import backendUrl from "./backendUrl";
 
 const instance = axios.create({
-  baseURL: frontend_url,
+  baseURL: backendUrl,
 });
 
 export default instance;

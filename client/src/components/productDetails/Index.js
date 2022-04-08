@@ -26,7 +26,11 @@ const Index = () => {
   return (
     <div className="w-11/12 m-auto">
       <Details />
-      <TabRoute routeHandler={routeHandler} reviewReducer={reviewReducer} />
+      <TabRoute
+        routeHandler={routeHandler}
+        reviewReducer={reviewReducer}
+        state={state}
+      />
       {state === "addition" && <AdditionalInfo />}
       {state === "review" && <Review reviewReducer={reviewReducer} />}
     </div>

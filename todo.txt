@@ -10,4 +10,3 @@ chat system add
 invoice add
 react chatbot add
 our vendor show
-payment system

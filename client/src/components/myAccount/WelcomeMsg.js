@@ -18,7 +18,7 @@ const WelcomeMsg = () => {
     <div className="shadow-md rounded-md p-5">
       <p>
         Hello {userReducer.user && userReducer.user.username} (not{" "}
-        {userReducer.user && userReducer.user.username}?
+        {userReducer.user && userReducer.user.username}?{" "}
         <span
           className="cursor-pointer underline text-purple-500"
           onClick={() => {

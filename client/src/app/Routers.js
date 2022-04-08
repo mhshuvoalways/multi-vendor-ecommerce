@@ -19,7 +19,6 @@ import CheckOut from "../pages/CheckOut";
 import CheckoutMethod from "../pages/CheckoutMethod";
 import InWish from "../pages/InWish";
 import Category from "../pages/Category";
-import ComingSoon from "../components/CommingSoon";
 import Contact from "../pages/Contact";
 import PageNotFound from "../components/NotFound404";
 
@@ -33,6 +32,10 @@ import AccountDetails from "../components/myAccount/AccountDetails";
 import VendorRoutes from "../pages/VendorRoutes";
 import VendorDashboard from "../components/vendorDashboard/Dashboard";
 import VendorProducts from "../components/vendorDashboard/VendorProducts";
+import Settings from "../components/vendorDashboard/Settings";
+
+import Filter from "../components/filter";
+import VisitStore from "../components/visitStore";
 
 const Routers = () => {
   return (
@@ -40,7 +43,10 @@ const Routers = () => {
       <Tostify />
       <Routes>
         <Route path="" element={<Home />} />
-        <Route path="shop" element={<Shop />} />
+        <Route path="shop" element={<Shop />}>
+          <Route path="" element={<Filter />} />
+          <Route path=":storeauthorid" element={<VisitStore />} />
+        </Route>
         <Route path="details/:id" element={<Details />} />
         <Route path="cart" element={<Cart />} />
         <Route path="wishlist" element={<InWish />} />
@@ -162,10 +168,10 @@ const Routers = () => {
             }
           />
           <Route
-            path="comingsoon"
+            path="settings"
             element={
               <RequireAuth>
-                <ComingSoon />
+                <Settings />
               </RequireAuth>
             }
           />

@@ -4,14 +4,8 @@ const { Schema, model } = mongoose;
 const productSchema = new Schema(
   {
     author: {
-      authorId: {
-        type: Schema.Types.ObjectId,
-        ref: "user",
-      },
-      storeName: {
-        type: String,
-        required: true,
-      },
+      type: Schema.Types.ObjectId,
+      ref: "user",
     },
     name: {
       type: String,

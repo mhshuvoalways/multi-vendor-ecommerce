@@ -20,10 +20,11 @@ export default function Navigation() {
 
   useEffect(() => {
     dispatch(isAuthenticate());
-    dispatch(getCartItem());
-    dispatch(getWishItem());
     if (!userReducer.isAuthenticate) {
       dispatch(clearReduxData());
+    } else {
+      dispatch(getCartItem());
+      dispatch(getWishItem());
     }
   }, [dispatch, userReducer.isAuthenticate]);
 

@@ -11,7 +11,7 @@ const createOrder = async (req, res) => {
     });
     const options = {
       amount: req.body.amount,
-      currency: "INR",
+      currency: "USD",
     };
     const order = await instance.orders.create(options);
     if (!order) return serverError(res);

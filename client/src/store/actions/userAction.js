@@ -7,10 +7,10 @@ import enableBtn from "./enableBtnAction";
 
 export const userRegister = (user, navigate) => (dispatch) => {
   axios
-    .post("/user/register", user)
+    .post("/user/customerregister", user)
     .then((response) => {
       dispatch({
-        type: Types.REGISTER_USER,
+        type: Types.CUSTOMER_REGISTER,
         payload: {
           user: response.data,
         },
@@ -25,7 +25,41 @@ export const userRegister = (user, navigate) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({
-        type: Types.REGISTER_USER_ERROR,
+        type: Types.CUSTOMER_REGISTER_ERROR,
+        payload: {
+          error: err.response.data,
+        },
+      });
+      dispatch(enableBtn(true));
+      dispatch(alertAction(err.response.data.email));
+      dispatch(alertAction(err.response.data.password));
+      dispatch(alertAction(err.response.data.storeName));
+      dispatch(alertAction(err.response.data.recaptch));
+      dispatch(alertAction(err.response.data.message));
+    });
+};
+
+export const vendorRegister = (user, navigate) => (dispatch) => {
+  axios
+    .post("/user/vendorregister", user)
+    .then((response) => {
+      dispatch({
+        type: Types.REGISTER_VENDOR,
+        payload: {
+          user: response.data,
+        },
+      });
+      dispatch(
+        alertAction(
+          "Thanks for register! Please check your email and active your account."
+        )
+      );
+      navigate("/login");
+      dispatch(enableBtn(true));
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.REGISTER_VENDOR_ERROR,
         payload: {
           error: err.response.data,
         },

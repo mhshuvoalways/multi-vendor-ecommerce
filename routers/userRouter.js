@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const {
   adminRegister,
-  register,
+  customerRegister,
+  vendorRegister,
   login,
   loginWithGoogle,
   loginWithFacebook,
@@ -19,7 +20,8 @@ const authenticate = require("../middlewares/authenticate");
 const fileUploader = require("../middlewares/fileUploader");
 
 router.post("/adminregister", adminRegister);
-router.post("/register", register);
+router.post("/customerregister", customerRegister);
+router.post("/vendorregister", vendorRegister);
 router.post("/google", loginWithGoogle);
 router.post("/facebook", loginWithFacebook);
 router.post("/login", login);

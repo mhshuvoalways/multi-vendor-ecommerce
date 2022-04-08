@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addReview } from "../../store/actions/reviewAction";
+import enableBtnAction from "../../store/actions/enableBtnAction";
 import ReactStars from "react-rating-stars-component";
 import Avatar from "../../assets/images/others/avatar.svg";
 
@@ -14,6 +15,7 @@ const Reviews = ({ reviewReducer }) => {
   const dispatch = useDispatch();
   const params = useParams();
   const userReducer = useSelector((store) => store.userReducer);
+  const btnReducer = useSelector((store) => store.btnReducer);
 
   const setting = {
     size: 20,
@@ -34,6 +36,7 @@ const Reviews = ({ reviewReducer }) => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     dispatch(addReview(state, params.id));
+    dispatch(enableBtnAction(false));
     setState({
       rating: 5,
       comments: "",
@@ -99,19 +102,28 @@ const Reviews = ({ reviewReducer }) => {
             value={state.comments}
             onChange={onChangeHandler}
           />
-          {userReducer.isAuthenticate ? (
+          {btnReducer ? (
+            userReducer.isAuthenticate ? (
+              <button
+                className="bg-purple-500 px-5 py-2 text-white hover:bg-gray-800"
+                onClick={onSubmitHandler}
+              >
+                Submit
+              </button>
+            ) : (
+              <Link to="/login">
+                <button className="bg-purple-500 px-5 py-2 text-white hover:bg-gray-800">
+                  Submit
+                </button>
+              </Link>
+            )
+          ) : (
             <button
-              className="bg-purple-500 px-5 py-2 text-white hover:bg-gray-800"
-              onClick={onSubmitHandler}
+              className="bg-gray-500 opacity-50 cursor-not-allowed px-5 py-2 text-white hover:bg-gray-800"
+              type="button"
             >
               Submit
             </button>
-          ) : (
-            <Link to="/login">
-              <button className="bg-purple-500 px-5 py-2 text-white hover:bg-gray-800">
-                Submit
-              </button>
-            </Link>
           )}
         </div>
       </div>

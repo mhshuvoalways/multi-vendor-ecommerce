@@ -11,6 +11,10 @@ const paymentSchema = new Schema(
       type: Number,
       default: 0,
     },
+    typeofAmount: {
+      type: String,
+      default: "USD",
+    },
     details: {
       orderId: String,
       paymentId: String,

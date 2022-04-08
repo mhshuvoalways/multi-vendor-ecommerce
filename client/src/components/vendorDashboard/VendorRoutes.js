@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getMyVendor } from "../../store/actions/vendorAction";
 import { logout } from "../../store/actions/userAction";
 import clearReduxData from "../../store/actions/clearAction";
 
 const VendorRoutes = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getMyVendor());
+  }, [dispatch]);
+
+  const vendorReducer = useSelector((store) => store.vendorReducer);
 
   return (
     <div className="bg-gray-800 p-5">
@@ -31,18 +38,21 @@ const VendorRoutes = () => {
             Products
           </li>
         </NavLink>
-        <NavLink
-          to="comingsoon"
-          className={({ isActive }) =>
-            isActive ? "text-purple-600" : "text-gray-100"
-          }
-        >
-          <li className="border border-gray-300 hover:bg-purple-600 hover:text-gray-100 py-2 px-5">
+        <li className="border border-gray-300 hover:bg-purple-600 hover:text-gray-100 py-2 px-5 text-gray-100">
+          <a
+            href={`/shop/${
+              vendorReducer.vendor &&
+              vendorReducer.vendor.author &&
+              vendorReducer.vendor.author._id
+            }`}
+            target="_blank"
+            rel="noreferrer"
+          >
             Visit Store
-          </li>
-        </NavLink>
+          </a>
+        </li>
         <NavLink
-          to="comingsoon"
+          to="settings"
           className={({ isActive }) =>
             isActive ? "text-purple-600" : "text-gray-100"
           }

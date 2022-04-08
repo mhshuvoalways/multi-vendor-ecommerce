@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getCategory } from "../../store/actions/categoryAction";
-import Imgelec from "../../assets/images/icons/food.png";
 import Loading from "../utils/Loading";
 
 const Categories = () => {
@@ -25,7 +24,7 @@ const Categories = () => {
             key={category._id}
           >
             <p>{category.name}</p>
-            <img src={Imgelec} alt="" className="w-8" />
+            <img src={category.icon.url} alt="" className="w-8" />
           </Link>
         ))
       )}

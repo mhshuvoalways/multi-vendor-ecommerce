@@ -1,11 +1,13 @@
 const User = require("../Model/User");
+const VendorInfor = require("../Model/VendorInfor");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cloudinary = require("cloudinary");
 const serverError = require("../utils/serverError");
 const {
   adminRegisterValidation,
-  registerValidation,
+  customerRegisterValidation,
+  vendorRegisterValidation,
   loginValidation,
   findMailValidation,
   recoverPassValidation,
@@ -15,16 +17,16 @@ const transporter = require("../mail/transporter");
 const { recoverPass, activeAccount } = require("../mail/templates");
 const axios = require("axios");
 
-const adminRegister = (_req, res) => {
-  const { email, password, storeName, recaptch, agree } = req.body;
+const adminRegister = (req, res) => {
+  const { email, password, storeName, agree } = req.body;
   const validation = adminRegisterValidation({
     email,
     password,
     storeName,
-    recaptch,
     agree,
   });
   const username = email.substring(0, email.lastIndexOf("@"));
+  const storeUsername = storeName.split(" ").join("-").toLowerCase();
   if (validation.isValid) {
     User.findOne({ email })
       .then((response) => {
@@ -37,11 +39,79 @@ const adminRegister = (_req, res) => {
                 email,
                 username,
                 storeName,
+                storeUsername,
                 password: hash,
                 role: "admin",
                 isActive: true,
               };
               new User(user)
+                .save()
+                .then((response) => {
+                  new VendorInfor({ author: response._id })
+                    .save()
+                    .then(() => {
+                      res.status(200).json({
+                        message: "Thanks for register!",
+                        response,
+                      });
+                    })
+                    .catch(() => {
+                      serverError(res);
+                    });
+                })
+                .catch(() => {
+                  serverError(res);
+                });
+            }
+          });
+        } else {
+          res.status(400).json({
+            message: "User already exists!",
+          });
+        }
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else {
+    res.status(400).json(validation.error);
+  }
+};
+
+const customerRegister = (req, res) => {
+  const { email, password, role, recaptch, agree } = req.body;
+  const validation = customerRegisterValidation({
+    email,
+    password,
+    recaptch,
+    agree,
+    role,
+  });
+  const username = email.substring(0, email.lastIndexOf("@"));
+  if (validation.isValid) {
+    User.findOne({ email })
+      .then((response) => {
+        if (!response) {
+          bcrypt.hash(password, 10, function (err, hash) {
+            if (err) {
+              serverError(res);
+            } else {
+              const token = jwt.sign(
+                {
+                  email: email,
+                  username: username,
+                },
+                process.env.SECRET,
+                { expiresIn: "1h" }
+              );
+              transporter(email, activeAccount, username, token);
+              const curstomer = {
+                email,
+                username,
+                password: hash,
+                role,
+              };
+              new User(curstomer)
                 .save()
                 .then((response) => {
                   res.status(200).json({
@@ -68,9 +138,9 @@ const adminRegister = (_req, res) => {
   }
 };
 
-const register = (req, res) => {
+const vendorRegister = (req, res) => {
   const { email, password, storeName, role, recaptch, agree } = req.body;
-  const validation = registerValidation({
+  const validation = vendorRegisterValidation({
     email,
     password,
     storeName,
@@ -79,68 +149,75 @@ const register = (req, res) => {
     role,
   });
   const username = email.substring(0, email.lastIndexOf("@"));
-  if (process.env.adminEmail === email) {
-    res.status(400).json({
-      message: "You can't use admin mail!",
-    });
-  } else {
-    if (validation.isValid) {
-      User.findOne({ email })
-        .then((response) => {
-          if (!response) {
-            bcrypt.hash(password, 10, function (err, hash) {
-              if (err) {
-                serverError(res);
-              } else {
-                const token = jwt.sign(
-                  {
-                    email: email,
-                    username: username,
-                  },
-                  process.env.SECRET,
-                  { expiresIn: "1h" }
-                );
-                transporter(email, activeAccount, username, token);
-
-                const vendor = {
-                  email,
-                  username,
-                  password: hash,
-                  storeName,
-                  role,
-                };
-                const curstomer = {
-                  email,
-                  username,
-                  password: hash,
-                  role,
-                };
-                const user = role === "vendor" ? vendor : curstomer;
-                new User(user)
-                  .save()
-                  .then((response) => {
-                    res.status(200).json({
-                      message: "Thanks for register!",
-                      response,
-                    });
-                  })
-                  .catch(() => {
+  const storeUsername = storeName.split(" ").join("-").toLowerCase();
+  if (validation.isValid) {
+    User.findOne({ email })
+      .then((response) => {
+        if (!response) {
+          User.findOne({ storeUsername })
+            .then((storeUsernameRes) => {
+              if (!storeUsernameRes) {
+                bcrypt.hash(password, 10, function (err, hash) {
+                  if (err) {
                     serverError(res);
-                  });
+                  } else {
+                    const token = jwt.sign(
+                      {
+                        email: email,
+                        username: username,
+                      },
+                      process.env.SECRET,
+                      { expiresIn: "1h" }
+                    );
+                    transporter(email, activeAccount, username, token);
+                    const vendor = {
+                      email,
+                      username,
+                      password: hash,
+                      storeName,
+                      role,
+                      storeUsername,
+                    };
+                    new User(vendor)
+                      .save()
+                      .then((response) => {
+                        new VendorInfor({ author: response._id })
+                          .save()
+                          .then(() => {
+                            res.status(200).json({
+                              message: "Thanks for register!",
+                              response,
+                            });
+                          })
+                          .catch(() => {
+                            serverError(res);
+                          });
+                      })
+                      .catch(() => {
+                        serverError(res);
+                      });
+                  }
+                });
+              } else {
+                res.status(400).json({
+                  message: "Store name already has taken!",
+                });
               }
+            })
+            .catch(() => {
+              serverError(res);
             });
-          } else {
-            res.status(400).json({
-              message: "User already exists!",
-            });
-          }
-        })
-        .catch(() => {
-          serverError(res);
-        });
-    } else {
-      res.status(400).json(validation.error);
-    }
+        } else {
+          res.status(400).json({
+            message: "User already exists!",
+          });
+        }
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else {
+    res.status(400).json(validation.error);
   }
 };
 
@@ -178,7 +255,8 @@ const login = (req, res) => {
             });
           } else {
             res.status(400).json({
-              message: "Please active your account and try again",
+              message:
+                "Please check your registered mail and activate your account!",
             });
           }
         } else {
@@ -658,7 +736,8 @@ const deleteUser = (req, res) => {
 
 module.exports = {
   adminRegister,
-  register,
+  customerRegister,
+  vendorRegister,
   login,
   loginWithGoogle,
   loginWithFacebook,

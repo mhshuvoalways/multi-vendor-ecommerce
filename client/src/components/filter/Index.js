@@ -1,21 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Filter from "./Filter";
+import Products from "../products/Products";
+import ProductTop from "./ProductTop";
+import ProductLeft from "./ProductLeft";
+import FilterTop from "./FilterTop";
+import FilterLeft from "./FilterLeft";
 import { filterProducts } from "../../store/actions/productAction";
 import { getCategory } from "../../store/actions/categoryAction";
 import { getTags } from "../../store/actions/tagAction";
 
 const Index = () => {
+  const [state, setState] = useState({ filter: false });
   const [categories, setCategoies] = useState({});
   const [tags, setTags] = useState({});
   const [logHighValue, setlogHighValue] = useState();
   const [searchTerm, setSearchTerm] = useState("");
 
-  const productReducer = useSelector((el) => el.productReducer);
   const categoryReducer = useSelector((el) => el.categoryReducer);
   const tagsReducer = useSelector((el) => el.tagsReducer);
+  const productReducer = useSelector((el) => el.productReducer);
 
   const dispatch = useDispatch();
+
+  const filterHandler = () => {
+    setState({ filter: !state.filter });
+  };
 
   const onChangeHandler = (event) => {
     if (event.target.checked) {
@@ -74,17 +83,51 @@ const Index = () => {
   }, [categories, dispatch, logHighValue, searchTerm, tags]);
 
   return (
-    <Filter
-      productReducer={productReducer}
-      categoryReducer={categoryReducer}
-      onChangeHandler={onChangeHandler}
-      searchTermHandler={searchTermHandler}
-      categories={categories}
-      tagsReducer={tagsReducer}
-      tags={tags}
-      onClickTagHandler={onClickTagHandler}
-      lowHigh={lowHigh}
-    />
+    <div>
+      <div className="block sm:hidden">
+        <ProductTop
+          filterHandler={filterHandler}
+          state={state}
+          productReducer={productReducer}
+        />
+        {state.filter && (
+          <FilterTop
+            productReducer={productReducer}
+            categoryReducer={categoryReducer}
+            onChangeHandler={onChangeHandler}
+            searchTermHandler={searchTermHandler}
+            categories={categories}
+            tagsReducer={tagsReducer}
+            tags={tags}
+            onClickTagHandler={onClickTagHandler}
+            lowHigh={lowHigh}
+          />
+        )}
+        <Products
+          productReducer={productReducer}
+          allProducts={productReducer.products}
+        />
+      </div>
+      <div className="hidden sm:flex w-11/12 m-auto">
+        <FilterLeft
+          productReducer={productReducer}
+          categoryReducer={categoryReducer}
+          onChangeHandler={onChangeHandler}
+          searchTermHandler={searchTermHandler}
+          categories={categories}
+          tagsReducer={tagsReducer}
+          tags={tags}
+          onClickTagHandler={onClickTagHandler}
+        />
+        <div className="w-4/5">
+          <ProductLeft productReducer={productReducer} lowHigh={lowHigh} />
+          <Products
+            productReducer={productReducer}
+            allProducts={productReducer.products}
+          />
+        </div>
+      </div>
+    </div>
   );
 };
 

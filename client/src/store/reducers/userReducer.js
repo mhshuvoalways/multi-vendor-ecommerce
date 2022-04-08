@@ -11,14 +11,30 @@ const init = {
 
 const userReudcer = (state = init, action) => {
   switch (action.type) {
-    case Types.REGISTER_USER: {
+    case Types.CUSTOMER_REGISTER: {
       return {
         ...state,
         user: action.payload.user,
         error: null,
       };
     }
-    case Types.REGISTER_USER_ERROR: {
+    case Types.CUSTOMER_REGISTER_ERROR: {
+      return {
+        ...state,
+        isAuthenticate: false,
+        user: {},
+        error: action.payload.error,
+      };
+    }
+
+    case Types.REGISTER_VENDOR: {
+      return {
+        ...state,
+        user: action.payload.user,
+        error: null,
+      };
+    }
+    case Types.REGISTER_VENDOR_ERROR: {
       return {
         ...state,
         isAuthenticate: false,
@@ -144,9 +160,10 @@ const userReudcer = (state = init, action) => {
     case Types.GET_MYACCOUT_ERROR: {
       return {
         ...state,
-        user: action.payload,
+        error: action.payload,
       };
     }
+
     case Types.AVATAR_UPDATE: {
       return {
         ...state,
