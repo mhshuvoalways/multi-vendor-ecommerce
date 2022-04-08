@@ -23,6 +23,7 @@ export const addCart = (id, body) => (dispatch) => {
         payload: err.response,
       });
       dispatch(enableBtn(true));
+      dispatch(alertAction(err.response.data.message));
     });
 };
 
@@ -40,6 +41,7 @@ export const getCartItem = () => (dispatch) => {
         type: Types.CART_GET_ERROR,
         payload: err.response,
       });
+      dispatch(alertAction(err.response.data.message));
     });
 };
 
@@ -60,6 +62,7 @@ export const increment = (id) => (dispatch) => {
         type: Types.INCREMENT_ERROR,
         payload: err.response,
       });
+      dispatch(alertAction(err.response.data.message));
     });
 };
 
@@ -80,6 +83,7 @@ export const decrement = (id) => (dispatch) => {
         type: Types.DECREMENT_ERROR,
         payload: err.response,
       });
+      dispatch(alertAction(err.response.data.message));
     });
 };
 
@@ -101,6 +105,7 @@ export const deleteCartItem = (id) => (dispatch) => {
         type: Types.DELETE_ITEM_ERROR,
         payload: err.response,
       });
+      dispatch(alertAction(err.response.data.message));
     });
 };
 
@@ -121,6 +126,7 @@ export const deleteAllCartItem = () => (dispatch) => {
         payload: err.response,
       });
       dispatch(enableBtn(true));
+      dispatch(alertAction(err.response.data.message));
     });
 };
 
@@ -141,6 +147,7 @@ export const updateCart = (id, quantity) => (dispatch) => {
         type: Types.UPDATE_ITEM_ERROR,
         payload: err.response,
       });
+      dispatch(alertAction(err.response.data.message));
     });
 };
 

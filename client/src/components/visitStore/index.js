@@ -29,7 +29,6 @@ const Index = () => {
   const reviewReducer = useSelector((store) => store.reviewReducer);
 
   const vendor = vendorReducer.vendor;
-  const user = userReducer.user;
 
   useEffect(() => {
     const filterProducts = productReducer.products.filter(
@@ -57,7 +56,7 @@ const Index = () => {
         vendor={vendor}
         ratingProducts={ratingProducts}
         totalRating={totalRating}
-        user={user}
+        user={userReducer}
       />
       <Nav handler={handler} state={state} />
       {state === "profile" ? (

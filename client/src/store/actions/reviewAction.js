@@ -39,6 +39,7 @@ export const getReview = (id) => (dispatch) => {
         type: Types.GET_REVIEW_ERROR,
         payload: err.response,
       });
+      dispatch(AlertAction(err.response.data.message));
     });
 };
 
@@ -56,5 +57,6 @@ export const getAllReview = (storeUsername) => (dispatch) => {
         type: Types.GET_ALL_REVIEW_ERROR,
         payload: err.response,
       });
+      dispatch(AlertAction(err.response.data.message));
     });
 };

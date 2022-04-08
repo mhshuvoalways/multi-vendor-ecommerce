@@ -7,8 +7,8 @@ const productValidation = (value) => {
     error.name = "Please provide product name";
   } else if (value.name.length < 5) {
     error.name = "Please provide minimum 5 characters of name";
-  } else if (value.name.length > 35) {
-    error.name = "Please provide maximum 35 characters of name";
+  } else if (value.name.length > 45) {
+    error.name = "Please provide maximum 45 characters of name";
   }
   if (!value.regularPrice) {
     error.regularPrice = "Please provide product regular price";

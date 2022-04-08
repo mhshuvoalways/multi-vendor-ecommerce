@@ -68,6 +68,7 @@ export const getOderDetails = () => (dispatch) => {
         type: Types.GET_ORDER_PRODUCT_ERROR,
         payload: err.response,
       });
+      dispatch(alertAction(err.response.data.message));
     });
 };
 

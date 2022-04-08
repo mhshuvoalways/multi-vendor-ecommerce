@@ -30,7 +30,7 @@ const OverView = ({
       </div>
       <div className="border p-5">
         <p>Joined</p>
-        <p>{vendor ? moment(vendor.createdAt).format("L") : "!"}</p>
+        <p>{vendor && moment(vendor.createdAt).format("L")}</p>
       </div>
     </div>
   );

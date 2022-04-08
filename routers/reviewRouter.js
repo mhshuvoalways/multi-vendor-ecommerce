@@ -8,6 +8,6 @@ const authenticate = require("../middlewares/authenticate");
 
 router.get("/get/:id", getReview);
 router.post("/add/:id", authenticate, addReview);
-router.get("/allreviews/:storeUsername", getAllReview);
+router.get("/allreviews/:storeauthorid", getAllReview);
 
 module.exports = router;

@@ -26,7 +26,6 @@ const adminRegister = (req, res) => {
     agree,
   });
   const username = email.substring(0, email.lastIndexOf("@"));
-  const storeUsername = storeName.split(" ").join("-").toLowerCase();
   if (validation.isValid) {
     User.findOne({ email })
       .then((response) => {
@@ -39,7 +38,6 @@ const adminRegister = (req, res) => {
                 email,
                 username,
                 storeName,
-                storeUsername,
                 password: hash,
                 role: "admin",
                 isActive: true,
@@ -149,64 +147,50 @@ const vendorRegister = (req, res) => {
     role,
   });
   const username = email.substring(0, email.lastIndexOf("@"));
-  const storeUsername = storeName.split(" ").join("-").toLowerCase();
   if (validation.isValid) {
     User.findOne({ email })
       .then((response) => {
         if (!response) {
-          User.findOne({ storeUsername })
-            .then((storeUsernameRes) => {
-              if (!storeUsernameRes) {
-                bcrypt.hash(password, 10, function (err, hash) {
-                  if (err) {
-                    serverError(res);
-                  } else {
-                    const token = jwt.sign(
-                      {
-                        email: email,
-                        username: username,
-                      },
-                      process.env.SECRET,
-                      { expiresIn: "1h" }
-                    );
-                    transporter(email, activeAccount, username, token);
-                    const vendor = {
-                      email,
-                      username,
-                      password: hash,
-                      storeName,
-                      role,
-                      storeUsername,
-                    };
-                    new User(vendor)
-                      .save()
-                      .then((response) => {
-                        new VendorInfor({ author: response._id })
-                          .save()
-                          .then(() => {
-                            res.status(200).json({
-                              message: "Thanks for register!",
-                              response,
-                            });
-                          })
-                          .catch(() => {
-                            serverError(res);
-                          });
-                      })
-                      .catch(() => {
-                        serverError(res);
-                      });
-                  }
-                });
-              } else {
-                res.status(400).json({
-                  message: "Store name already has taken!",
-                });
-              }
-            })
-            .catch(() => {
+          bcrypt.hash(password, 10, function (err, hash) {
+            if (err) {
               serverError(res);
-            });
+            } else {
+              const token = jwt.sign(
+                {
+                  email: email,
+                  username: username,
+                },
+                process.env.SECRET,
+                { expiresIn: "1h" }
+              );
+              transporter(email, activeAccount, username, token);
+              const vendor = {
+                email,
+                username,
+                password: hash,
+                storeName,
+                role,
+              };
+              new User(vendor)
+                .save()
+                .then((response) => {
+                  new VendorInfor({ author: response._id })
+                    .save()
+                    .then(() => {
+                      res.status(200).json({
+                        message: "Thanks for register!",
+                        response,
+                      });
+                    })
+                    .catch(() => {
+                      serverError(res);
+                    });
+                })
+                .catch(() => {
+                  serverError(res);
+                });
+            }
+          });
         } else {
           res.status(400).json({
             message: "User already exists!",

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { updateUser, avatarAdd } from "../../store/actions/userAction";
+import enableBtn from "../../store/actions/enableBtnAction";
 
 const AccoutDetails = () => {
   const [state, setState] = useState({
@@ -14,6 +15,7 @@ const AccoutDetails = () => {
 
   const dispatch = useDispatch();
   const userReducer = useSelector((state) => state.userReducer);
+  const btnReducer = useSelector((state) => state.btnReducer);
 
   const onChangeHandler = (event) => {
     setState({
@@ -44,6 +46,7 @@ const AccoutDetails = () => {
     if (avatar) {
       dispatch(avatarAdd(fd));
     }
+    dispatch(enableBtn(false));
   };
 
   return (
@@ -147,12 +150,21 @@ const AccoutDetails = () => {
         </div>
         <div className="flex flex-wrap gap-3">
           <div className="md:flex md:items-center">
-            <button
-              className="shadow bg-teal-400 hover:bg-gray-800 bg-purple-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-              onClick={onSubmitHandler}
-            >
-              Save Changes
-            </button>
+            {btnReducer ? (
+              <button
+                className="shadow bg-teal-400 hover:bg-gray-800 bg-purple-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                onClick={onSubmitHandler}
+              >
+                Save Changes
+              </button>
+            ) : (
+              <button
+                className="shadow bg-teal-400 hover:bg-gray-800 bg-gray-600 opacity-50 cursor-not-allowed focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                type="button"
+              >
+                Save Changes
+              </button>
+            )}
           </div>
           <div className="md:flex md:items-center">
             <Link to="/my-account/editpassword">

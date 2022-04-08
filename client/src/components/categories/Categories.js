@@ -20,7 +20,7 @@ const Categories = () => {
         categoryReducer.categories.map((category) => (
           <Link
             to={"/category/" + category.name}
-            className="border py-2 px-5 w-56 flex gap-3 flex-wrap justify-between items-center"
+            className="border py-2 px-5 w-64 flex gap-3 flex-wrap justify-between items-center"
             key={category._id}
           >
             <p>{category.name}</p>

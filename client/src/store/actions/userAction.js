@@ -281,6 +281,7 @@ export const getMyAccount = () => (dispatch) => {
         type: Types.GET_MYACCOUT,
         payload: err.response,
       });
+      dispatch(alertAction(err.response.data.message));
     });
 };
 
@@ -340,12 +341,15 @@ export const avatarAdd = (avatar) => (dispatch) => {
         type: Types.AVATAR_UPDATE,
         payload: res.data,
       });
+      dispatch(enableBtn(true));
     })
     .catch((err) => {
       dispatch({
         type: Types.AVATAR_UPDATE_ERROR,
         payload: err.response,
       });
+      dispatch(enableBtn(true));
+      dispatch(alertAction(err.response.data.message));
     });
 };
 

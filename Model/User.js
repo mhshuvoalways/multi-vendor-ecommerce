@@ -33,7 +33,6 @@ const userSchema = new Schema(
       min: 2,
       max: 50,
     },
-    storeUsername: String,
     role: {
       type: String,
       default: "customer",

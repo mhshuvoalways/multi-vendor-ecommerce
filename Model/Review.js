@@ -7,6 +7,10 @@ const reviewSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "user",
     },
+    storeId: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
     productId: {
       type: Schema.Types.ObjectId,
       ref: "product",

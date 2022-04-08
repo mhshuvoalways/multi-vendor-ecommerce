@@ -79,15 +79,7 @@ const Register = () => {
         )
       );
     }
-
     dispatch(enableBtn(false));
-    setState({
-      email: "",
-      password: "",
-      storeName: "",
-      role: "customer",
-      agree: true,
-    });
   };
 
   return (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAddress, getAddress } from "../../store/actions/userAddressAction";
+import enableBtn from "../../store/actions/enableBtnAction";
 
 const Address = () => {
   const [state, setState] = useState({
@@ -13,6 +14,7 @@ const Address = () => {
 
   const dispatch = useDispatch();
   const userAddressReducer = useSelector((state) => state.userAddressReducer);
+  const btnReducer = useSelector((state) => state.btnReducer);
 
   const onChangeHandler = (event) => {
     setState({
@@ -39,6 +41,7 @@ const Address = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     dispatch(addAddress(state));
+    dispatch(enableBtn(false));
   };
 
   return (
@@ -111,12 +114,21 @@ const Address = () => {
       </div>
       <div className="md:flex md:items-center">
         <div className="md:w-1/3">
-          <button
-            className="shadow bg-teal-400 hover:bg-gray-800 bg-purple-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-            type="submit"
-          >
-            Save Changes
-          </button>
+          {btnReducer ? (
+            <button
+              className="shadow bg-teal-400 hover:bg-gray-800 bg-purple-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+              type="submit"
+            >
+              Save Changes
+            </button>
+          ) : (
+            <button
+              className="shadow bg-teal-400 hover:bg-gray-800 bg-gray-600 opacity-50 cursor-not-allowed focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+              type="button"
+            >
+              Save Changes
+            </button>
+          )}
         </div>
       </div>
     </form>

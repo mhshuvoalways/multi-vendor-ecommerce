@@ -1,5 +1,6 @@
 import * as Types from "../constants/TagTypes";
 import axios from "../../utils/axios";
+import AlertAction from "./AlertAction";
 
 export const getTags = () => (dispatch) => {
   axios
@@ -15,5 +16,6 @@ export const getTags = () => (dispatch) => {
         type: Types.GET_TAGS_ERROR,
         payload: err.response,
       });
+      dispatch(AlertAction(err.response.data.message));
     });
 };

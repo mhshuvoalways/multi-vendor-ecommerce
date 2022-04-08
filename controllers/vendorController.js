@@ -32,13 +32,8 @@ const updateVendor = (req, res) => {
                   new: true,
                 })
                   .then(() => {
-                    const storeUsername = storeName
-                      .split(" ")
-                      .join("-")
-                      .toLowerCase();
                     const update = {
                       storeName,
-                      storeUsername,
                     };
                     User.findOneAndUpdate({ _id: req.user._id }, update, {
                       new: true,
@@ -85,13 +80,8 @@ const updateVendor = (req, res) => {
             new: true,
           })
             .then(() => {
-              const storeUsername = storeName
-                .split(" ")
-                .join("-")
-                .toLowerCase();
               const update = {
                 storeName,
-                storeUsername,
               };
               User.findOneAndUpdate({ _id: req.user._id }, update, {
                 new: true,
@@ -121,10 +111,8 @@ const updateVendor = (req, res) => {
           serverError(res);
         });
     } else {
-      const storeUsername = storeName.split(" ").join("-").toLowerCase();
       const update = {
         storeName,
-        storeUsername,
       };
       User.findOneAndUpdate({ _id: req.user._id }, update, {
         new: true,

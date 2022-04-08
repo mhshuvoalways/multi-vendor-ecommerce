@@ -1,9 +1,6 @@
 individual admin panel
 vendor upload multiple photo for product
-visit store and setting pages have to be done
 contact form has to be done
-more proucts in details page has to be done
-individual visit store
 additional info component has to be done
 rating has to be done in mobile device
 chat system add

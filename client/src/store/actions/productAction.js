@@ -95,6 +95,7 @@ export const getMyProducts = () => (dispatch) => {
           error: err.response,
         },
       });
+      dispatch(alertAction(err.response.data.message));
     });
 };
 
@@ -113,6 +114,7 @@ export const deleteProduct = (id) => (dispatch) => {
         type: Types.DELETE_PRODUCT_ERROR,
         payload: err.response.data,
       });
+      dispatch(alertAction(err.response.data.message));
     });
 };
 

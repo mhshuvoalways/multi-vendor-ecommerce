@@ -23,6 +23,7 @@ export const addWishList = (id) => (dispatch) => {
         payload: err.response,
       });
       dispatch(enableBtn(true));
+      dispatch(alertAction(err.response.data.message));
     });
 };
 
@@ -40,6 +41,7 @@ export const getWishItem = () => (dispatch) => {
         type: Types.WISH_GET_ERROR,
         payload: err.response,
       });
+      dispatch(alertAction(err.response.data.message));
     });
 };
 
@@ -61,6 +63,7 @@ export const deleteWishItem = (id) => (dispatch) => {
         type: Types.DELETE_ITEM_WISHLIST_ERROR,
         payload: err.response,
       });
+      dispatch(alertAction(err.response.data.message));
     });
 };
 
@@ -81,5 +84,6 @@ export const deleteAllWishItem = () => (dispatch) => {
         payload: err.response,
       });
       dispatch(enableBtn(true));
+      dispatch(alertAction(err.response.data.message));
     });
 };
