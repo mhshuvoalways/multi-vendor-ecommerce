@@ -34,7 +34,7 @@ import VendorDashboard from "../components/vendorDashboard/Dashboard";
 import VendorProducts from "../components/vendorDashboard/VendorProducts";
 import Settings from "../components/vendorDashboard/Settings";
 
-import Filter from "../components/filter";
+import Filter from "../components/filters";
 import VisitStore from "../components/visitStore";
 
 const Routers = () => {
