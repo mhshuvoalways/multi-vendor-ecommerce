@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import parse from "html-react-parser";
 import ReactStars from "react-rating-stars-component";
 import { addCart } from "../../store/actions/inCartAction";
 import { addWishList } from "../../store/actions/wishListAction";
 import Modal from "../Modal";
 import Loading from "../utils/Loading";
+import ProductShare from "../productDetails/ProductShare";
 
 const ProductModal = ({ state, modalHandler, productReducer }) => {
   const [products, setProducts] = useState();
@@ -34,13 +36,21 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
   );
 
   return (
-    <Modal modal={state.modal} modalHandler={modalHandler}>
+    <Modal
+      modal={state.modal}
+      modalHandler={modalHandler}
+      modalTitle={products && products.name}
+    >
       {products ? (
         <div className="w-11/12 my-20 md:flex gap-20 m-auto">
-          <div className="flex-1">
-            <img src={products.image[0].url} alt="" />
+          <div className="w-full md:w-2/5">
+            <img
+              src={products.image[0].url}
+              alt=""
+              className="w-full border p-5"
+            />
           </div>
-          <div className="my-10 md:my-0 flex-1">
+          <div className="my-10 md:my-0 md:w-2/4 w-full">
             <p className="mb-2 text-3xl">{products.name}</p>
             <div className="flex">
               <p className="text-2xl">${products.salePrice}</p>
@@ -60,9 +70,9 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
                 }}
               />
             </div>
-            <p className="mt-5">{products.description}</p>
+            <p className="mt-5 text-base">{parse(products.description)}</p>
             <p className="border-solid bg-gray-100 border-2 my-10"></p>
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-4 items-center flex-wrap">
               <div className="flex gap-5 border-solid border border-gray-300 cursor-pointer p-2">
                 <p
                   onClick={() => {
@@ -125,18 +135,13 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
                   <p key={el._id}>{el.name}</p>
                 ))}
               </p>
-              <div className="mt-10 flex gap-8">
-                <i className="fab fa-facebook cursor-pointer text-2xl"></i>
-                <i className="fab fa-instagram cursor-pointer text-2xl"></i>
-                <i className="fab fa-linkedin-in cursor-pointer text-2xl"></i>
-                <i className="fab fa-twitter cursor-pointer text-2xl"></i>
-              </div>
+              <ProductShare products={products} productUrl={products._id} />
             </div>
             <p className="border-solid bg-gray-100 border-2 my-10"></p>
             <div className="border-solid border-2 border-gray-100">
-              <p className="p-2">Sold by</p>
-              <Link to="/shop" className="text-xl p-2">
-                {products.author.storeName}
+              <Link to={"/shop/" + products.author._id}>
+                <p className="p-2">Sold by</p>
+                <p className="text-xl p-2">{products.author.storeName}</p>
               </Link>
             </div>
           </div>

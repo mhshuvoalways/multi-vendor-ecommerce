@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getVendor } from "../../store/actions/vendorAction";
 import { getProducts } from "../../store/actions/productAction";
 import { getAllReview } from "../../store/actions/reviewAction";
+import { getVenodrOrderProducts } from "../../store/actions/orderAction";
 import Intro from "./Intro";
 import Nav from "./Nav";
 import OverView from "./OverView";
@@ -20,6 +21,7 @@ const Index = () => {
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getVendor(params.storeauthorid));
+    dispatch(getVenodrOrderProducts(params.storeauthorid));
     dispatch(getAllReview(params.storeauthorid));
   }, [dispatch, params.storeauthorid]);
 
@@ -27,6 +29,7 @@ const Index = () => {
   const vendorReducer = useSelector((store) => store.vendorReducer);
   const userReducer = useSelector((store) => store.userReducer);
   const reviewReducer = useSelector((store) => store.reviewReducer);
+  const orderReducer = useSelector((store) => store.orderReducer);
 
   const vendor = vendorReducer.vendor;
 
@@ -67,6 +70,7 @@ const Index = () => {
             vendor={vendor}
             products={products}
             reviewReducer={reviewReducer}
+            orderReducer={orderReducer}
           />
           <RatingReviews reviewReducer={reviewReducer} />
         </div>

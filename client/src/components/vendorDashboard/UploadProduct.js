@@ -94,7 +94,11 @@ const UploadModal = ({ modal, modalHandler }) => {
   };
 
   return (
-    <Modal modal={modal} modalHandler={modalHandler}>
+    <Modal
+      modal={modal}
+      modalHandler={modalHandler}
+      modalTitle="Upload Product"
+    >
       <form>
         <div className="flex gap-5 justify-between flex-wrap">
           {image ? (
@@ -200,10 +204,10 @@ const UploadModal = ({ modal, modalHandler }) => {
           tags={tags}
           onClickTags={onClickTags}
         />
-        <div className="mt-5">
+        <div className="mt-5 bg-gray-200">
           <ReactQuill
             onChange={handleChange}
-            className="bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-64 pb-10"
+            className="bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           />
         </div>
         <div className="mt-5 ">

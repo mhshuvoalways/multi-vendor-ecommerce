@@ -72,6 +72,24 @@ export const getOderDetails = () => (dispatch) => {
     });
 };
 
+export const getVenodrOrderProducts = (id) => (dispatch) => {
+  axios
+    .get("/order/getvendororder/" + id)
+    .then((res) => {
+      dispatch({
+        type: Types.GET_VENODR_ORDER_PRODUCT,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.GET_VENODR_ORDER_PRODUCT_ERROR,
+        payload: err.response,
+      });
+      dispatch(alertAction(err.response.data.message));
+    });
+};
+
 export const applyCouponAction = (value) => (dispatch) => {
   dispatch({
     type: Types.APPLY_COUPON,

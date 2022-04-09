@@ -16,7 +16,7 @@ const RatingReviews = ({ reviewReducer }) => {
       {!reviewReducer.isLoading ? (
         reviewReducer.reviews.length ? (
           reverseReviews.reverse().map((review) => (
-            <div className="flex gap-10 mt-5 border p-5">
+            <div className="flex gap-10 mt-5 border p-5 flex-wrap">
               <div className="w-40 cursor-pointer">
                 <img
                   src={

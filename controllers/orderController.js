@@ -220,8 +220,24 @@ const getOderDetails = (req, res) => {
     });
 };
 
+const getVenodrDetails = (req, res) => {
+  Order.find()
+    .populate("authorId")
+    .populate("productId")
+    .then((orderResponse) => {
+      const vendorProducts = orderResponse.filter((el) =>
+        el.productId.find((auth) => auth.author.toString() === req.params.id)
+      );
+      res.status(200).json(vendorProducts);
+    })
+    .catch(() => {
+      serverError(res);
+    });
+};
+
 module.exports = {
   orderPlace,
   getOderDetails,
   checkValidationOrder,
+  getVenodrDetails,
 };

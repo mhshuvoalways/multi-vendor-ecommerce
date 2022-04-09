@@ -148,7 +148,7 @@ const EditProduct = ({ modal, modalHandler, id }) => {
   };
 
   return (
-    <Modal modal={modal} modalHandler={modalHandler}>
+    <Modal modal={modal} modalHandler={modalHandler} modalTitle={product.name}>
       <form>
         <div className="flex gap-5 justify-between flex-wrap">
           {imageView()}
@@ -217,10 +217,10 @@ const EditProduct = ({ modal, modalHandler, id }) => {
           tags={tags}
           onClickTags={onClickTags}
         />
-        <div className="mt-5">
+        <div className="mt-5 bg-gray-200">
           <ReactQuill
             onChange={handleChange}
-            className="bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-64 pb-10"
+            className="bg text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             value={product.description}
           />
         </div>

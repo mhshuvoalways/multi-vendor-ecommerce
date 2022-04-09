@@ -55,7 +55,7 @@ const AccoutDetails = () => {
         <div className="mb-10">
           <label>
             {(userReducer.user && userReducer.user.avatar) || avatar ? (
-              <div className="md:w-1/3 m-auto">
+              <div className="flex justify-center">
                 {avatar ? (
                   <img
                     src={URL.createObjectURL(avatar)}

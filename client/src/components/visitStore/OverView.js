@@ -7,6 +7,7 @@ const OverView = ({
   vendor,
   products,
   reviewReducer,
+  orderReducer,
 }) => {
   const percents = (totalRating * 100) / (ratingProducts * 5);
   const avarageRating = totalRating / ratingProducts;
@@ -15,6 +16,10 @@ const OverView = ({
       <div className="border p-5">
         <p>Products</p>
         <p className="text-xl">{products.length}</p>
+      </div>
+      <div className="border p-5">
+        <p>Sellers</p>
+        <p className="text-xl">{orderReducer.order.length}</p>
       </div>
       <div className="border p-5">
         <p>Reviews</p>

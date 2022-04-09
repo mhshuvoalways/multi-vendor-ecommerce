@@ -22,10 +22,9 @@ export default function Navigation() {
     dispatch(isAuthenticate());
     if (!userReducer.isAuthenticate) {
       dispatch(clearReduxData());
-    } else {
-      dispatch(getCartItem());
-      dispatch(getWishItem());
     }
+    dispatch(getCartItem());
+    dispatch(getWishItem());
   }, [dispatch, userReducer.isAuthenticate]);
 
   const navigation = [
@@ -51,7 +50,7 @@ export default function Navigation() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="mx-10 flex items-center justify-center sm:items-stretch sm:justify-start">
+              <div className="mx-10 md:mx-0 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <Link
                   to="/"
                   className="flex-shrink-0 flex items-center sm:text-3xl cursor-pointer text-xl"

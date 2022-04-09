@@ -34,6 +34,20 @@ const orderReducer = (state = init, action) => {
         error: action.payload,
       };
     }
+
+    case Types.GET_VENODR_ORDER_PRODUCT: {
+      return {
+        ...state,
+        order: action.payload,
+      };
+    }
+    case Types.GET_VENODR_ORDER_PRODUCT_ERROR: {
+      return {
+        ...state,
+        error: action.payload,
+      };
+    }
+
     case Types.APPLY_COUPON: {
       return {
         ...state,

@@ -13,7 +13,7 @@ const Intro = ({ user, vendor, ratingProducts, totalRating }) => {
 
   const percents = (totalRating * 100) / (ratingProducts * 5);
   return (
-    <div className="flex gap-20 justify-between border border-gray-600 p-5">
+    <div className="flex gap-5 justify-between border border-gray-600 p-5 flex-wrap">
       <img
         src={vendor && vendor.image && vendor.image.url}
         alt=""

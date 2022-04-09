@@ -134,7 +134,7 @@ const Cart = () => {
                   ))}
                 </table>
               </div>
-              <div className="flex justify-between my-10 flex-wrap gap-5 margin-auto">
+              <div className="flex md:justify-between justify-center my-10 flex-wrap gap-5 margin-auto">
                 <Link to="/shop">
                   <button className="bg-gray-100 text-gray-900 py-3 w-60 hover:bg-purple-600 hover:text-white rounded-full">
                     CONTINUE SHOPPING

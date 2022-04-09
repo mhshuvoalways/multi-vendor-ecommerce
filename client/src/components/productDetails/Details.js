@@ -46,14 +46,14 @@ const Details = () => {
         <Loading />
       ) : (
         <div className="w-11/12 my-20 md:flex gap-20 m-auto">
-          <div className="w-2/5">
+          <div className="w-full md:w-2/5">
             <img
               src={products.image[0].url}
               alt=""
               className="w-full border p-5"
             />
           </div>
-          <div className="my-10 md:my-0 w-2/4">
+          <div className="my-10 md:my-0 md:w-2/4 w-full">
             <p className="mb-2 text-3xl">{products.name}</p>
             <div className="flex">
               <p className="text-2xl">${products.salePrice}</p>
@@ -75,7 +75,7 @@ const Details = () => {
             </div>
             <p className="mt-5 text-base">{parse(products.description)}</p>
             <p className="border-solid bg-gray-100 border-2 my-10"></p>
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-4 items-center flex-wrap">
               <div className="flex gap-5 border-solid border border-gray-300 cursor-pointer p-2">
                 <p
                   onClick={() => {
