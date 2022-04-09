@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { findMail } from "../../store/actions/userAction";
+import enableBtn from "../../store/actions/enableBtnAction";
 import { Link, useNavigate } from "react-router-dom";
 
 const FindEmail = () => {
@@ -8,12 +9,15 @@ const FindEmail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const btnReducer = useSelector((store) => store.btnReducer);
+
   const onChange = (e) => {
     setState(e.target.value);
   };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    dispatch(enableBtn(false));
     dispatch(findMail({ email: state }, navigate));
   };
 
@@ -38,12 +42,21 @@ const FindEmail = () => {
             value={state}
           />
         </label>
-        <button
-          className="bg-purple-600 text-white py-2 mt-5 w-full hover:bg-gray-900"
-          onClick={onSubmitHandler}
-        >
-          Next
-        </button>
+        {btnReducer ? (
+          <button
+            className="bg-purple-600 text-white py-2 mt-5 w-full hover:bg-gray-900"
+            onClick={onSubmitHandler}
+          >
+            Next
+          </button>
+        ) : (
+          <button
+            className="bg-gray-600 cursor-not-allowed opacity-50 text-white py-2 mt-5 w-full hover:bg-gray-900"
+            type="button"
+          >
+            Next
+          </button>
+        )}
       </div>
     </form>
   );

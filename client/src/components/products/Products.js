@@ -12,7 +12,7 @@ import Favorite from "../../assets/images/icons/favorite.png";
 import Cart from "../../assets/images/icons/cart.png";
 import enableBtn from "../../store/actions/enableBtnAction";
 
-const Products = ({ productReducer, allProducts, proFilter }) => {
+const Products = ({ productReducer, allProducts, proFilter, morePro }) => {
   const dispatch = useDispatch();
   const userReducer = useSelector((el) => el.userReducer);
   const cartReducer = useSelector((el) => el.inCartReducer);
@@ -25,9 +25,10 @@ const Products = ({ productReducer, allProducts, proFilter }) => {
 
   const reverseProducts = [...allProducts];
 
-  const products = proFilter
-    ? reverseProducts.reverse().slice(0, 8)
-    : reverseProducts.reverse();
+  const products =
+    proFilter || morePro
+      ? reverseProducts.reverse().slice(0, 8)
+      : reverseProducts.reverse();
 
   return (
     <div>

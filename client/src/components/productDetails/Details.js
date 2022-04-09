@@ -142,9 +142,9 @@ const Details = () => {
             </div>
             <p className="border-solid bg-gray-100 border-2 my-10"></p>
             <div className="border-solid border-2 border-gray-100">
-              <p className="p-2">Sold by</p>
-              <Link to={"/shop/" + products.author._id} className="text-xl p-2">
-                {products.author.storeName}
+              <Link to={"/shop/" + products.author._id}>
+                <p className="p-2">Sold by</p>
+                <p className="text-xl p-2">{products.author.storeName}</p>
               </Link>
             </div>
           </div>

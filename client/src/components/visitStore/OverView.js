@@ -11,26 +11,30 @@ const OverView = ({
   const percents = (totalRating * 100) / (ratingProducts * 5);
   const avarageRating = totalRating / ratingProducts;
   return (
-    <div className="mt-5 text-xl flex justify-between gap-5 flex-wrap">
+    <div className="mt-5 flex justify-between gap-5 flex-wrap">
       <div className="border p-5">
         <p>Products</p>
-        <p>{products.length}</p>
+        <p className="text-xl">{products.length}</p>
       </div>
       <div className="border p-5">
         <p>Reviews</p>
-        <p>{reviewReducer.reviews.length}</p>
+        <p className="text-xl">{reviewReducer.reviews.length}</p>
       </div>
       <div className="border p-5">
         <p>Positive Rating</p>
-        <p>{percents ? Math.round(percents) : 0}%</p>
+        <p className="text-xl">{percents ? Math.round(percents) : 0}%</p>
       </div>
       <div className="border p-5">
         <p>Avarage Rating</p>
-        <p>{avarageRating ? avarageRating.toFixed(2) : 0}</p>
+        <p className="text-xl">
+          {avarageRating ? avarageRating.toFixed(2) : 0}
+        </p>
       </div>
       <div className="border p-5">
         <p>Joined</p>
-        <p>{vendor && moment(vendor.createdAt).format("L")}</p>
+        <p className="text-xl">
+          {vendor && moment(vendor.createdAt).format("L")}
+        </p>
       </div>
     </div>
   );

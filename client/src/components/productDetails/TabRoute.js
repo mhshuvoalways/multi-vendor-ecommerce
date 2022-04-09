@@ -5,14 +5,14 @@ const TabRoute = ({ routeHandler, reviewReducer, state }) => {
     <div>
       <ul className="flex gap-3 md:gap-10 md:text-2xl text-base justify-center flex-wrap">
         <li
-          onClick={() => routeHandler("addition")}
+          onClick={() => routeHandler("vendorinfo")}
           className={
-            state === "addition"
+            state === "vendorinfo"
               ? "cursor-pointer font-semibold border-b-4 border-purple-600"
               : "cursor-pointer font-semibold"
           }
         >
-          Additional Info
+          Vendor's Info
         </li>
         <li
           onClick={() => routeHandler("review")}

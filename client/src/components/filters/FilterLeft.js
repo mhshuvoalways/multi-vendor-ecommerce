@@ -42,26 +42,28 @@ const Filter = ({
           </div>
         ))}
       </div>
-      <div className="w-32">
+      <div>
         <p className="text-xl mt-10 mb-2">Tags</p>
-        {tagsReducer.tags.map((tag) => (
-          <p
-            key={tag._id}
-            className={
-              Object.values(tags).length
-                ? Object.values(tags).map((el) =>
-                    el === tag.name
-                      ? "rounded-full px-2 my-1 cursor-pointer bg-purple-500 text-black"
-                      : "rounded-full px-2 my-1 cursor-pointer bg-gray-100 hover:bg-purple-500 hover:text-white"
-                  )
-                : "rounded-full px-2 my-1 cursor-pointer hover:bg-purple-500 hover:text-white"
-            }
-            onClick={(e) => onClickTagHandler(e)}
-            name={tag.name}
-          >
-            {tag.name}
-          </p>
-        ))}
+        <div className="w-full flex flex-wrap gap-2">
+          {tagsReducer.tags.map((tag) => (
+            <p
+              key={tag._id}
+              className={
+                Object.values(tags).length
+                  ? Object.values(tags).map((el) =>
+                      el === tag.name
+                        ? "rounded-full px-2 cursor-pointer bg-purple-500 text-black"
+                        : "rounded-full px-2 cursor-pointer hover:bg-purple-500 hover:text-white"
+                    )
+                  : "rounded-full px-2 cursor-pointer hover:bg-purple-500 hover:text-white"
+              }
+              onClick={(e) => onClickTagHandler(e)}
+              name={tag.name}
+            >
+              {tag.name}
+            </p>
+          ))}
+        </div>
       </div>
     </div>
   );
