@@ -18,7 +18,7 @@ const OverView = ({
         <p className="text-xl">{products.length}</p>
       </div>
       <div className="border p-5">
-        <p>Sellers</p>
+        <p>Sells</p>
         <p className="text-xl">{orderReducer.order.length}</p>
       </div>
       <div className="border p-5">

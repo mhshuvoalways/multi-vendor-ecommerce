@@ -16,16 +16,16 @@ const RatingReviews = ({ reviewReducer }) => {
       {!reviewReducer.isLoading ? (
         reviewReducer.reviews.length ? (
           reverseReviews.reverse().map((review) => (
-            <div className="flex gap-10 mt-5 border p-5 flex-wrap">
+            <div className="flex gap-10 mt-5 border p-5 flex-wrap  md:flex-nowrap">
               <div className="w-40 cursor-pointer">
                 <img
                   src={
                     review.authorId.avatar ? review.authorId.avatar.url : Avatar
                   }
                   alt=""
-                  className="w-20 h-20 rounded-full"
+                  className="w-16 h-16 rounded-full"
                 />
-                <p className="text-base">
+                <p className="text-base ml-1">
                   {review.authorId.firstName
                     ? (review.authorId.firstName && review.authorId.firstName) +
                       " " +
@@ -39,7 +39,11 @@ const RatingReviews = ({ reviewReducer }) => {
                   to={"/details/" + review.productId._id}
                 >
                   <img
-                    src={review.productId && review.productId.image[0].url}
+                    src={
+                      review.productId &&
+                      review.productId.image &&
+                      review.productId.image[0].url
+                    }
                     alt=""
                     className="w-20 mb-2"
                   />

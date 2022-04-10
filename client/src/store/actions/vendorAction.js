@@ -39,6 +39,24 @@ export const getVendor = (authorId) => (dispatch) => {
     });
 };
 
+export const getAllVendor = () => (dispatch) => {
+  axios
+    .get("/vendor/allvendor")
+    .then((res) => {
+      dispatch({
+        type: Types.GET_ALL_VENDOR,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.GET_ALL_VENDOR_ERROR,
+        payload: err.response,
+      });
+      dispatch(alertAction(err.response.data.message));
+    });
+};
+
 export const updateVendor = (image) => (dispatch) => {
   axios
     .post("/vendor/add", image)

@@ -6,6 +6,7 @@ import SectionTitle from "../components/SectionTitle";
 import Categories from "../components/categories/Categories";
 import Products from "../components/products";
 import Testimonials from "../components/Testimonials";
+import OurVendor from "../components/ourVendor";
 import Footer from "../components/Footer";
 
 const Home = () => {
@@ -18,6 +19,8 @@ const Home = () => {
       <Categories />
       <SectionTitle title="HIGHLIGHTS PRODUCTS" />
       <Products />
+      <SectionTitle title="OUR VENDORS" />
+      <OurVendor />
       <SectionTitle title="CLIENT REVIEW" />
       <Testimonials />
       <Footer />

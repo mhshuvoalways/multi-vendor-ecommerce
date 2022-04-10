@@ -162,6 +162,17 @@ const getVendor = (req, res) => {
     });
 };
 
+const getAllVendor = (req, res) => {
+  VendorInfor.find()
+    .populate("author")
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch(() => {
+      serverError(res);
+    });
+};
+
 const vendorFollow = (req, res) => {
   const vendorId = req.params.vendorId;
   VendorInfor.findOne({ author: vendorId })
@@ -210,5 +221,6 @@ module.exports = {
   updateVendor,
   getMyVendor,
   getVendor,
+  getAllVendor,
   vendorFollow,
 };

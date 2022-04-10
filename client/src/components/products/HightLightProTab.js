@@ -11,7 +11,7 @@ const HightLightProTab = ({ changeHandler, filterTab }) => {
         }
         onClick={() => changeHandler("bestsellers")}
       >
-        Best Sellers
+        BEST SELLING
       </p>
       <p
         className={
@@ -21,7 +21,7 @@ const HightLightProTab = ({ changeHandler, filterTab }) => {
         }
         onClick={() => changeHandler("bestrated")}
       >
-        Best Rated
+        TOP RATED
       </p>
       <p
         className={
@@ -31,7 +31,7 @@ const HightLightProTab = ({ changeHandler, filterTab }) => {
         }
         onClick={() => changeHandler("newarrivals")}
       >
-        New Arrivals
+        NEW ARRIVAL
       </p>
     </div>
   );

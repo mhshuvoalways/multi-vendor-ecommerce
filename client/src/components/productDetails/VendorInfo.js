@@ -13,6 +13,8 @@ const AdditionalInfo = ({ vendorReducer }) => {
         Vendor's Author Name:
         <p className="font-bold">
           {vendorReducer.vendor.author &&
+            vendorReducer.vendor.author.firstName &&
+            vendorReducer.vendor.author.lastName &&
             vendorReducer.vendor.author.firstName +
               " " +
               vendorReducer.vendor.author.lastName}

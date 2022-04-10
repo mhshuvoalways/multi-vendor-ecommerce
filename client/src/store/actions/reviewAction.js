@@ -60,3 +60,21 @@ export const getAllReview = (storeUsername) => (dispatch) => {
       dispatch(AlertAction(err.response.data.message));
     });
 };
+
+export const getAllReviews = () => (dispatch) => {
+  axios
+    .get("/review/getallreviews")
+    .then((res) => {
+      dispatch({
+        type: Types.GET_ALL_REVIEWS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: Types.GET_ALL_REVIEWS_ERROR,
+        payload: err.response,
+      });
+      dispatch(AlertAction(err.response.data.message));
+    });
+};

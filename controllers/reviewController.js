@@ -95,7 +95,18 @@ const getReview = (req, res) => {
     });
 };
 
-const getAllReview = (req, res) => {
+const getAllReviews = (req, res) => {
+  Review.find()
+    .populate("authorId")
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch(() => {
+      serverError(res);
+    });
+};
+
+const getVendorReview = (req, res) => {
   Review.find({ storeId: req.params.storeauthorid })
     .populate("productId")
     .populate("authorId")
@@ -111,5 +122,6 @@ const getAllReview = (req, res) => {
 module.exports = {
   addReview,
   getReview,
-  getAllReview,
+  getAllReviews,
+  getVendorReview,
 };

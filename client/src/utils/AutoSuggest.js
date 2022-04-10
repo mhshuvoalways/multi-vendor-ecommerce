@@ -46,6 +46,17 @@ class Autosuggestion extends React.Component {
     }
   };
 
+  onSuggestionSelected = (e) => {
+    if (this.props.tagsProps) {
+      if (e.type === "click") {
+        this.props.onClickTags(e.target.innerText);
+        this.setState({
+          value: "",
+        });
+      }
+    }
+  };
+
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
       suggestions: this.getSuggestions(value),
@@ -66,7 +77,7 @@ class Autosuggestion extends React.Component {
       onChange: this.onChange,
       onKeyDown: this.onKeyPressHandler,
       className: this.props.classNameProps,
-      type: "text"
+      type: "text",
     };
 
     return (
@@ -77,6 +88,7 @@ class Autosuggestion extends React.Component {
         getSuggestionValue={this.getSuggestionValue}
         renderSuggestion={this.renderSuggestion}
         inputProps={inputProps}
+        onSuggestionSelected={this.onSuggestionSelected}
       />
     );
   }
