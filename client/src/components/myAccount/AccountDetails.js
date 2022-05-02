@@ -152,14 +152,14 @@ const AccoutDetails = () => {
           <div className="md:flex md:items-center">
             {btnReducer ? (
               <button
-                className="shadow bg-teal-400 hover:bg-gray-800 bg-purple-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                className="shadow hover:bg-gray-800 bg-purple-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                 onClick={onSubmitHandler}
               >
                 Save Changes
               </button>
             ) : (
               <button
-                className="shadow bg-teal-400 hover:bg-gray-800 bg-gray-600 opacity-50 cursor-not-allowed focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                className="shadow hover:bg-gray-800 bg-gray-600 opacity-50 cursor-not-allowed focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                 type="button"
               >
                 Save Changes
@@ -169,7 +169,7 @@ const AccoutDetails = () => {
           <div className="md:flex md:items-center">
             <Link to="/my-account/editpassword">
               <button
-                className="shadow bg-teal-400 hover:bg-gray-800 bg-red-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                className="shadow hover:bg-gray-800 bg-red-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                 type="button"
               >
                 Changes Password

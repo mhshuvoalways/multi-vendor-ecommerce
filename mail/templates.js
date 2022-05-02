@@ -28,7 +28,25 @@ const activeAccount = (name, link) => {
   </div>`;
 };
 
+const contactMessage = (details, message) => {
+  return `<div style="background-color: #efefef; padding: 30px">
+    <p>
+    First Name: ${details.firstName}
+    </p>
+    <p>
+    Last Name: ${details.lastName}
+    </p>
+    <p>
+    Email: ${details.email}
+    </p>
+    <p>
+    Message: ${message}
+    </p>
+  </div>`;
+};
+
 module.exports = {
   recoverPass,
   activeAccount,
+  contactMessage,
 };

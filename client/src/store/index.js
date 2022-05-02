@@ -12,6 +12,7 @@ import reviewReducer from "./reducers/reviewReducer";
 import alertReducer from "./reducers/alertReducer";
 import vendorReducer from "./reducers/vendorReducer";
 import btnReducer from "./reducers/enableBtnReducer";
+import contactReducer from "./reducers/contactReducer";
 import thunk from "redux-thunk";
 
 const middlewares = [thunk];
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   vendorReducer,
   alertReducer,
   btnReducer,
+  contactReducer,
 });
 
 const store = createStore(rootReducer, composedEnhancers);

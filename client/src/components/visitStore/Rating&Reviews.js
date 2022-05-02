@@ -30,7 +30,7 @@ const RatingReviews = ({ reviewReducer }) => {
                     ? (review.authorId.firstName && review.authorId.firstName) +
                       " " +
                       (review.authorId.lastName && review.authorId.lastName)
-                    : review.authorId.storeName}
+                    : review.authorId.username}
                 </p>
               </div>
               <div>

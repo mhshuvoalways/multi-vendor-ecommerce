@@ -65,7 +65,7 @@ const Reviews = ({ reviewReducer }) => {
                 <p className="text-base font-semibold">
                   {`${
                     el.authorId
-                      ? el.authorId["firstName"] || el.authorId["storeName"]
+                      ? el.authorId["firstName"] || el.authorId["username"]
                       : "User"
                   } ${
                     el.authorId ? el.authorId["lastName"] || "" : "has deleted"

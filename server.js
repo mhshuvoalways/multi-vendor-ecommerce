@@ -16,6 +16,7 @@ const orderRouter = require("./routers/orderRouter");
 const reviewRouter = require("./routers/reviewRouter");
 const paymentRoute = require("./routers/paymentRoute");
 const vendorRoutes = require("./routers/vendorRoutes");
+const contactRoute = require("./routers/contactRoute");
 
 const app = express();
 app.use(express.json());
@@ -34,6 +35,7 @@ app.use("/order", orderRouter);
 app.use("/review", reviewRouter);
 app.use("/payment", paymentRoute);
 app.use("/vendor", vendorRoutes);
+app.use("/contact", contactRoute);
 
 app.get("/", (req, res) => {
   res.send("A MERN stack ecommerce app");

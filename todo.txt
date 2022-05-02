@@ -1,6 +1,2 @@
 individual admin panel
 vendor upload multiple photo for product
-contact form has to be done
-chat system add
-invoice add
-react chatbot add

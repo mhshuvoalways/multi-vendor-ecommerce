@@ -11,6 +11,7 @@ Feature:
 • Store create 
 • Product add, delete, update
 • Search product
+• Filter product
 • Review product
 
 Technology:
@@ -22,7 +23,6 @@ Technology:
 • Multer
 • React google captcha
 • React quill
-• Passportjs
 • Nodejs
 • Expressjs
 • Mongodb
