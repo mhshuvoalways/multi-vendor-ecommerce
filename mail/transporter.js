@@ -12,7 +12,7 @@ module.exports = (sendto, templateName, name, link) => {
   const mailOptions = {
     from: process.env.SENDINBLUE_USER,
     to: sendto,
-    subject: "Message from e-Shop",
+    subject: "e-Shop",
     html: templateName(name, link),
   };
 

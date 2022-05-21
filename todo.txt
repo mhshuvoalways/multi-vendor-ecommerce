@@ -1,2 +1,0 @@
-individual admin panel
-vendor upload multiple photo for product

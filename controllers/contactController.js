@@ -13,7 +13,7 @@ const contactController = (req, res) => {
       .save()
       .then((response) => {
         res.status(200).json({
-          message: "Message sent successfully!",
+          message: "Thanks for reaching out to us! We will reply as soon as possible.",
           response: response,
         });
         transporter(
