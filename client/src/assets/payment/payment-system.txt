@@ -1,0 +1,11 @@
+Paypal:
+Login with these credentials and pay
+email: sb-kkoez15144315@personal.example.com
+password: Hu^Ae3l"
+
+
+Razorpay:
+Card Number: 4111 1111 1111 1111
+Expiry: 03/32
+CVV: 123
+OTP: 123

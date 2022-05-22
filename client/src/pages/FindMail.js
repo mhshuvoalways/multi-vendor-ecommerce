@@ -1,7 +1,7 @@
 import React from "react";
 import Navigation from "../components/nav/Navigation";
 import FindMail from "../components/authentication/FindMail";
-import Footer from "../components/Footer";
+import Footer from "../components/footer/Footer";
 
 const FindEmail = () => {
   return (

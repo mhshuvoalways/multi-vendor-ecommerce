@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import Navigation from "../components/nav/Navigation";
 import PageLocation from "../components/utils/PageLocation";
 import LoginComponent from "../components/authentication/Login";
-import Footer from "../components/Footer";
+import Footer from "../components/footer/Footer";
 
 const Login = () => {
   const store = useSelector((store) => store.userReducer.isAuthenticate);

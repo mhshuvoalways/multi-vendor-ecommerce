@@ -45,8 +45,17 @@ const contactMessage = (details, message) => {
   </div>`;
 };
 
+const subcriberMessage = (email) => {
+  return `<div style="background-color: #efefef; padding: 30px">
+    <p>
+    Subscriber mail: ${email}
+    </p>
+  </div>`;
+};
+
 module.exports = {
   recoverPass,
   activeAccount,
   contactMessage,
+  subcriberMessage,
 };

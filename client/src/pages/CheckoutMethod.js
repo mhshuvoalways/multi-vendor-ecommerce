@@ -2,7 +2,7 @@ import React from "react";
 import Navigation from "../components/nav/Navigation";
 import PageLocation from "../components/utils/PageLocation";
 import CheckoutMethodCompo from "../components/checkout/CheckoutMethod";
-import Footer from "../components/Footer";
+import Footer from "../components/footer/Footer";
 
 const CheckoutMethod = () => {
   return (

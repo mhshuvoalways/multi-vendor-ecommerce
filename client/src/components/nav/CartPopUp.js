@@ -35,20 +35,19 @@ const CartPopUp = () => {
       {cart.length ? (
         <div>
           {reverseCart.reverse().map((el) => (
-            <div className="flex justify-between gap-1 text-sm text-gray-700 p-8 hover:bg-gray-100" key={el._id}>
-              <div className="w-20">
+            <div
+              className="flex justify-between gap-1 text-sm text-gray-700 p-8 hover:bg-gray-100"
+              key={el._id}
+            >
+              <div>
                 <Link to={`/details/${el.productId}`}>
-                  <img src={el.image} alt="" className="cursor-pointer" />
+                  <img src={el.image} alt="" className="cursor-pointer w-20" />
                 </Link>
               </div>
               <div>
                 <p>{el.name}</p>
                 <p>Qty: {el.quantity}</p>
-                <p>${el.subTotal}</p>
-                <div className="mt-2">
-                  <p>Color: blue</p>
-                  <p>Size: x</p>
-                </div>
+                <p>Price: ${el.subTotal}</p>
               </div>
               <div>
                 <img

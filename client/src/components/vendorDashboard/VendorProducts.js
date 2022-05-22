@@ -52,8 +52,6 @@ const Products = () => {
             </td>
             <td className="p-2">
               <p>{el.name}</p>
-              <p>Color: blue</p>
-              <p>Size: x</p>
             </td>
             <td className="p-2">
               <div className="flex">

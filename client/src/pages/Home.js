@@ -7,7 +7,7 @@ import Categories from "../components/categories/Categories";
 import Products from "../components/products";
 import Testimonials from "../components/Testimonials";
 import OurVendor from "../components/ourVendor";
-import Footer from "../components/Footer";
+import Footer from "../components/footer/Footer";
 
 const Home = () => {
   return (

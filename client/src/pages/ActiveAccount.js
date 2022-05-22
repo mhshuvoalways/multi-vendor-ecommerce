@@ -1,7 +1,7 @@
 import React from "react";
 import Navigation from "../components/nav/Navigation";
 import ActiveAccountComponent from "../components/authentication/ActiveAccount";
-import Footer from "../components/Footer";
+import Footer from "../components/footer/Footer";
 
 const ActiveAccount = () => {
   return (

@@ -3,7 +3,7 @@ import Navigation from "../components/nav/Navigation";
 import PageLocation from "../components/utils/PageLocation";
 import AccountRoutes from "../components/myAccount/AccountRoutes";
 import AccountDetails from "../components/myAccount/AccountDetails";
-import Footer from "../components/Footer";
+import Footer from "../components/footer/Footer";
 
 const AccoutDetails = () => {
   return (

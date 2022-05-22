@@ -37,6 +37,9 @@ import Settings from "../components/vendorDashboard/Settings";
 import Filter from "../components/filters";
 import VisitStore from "../components/visitStore";
 
+import AboutUs from "../components/footer/AboutUs";
+import PrivacyPolicy from "../components/footer/PrivacyPolicy";
+
 const Routers = () => {
   return (
     <BrowserRouter>
@@ -60,6 +63,8 @@ const Routers = () => {
         <Route path="contact" element={<Contact />} />
         <Route path="findmail" element={<FindMail />} />
         <Route path="category/:name" element={<Category />} />
+        <Route path="aboutus" element={<AboutUs />} />
+        <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<PageNotFound />} />
         <Route
           path="checkout"

@@ -4,7 +4,7 @@ import { getProducts } from "../store/actions/productAction";
 import Navigation from "../components/nav/Navigation";
 import PageLocation from "../components/utils/PageLocation";
 import Details from "../components/productDetails/Index";
-import Footer from "../components/Footer";
+import Footer from "../components/footer/Footer";
 
 const Home = () => {
   const dispatch = useDispatch();

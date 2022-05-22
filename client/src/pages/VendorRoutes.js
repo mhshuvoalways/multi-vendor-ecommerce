@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import Navigation from "../components/nav/Navigation";
 import PageLocation from "../components/utils/PageLocation";
 import VendorRoutesCompo from "../components/vendorDashboard/VendorRoutes";
-import Footer from "../components/Footer";
+import Footer from "../components/footer/Footer";
 
 const VendorRoutes = () => {
   return (

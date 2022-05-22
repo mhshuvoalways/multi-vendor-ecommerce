@@ -13,6 +13,7 @@ import alertReducer from "./reducers/alertReducer";
 import vendorReducer from "./reducers/vendorReducer";
 import btnReducer from "./reducers/enableBtnReducer";
 import contactReducer from "./reducers/contactReducer";
+import subscriberReducer from "./reducers/subscriberReducer";
 import thunk from "redux-thunk";
 
 const middlewares = [thunk];
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   alertReducer,
   btnReducer,
   contactReducer,
+  subscriberReducer,
 });
 
 const store = createStore(rootReducer, composedEnhancers);

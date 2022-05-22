@@ -1,6 +1,7 @@
 import React from "react";
 import PayPal from "./Paypal";
 import RazorPay from "./RazorPay";
+import PaymentFile from "../../assets/payment/payment-system.txt";
 
 const CheckoutMethod = () => {
   return (
@@ -10,6 +11,12 @@ const CheckoutMethod = () => {
         <PayPal />
         <RazorPay />
       </div>
+      <p className="text-center mt-5">
+        Download the file and see how to payment:{" "}
+        <a href={PaymentFile} className="text-blue-900 underline" download>
+          Download
+        </a>
+      </p>
     </div>
   );
 };
