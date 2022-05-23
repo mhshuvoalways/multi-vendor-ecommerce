@@ -17,7 +17,7 @@ const Intro = ({ user, vendor, ratingProducts, totalRating }) => {
       <img
         src={vendor && vendor.image && vendor.image.url}
         alt=""
-        className="w-24 border-2 p-2"
+        className="w-24 border-2 p-2 h-24"
       />
       <div>
         <p className="text-xl">
