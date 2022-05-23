@@ -16,9 +16,9 @@ const OurVendor = () => {
 
   const settings = {
     infinite: true,
-    speed: 2000,
-    slidesToShow: 3,
-    slidesToScroll: 3,
+    speed: 1000,
+    slidesToShow: 4,
+    slidesToScroll: 4,
     autoplay: true,
   };
 

@@ -277,6 +277,7 @@ const loginWithGoogle = (req, res) => {
                 avatar: {
                   url: imageUrl,
                 },
+                isActive: true,
                 strategy: "google",
               };
               if (response) {
@@ -360,6 +361,7 @@ const loginWithFacebook = (req, res) => {
               avatar: {
                 url: imageUrl,
               },
+              isActive: true,
               strategy: "facebook",
             };
             if (response) {
