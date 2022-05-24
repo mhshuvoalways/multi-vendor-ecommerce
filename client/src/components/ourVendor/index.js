@@ -54,6 +54,7 @@ const OurVendor = () => {
             <Link
               to={`/shop/${el.author._id}`}
               className="border py-2 px-5 flex justify-between items-center"
+              key={el._id}
             >
               <img
                 src={el.image && el.image.url}
