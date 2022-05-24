@@ -39,7 +39,7 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
   );
 
   return (
-    <div>
+    <>
       {products && products ? (
         <Modal
           modal={state.modal}
@@ -156,7 +156,7 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
       ) : (
         <Loading />
       )}
-    </div>
+    </>
   );
 };
 
