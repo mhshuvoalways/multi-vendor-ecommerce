@@ -16,10 +16,32 @@ const OurVendor = () => {
 
   const settings = {
     infinite: true,
-    speed: 1000,
+    speed: 5000,
     slidesToShow: 4,
     slidesToScroll: 4,
     autoplay: true,
+    responsive: [
+      {
+        breakpoint: 700,
+        settings: {
+          infinite: true,
+          speed: 5000,
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          autoplay: true,
+        },
+      },
+      {
+        breakpoint: 500,
+        settings: {
+          infinite: true,
+          speed: 5000,
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          autoplay: true,
+        },
+      },
+    ],
   };
 
   return (

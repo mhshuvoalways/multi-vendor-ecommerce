@@ -105,6 +105,17 @@ const Settings = () => {
         <label className="text-base">Store Image:</label>
         {imageView()}
       </div>
+      <div className="mt-10 flex gap-2">
+        <p>Take an icon from here to match your store : </p>
+        <a
+          href="https://www.flaticon.com"
+          target="_blank"
+          rel="noreferrer"
+          className="underline"
+        >
+          Click
+        </a>
+      </div>
       <div className="mt-10">
         {btnReducer ? (
           <button
