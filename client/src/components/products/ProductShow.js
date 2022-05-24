@@ -41,7 +41,7 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
       modalHandler={modalHandler}
       modalTitle={products && products.name}
     >
-      {products ? (
+      {products && products ? (
         <div className="w-11/12 my-20 md:flex gap-20 m-auto">
           <div className="w-full md:w-2/5">
             <img
