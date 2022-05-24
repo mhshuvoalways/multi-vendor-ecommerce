@@ -139,11 +139,9 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
             </div>
             <p className="border-solid bg-gray-100 border-2 my-10"></p>
             <div className="border-solid border-2 border-gray-100">
-              <Link to={"/shop/" + products.author && products.author._id}>
+              <Link to={"/shop/" + products.author._id}>
                 <p className="p-2">Sold by</p>
-                <p className="text-xl p-2">
-                  {products.author && products.author.storeName}
-                </p>
+                <p className="text-xl p-2">{products.author.storeName}</p>
               </Link>
             </div>
           </div>
