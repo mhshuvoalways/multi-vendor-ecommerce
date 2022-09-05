@@ -94,6 +94,23 @@ const userReudcer = (state = init, action) => {
       };
     }
 
+    case Types.RECOVER_PASS: {
+      return {
+        ...state,
+        isAuthenticate: Object.keys(action.payload.user).length > 0,
+        user: action.payload.user,
+        error: null,
+      };
+    }
+    case Types.RECOVER_PASS_ERROR: {
+      return {
+        ...state,
+        isAuthenticate: false,
+        user: {},
+        error: action.payload.error,
+      };
+    }
+
     case Types.ACTIVE_ACCOUNT: {
       return {
         ...state,
@@ -120,23 +137,6 @@ const userReudcer = (state = init, action) => {
       };
     }
 
-    case Types.RECOVER_PASS: {
-      return {
-        ...state,
-        isAuthenticate: Object.keys(action.payload.user).length > 0,
-        user: action.payload.user,
-        error: null,
-      };
-    }
-    case Types.RECOVER_PASS_ERROR: {
-      return {
-        ...state,
-        isAuthenticate: false,
-        user: {},
-        error: action.payload.error,
-      };
-    }
-
     case Types.ISAUTHENTICATE: {
       return {
         ...state,
@@ -145,12 +145,14 @@ const userReudcer = (state = init, action) => {
     }
     case Types.LOGOUT_USER: {
       return {
-        isAuthenticate: action.payload.isAuthenticate,
+        isAuthenticate: false,
         user: {},
         error: null,
         findMail: false,
+        activeAccountMsg: "",
       };
     }
+    
     case Types.GET_MYACCOUT: {
       return {
         ...state,

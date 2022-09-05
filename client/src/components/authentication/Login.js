@@ -57,13 +57,17 @@ const Login = () => {
   const responseGoogle = (response) => {
     const { email, givenName, familyName, imageUrl } = response.profileObj;
     dispatch(
-      loginWithGoogle({
-        accessToken: response.accessToken,
-        email,
-        givenName,
-        familyName,
-        imageUrl,
-      })
+      loginWithGoogle(
+        {
+          accessToken: response.accessToken,
+          email,
+          givenName,
+          familyName,
+          imageUrl,
+        },
+        navigate,
+        from
+      )
     );
     dispatch(enableBtn(false));
   };
@@ -71,14 +75,18 @@ const Login = () => {
   const responseFacebook = (response) => {
     const { email, name, accessToken, userID } = response;
     dispatch(
-      loginWithFacebook({
-        email,
-        name,
-        imageUrl: response.picture.data.url,
-        accessToken,
-        userID,
-        appId: process.env.REACT_APP_FACEBOOK_APPID,
-      })
+      loginWithFacebook(
+        {
+          email,
+          name,
+          imageUrl: response.picture.data.url,
+          accessToken,
+          userID,
+          appId: process.env.REACT_APP_FACEBOOK_APPID,
+        },
+        navigate,
+        from
+      )
     );
     dispatch(enableBtn(false));
   };

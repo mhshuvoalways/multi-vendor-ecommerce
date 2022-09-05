@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { recoverPass } from "../../store/actions/userAction";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import enableBtn from "../../store/actions/enableBtnAction";
 
 const RecoverPassword = () => {
@@ -18,6 +18,9 @@ const RecoverPassword = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const onChange = (event) => {
     setState({
       ...state,
@@ -28,7 +31,7 @@ const RecoverPassword = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(enableBtn(false));
-    dispatch(recoverPass(state, navigate));
+    dispatch(recoverPass(state, navigate, from));
   };
 
   return (

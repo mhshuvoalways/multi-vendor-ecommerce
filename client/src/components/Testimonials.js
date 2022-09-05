@@ -30,27 +30,30 @@ const ClientFeedBack = () => {
       ) : (
         <Slider {...settings}>
           {reviewReducer.allreviews &&
-            reviewReducer.allreviews.reverse().map(
-              (el) =>
-                el.rating === 5 &&
-                el.authorId.avatar &&
-                el.authorId.lastName &&
-                el.comments && (
-                  <div className="bg-gray-100 py-5">
-                    <div className="w-28 m-auto">
-                      <img
-                        src={el.authorId.avatar.url}
-                        alt=""
-                        className="w-28 h-28 rounded-full"
-                      />
-                      <p className="text-center text-xl mb-4 mt-2 font-semibold">
-                        {el.authorId.lastName}
-                      </p>
+            reviewReducer.allreviews
+              .reverse()
+              .slice(0, 5)
+              .map(
+                (el) =>
+                  el.rating === 5 &&
+                  el.authorId.avatar &&
+                  el.authorId.lastName &&
+                  el.comments && (
+                    <div className="bg-gray-100 py-5">
+                      <div className="w-28 m-auto">
+                        <img
+                          src={el.authorId.avatar.url}
+                          alt=""
+                          className="w-28 h-28 rounded-full"
+                        />
+                        <p className="text-center text-xl mb-4 mt-2 font-semibold">
+                          {el.authorId.lastName}
+                        </p>
+                      </div>
+                      <p className="text-center px-5">{el.comments}</p>
                     </div>
-                    <p className="text-center px-5">{el.comments}</p>
-                  </div>
-                )
-            )}
+                  )
+              )}
         </Slider>
       )}
     </div>

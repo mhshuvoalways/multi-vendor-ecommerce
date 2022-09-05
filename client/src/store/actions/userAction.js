@@ -104,7 +104,7 @@ export const userLogin = (user, navigate, form) => (dispatch) => {
     });
 };
 
-export const loginWithGoogle = (user) => (dispatch) => {
+export const loginWithGoogle = (user, navigate, form) => (dispatch) => {
   axios
     .post("/user/google", user)
     .then((response) => {
@@ -119,6 +119,7 @@ export const loginWithGoogle = (user) => (dispatch) => {
       setAuthToken(response.data.token);
       localStorage.setItem("token", response.data.token);
       dispatch(alertAction(response.data.message));
+      navigate(form);
     })
     .catch((err) => {
       dispatch({
@@ -132,7 +133,7 @@ export const loginWithGoogle = (user) => (dispatch) => {
     });
 };
 
-export const loginWithFacebook = (user) => (dispatch) => {
+export const loginWithFacebook = (user, navigate, form) => (dispatch) => {
   axios
     .post("/user/facebook", user)
     .then((response) => {
@@ -147,6 +148,7 @@ export const loginWithFacebook = (user) => (dispatch) => {
       setAuthToken(response.data.token);
       localStorage.setItem("token", response.data.token);
       dispatch(alertAction(response.data.message));
+      navigate(form);
     })
     .catch((err) => {
       dispatch({
@@ -200,12 +202,12 @@ export const findMail = (email, navigate) => (dispatch) => {
     });
 };
 
-export const recoverPass = (value, navigate) => (dispatch) => {
+export const recoverPass = (value, navigate, from) => (dispatch) => {
   if (value.password === value.confirmPassword) {
     axios
       .post("/user/recoverpass", value)
       .then((response) => {
-        const decoded = jwt_decode(response.data);
+        const decoded = jwt_decode(response.data.token);
         dispatch({
           type: Types.RECOVER_PASS,
           payload: {
@@ -213,10 +215,10 @@ export const recoverPass = (value, navigate) => (dispatch) => {
           },
         });
         dispatch(enableBtn(true));
-        setAuthToken(response.data);
-        localStorage.setItem("token", response.data);
-        dispatch(alertAction("Welcome to our application!"));
-        navigate("/");
+        setAuthToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        dispatch(alertAction(response.data.message));
+        navigate(from);
       })
       .catch((err) => {
         dispatch({

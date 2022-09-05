@@ -17,7 +17,7 @@ const RatingReviews = ({ reviewReducer }) => {
         reviewReducer.reviews.length ? (
           reverseReviews.reverse().map((review) => (
             <div className="flex gap-10 mt-5 border p-5 flex-wrap  md:flex-nowrap">
-              <div className="w-40 cursor-pointer">
+              <div className="w-40">
                 <img
                   src={
                     review.authorId.avatar ? review.authorId.avatar.url : Avatar

@@ -509,7 +509,19 @@ const recoverPassword = (req, res) => {
                   })
                     .select("-password")
                     .then(() => {
-                      res.status(200).json(token);
+                      const token = jwt.sign(
+                        {
+                          _id: response._id,
+                          email: response.email,
+                          username: response.username,
+                        },
+                        process.env.SECRET,
+                        { expiresIn: "1h" }
+                      );
+                      res.status(200).json({
+                        message: "Welcome back!",
+                        token,
+                      });
                     })
                     .catch(() => {
                       serverError(res);

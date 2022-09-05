@@ -21,7 +21,7 @@ const Home = () => {
       <Products />
       <SectionTitle title="OUR VENDORS" />
       <OurVendor />
-      <SectionTitle title="CLIENT REVIEW" />
+      <SectionTitle title="RECENT REVIEWS" />
       <Testimonials />
       <Footer />
     </div>
