@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import ReactStars from "react-rating-stars-component";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllReviews } from "../store/actions/reviewAction";
 import Slider from "react-slick";
@@ -35,20 +36,29 @@ const ClientFeedBack = () => {
               .slice(0, 5)
               .map(
                 (el) =>
-                  el.rating === 5 &&
                   el.authorId.avatar &&
-                  el.authorId.lastName &&
                   el.comments && (
                     <div className="bg-gray-100 py-5">
-                      <div className="w-28 m-auto">
-                        <img
-                          src={el.authorId.avatar.url}
-                          alt=""
-                          className="w-28 h-28 rounded-full"
+                      <img
+                        src={el.authorId.avatar.url}
+                        alt=""
+                        className="w-28 h-28 m-auto rounded-full"
+                      />
+                      <p className="text-center text-xl mt-2 font-semibold">
+                        {`${el.authorId.firstName} ${el.authorId.lastName}`}
+                      </p>
+                      <div className="flex justify-center mb-3">
+                        <ReactStars
+                          {...{
+                            size: 20,
+                            value: el.rating,
+                            count: 5,
+                            activeColor: "red",
+                            a11y: true,
+                            isHalf: true,
+                            edit: false,
+                          }}
                         />
-                        <p className="text-center text-xl mb-4 mt-2 font-semibold">
-                          {el.authorId.lastName}
-                        </p>
                       </div>
                       <p className="text-center px-5">{el.comments}</p>
                     </div>
