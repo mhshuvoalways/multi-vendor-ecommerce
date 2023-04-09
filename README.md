@@ -17,8 +17,6 @@ Feature:
 • Product add, delete, update
 
 Technology:
-• HTML
-• CSS
 • Reactjs
 • Tailwind CSS
 • Redux
@@ -27,6 +25,5 @@ Technology:
 • Mongodb
 • SMTP server
 • Twilio API
-• Netlify
-• Heroku
+• Vercel
 ```
