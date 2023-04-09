@@ -1,4 +1,4 @@
-# e-Shop Multi Vendor Ecommerce Application
+# 👗e-Shop - A Multi Vendor Ecommerce Application
 
 E-Shop is a functionally oriented multi vendor ecommerce application where users can get almost all the necessary facilities. There are 2 types of payment methods available such as PayPal and Razorpay.<br/> 
 It lives at https://eshop-multi-vendor.vercel.app
