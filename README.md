@@ -1,6 +1,7 @@
-# Mern-Stack-Ecommerce-App
+# e-Shop Multi Vendor Ecommerce Application
 
-This is an ecommerce web application with MERN Stack. It lives at https://ecommerce-app-mhs.netlify.app
+E-Shop is a functionally oriented multi vendor ecommerce application where users can get almost all the necessary facilities. There are 2 types of payment methods available such as PayPal and Razorpay.<br/> 
+It lives at https://eshop-multi-vendor.vercel.app
 
 ```bash
 Feature:
