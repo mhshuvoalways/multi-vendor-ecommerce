@@ -1,7 +1,7 @@
 {
-  "name": "ecommerce-app",
+  "name": "multi-vendor-ecommerce",
   "version": "1.0.0",
-  "description": "A mern stack ecommerce app",
+  "description": "A mern stack multi-vendor-ecommerce",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -10,6 +10,7 @@
   "keywords": [
     "ecommerce",
     "ecommerce app",
+    "multi-vendor-ecommerce",
     "mern stack ecommerce app"
   ],
   "author": "Mahamudul Hasan Shuvo",

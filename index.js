@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const morgan = require("morgan");
 const db = require("./config/db");
 const cloudinary = require("./config/cloudinary");
@@ -39,8 +40,18 @@ app.use("/vendor", vendorRoutes);
 app.use("/contact", contactRoute);
 app.use("/subscriber", subcriberRouter);
 
-app.get("/", (req, res) => {
-  res.send("A MERN stack ecommerce app");
-});
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.resolve(__dirname, "client", "build")));
+  app.get("*", (req, res) => {
+    res.sendFile(
+      path.resolve(__dirname, "client", "build", "index.html"),
+      function (err) {
+        if (err) {
+          res.status(500).send(err);
+        }
+      }
+    );
+  });
+}
 
 db(app);
