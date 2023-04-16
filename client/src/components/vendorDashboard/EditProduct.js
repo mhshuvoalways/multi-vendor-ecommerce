@@ -203,6 +203,7 @@ const EditProduct = ({ modal, modalHandler, id }) => {
               className="py-3 px-4 w-full text-gray-600 relative bg-gray-200 rounded text-sm border border-gray-400 outline-none border-none focus:outline-none focus:bg-white focus:border-gray-500"
               name="category"
               onChange={changeHandler}
+              value={product.category}
             >
               <option>Default</option>
               {categoryData.categories.map((el) => (

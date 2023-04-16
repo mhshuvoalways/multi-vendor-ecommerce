@@ -218,7 +218,6 @@ export const recoverPass = (value, navigate, from) => (dispatch) => {
         setAuthToken(response.data.token);
         localStorage.setItem("token", response.data.token);
         dispatch(alertAction(response.data.message));
-        navigate(from);
       })
       .catch((err) => {
         dispatch({
@@ -233,6 +232,7 @@ export const recoverPass = (value, navigate, from) => (dispatch) => {
       });
   } else {
     dispatch(alertAction("New password and confirm password don't match"));
+    dispatch(enableBtn(true));
   }
 };
 
