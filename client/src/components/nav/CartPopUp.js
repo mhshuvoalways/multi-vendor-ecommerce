@@ -39,12 +39,12 @@ const CartPopUp = () => {
               className="flex justify-between gap-1 text-sm text-gray-700 p-8 hover:bg-gray-100"
               key={el._id}
             >
-              <div>
+              <div className="cursor-pointer w-20">
                 <Link to={`/details/${el.productId}`}>
-                  <img src={el.image} alt="" className="cursor-pointer w-20" />
+                  <img src={el.image} alt="" />
                 </Link>
               </div>
-              <div>
+              <div className="w-6/12">
                 <p>{el.name}</p>
                 <p>Qty: {el.quantity}</p>
                 <p>Price: ${el.subTotal}</p>
@@ -53,7 +53,7 @@ const CartPopUp = () => {
                 <img
                   src={Clear}
                   alt=""
-                  className="cursor-pointer"
+                  className="cursor-pointer w-5 h-5"
                   onClick={() => {
                     dispatch(deleteCartItem(el._id));
                   }}
