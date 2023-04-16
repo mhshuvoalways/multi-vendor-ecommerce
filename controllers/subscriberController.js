@@ -12,13 +12,13 @@ const subscribeController = (req, res) => {
   if (validation.isValid) {
     new Subscribers(subObj)
       .save()
-      .then((response) => {
+      .then(async(response) => {
         res.status(200).json({
           message:
             "Thanks for subscribe! You will get updates about our latest shop and special offers.",
           response: response,
         });
-        transporter(process.env.ADMIN_USER, subcriberMessage, email);
+        await transporter(process.env.ADMIN_USER, subcriberMessage, email);
       })
       .catch(() => {
         serverError(res);

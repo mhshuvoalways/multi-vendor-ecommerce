@@ -90,7 +90,7 @@ const customerRegister = (req, res) => {
     User.findOne({ email })
       .then((response) => {
         if (!response) {
-          bcrypt.hash(password, 10, function (err, hash) {
+          bcrypt.hash(password, 10, async function (err, hash) {
             if (err) {
               serverError(res);
             } else {
@@ -102,7 +102,7 @@ const customerRegister = (req, res) => {
                 process.env.SECRET,
                 { expiresIn: "1h" }
               );
-              transporter(email, activeAccount, username, token);
+              await transporter(email, activeAccount, username, token);
               const curstomer = {
                 email,
                 username,
@@ -151,7 +151,7 @@ const vendorRegister = (req, res) => {
     User.findOne({ email })
       .then((response) => {
         if (!response) {
-          bcrypt.hash(password, 10, function (err, hash) {
+          bcrypt.hash(password, 10, async function (err, hash) {
             if (err) {
               serverError(res);
             } else {
@@ -163,7 +163,7 @@ const vendorRegister = (req, res) => {
                 process.env.SECRET,
                 { expiresIn: "1h" }
               );
-              transporter(email, activeAccount, username, token);
+              await transporter(email, activeAccount, username, token);
               const vendor = {
                 email,
                 username,
@@ -451,7 +451,7 @@ const findMail = (req, res) => {
   if (validation.isValid) {
     User.find()
       .select("-password")
-      .then((response) => {
+      .then(async (response) => {
         const findUser = response.find((el) => el.email === email);
         if (findUser) {
           const token = jwt.sign(
@@ -464,7 +464,7 @@ const findMail = (req, res) => {
             { expiresIn: "1h" }
           );
           if (findUser.strategy === "email") {
-            transporter(
+            await transporter(
               email,
               recoverPass,
               findUser.firstName + " " + findUser.lastName || findUser.username,
