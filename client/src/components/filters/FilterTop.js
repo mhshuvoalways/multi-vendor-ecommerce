@@ -14,7 +14,7 @@ const Filter = ({
 }) => {
   return (
     <div className="bg-gray-50 mb-5 pb-5">
-      <div className="flex flex-wrap gap-8 md:justify-between justify-around w-11/12 m-auto">
+      <div className="flex flex-wrap gap-8 md:justify-between justify-around w-11/12 m-auto container">
         <div>
           <p className="text-xl mt-10 mb-2">Search or Select</p>
           <AutosuggestComponent

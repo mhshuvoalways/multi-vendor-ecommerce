@@ -10,7 +10,7 @@ const MyAccount = () => {
     <div>
       <Navigation />
       <PageLocation value={["HOME", "-/-", "MY ACCOUNT"]} />
-      <div className="w-4/5 m-auto mt-20 bg-gray-200 py-16 flex gap-5 flex-wrap justify-center">
+      <div className="w-4/5 m-auto mt-20 bg-gray-200 py-16 flex gap-5 flex-wrap justify-center container">
         <AccountRoutes />
         <div className="w-full md:w-8/12">
           <Outlet />

@@ -26,7 +26,7 @@ const Footer = () => {
 
   return (
     <div className="bg-gray-800 text-white mt-36 py-20">
-      <div className="w-11/12 m-auto">
+      <div className="w-11/12 m-auto container">
         <div className="flex gap-8 flex-wrap justify-between">
           <ul>
             <li className="text-lg">ABOUT US</li>

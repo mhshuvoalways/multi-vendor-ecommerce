@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllVendor } from "../../store/actions/vendorAction";
-import Slider from "react-slick";
 import { Link } from "react-router-dom";
+import Slider from "react-slick";
 import Loading from "../../components/utils/Loading";
+import { getAllVendor } from "../../store/actions/vendorAction";
 
 const OurVendor = () => {
   const dispatch = useDispatch();
@@ -17,35 +17,27 @@ const OurVendor = () => {
   const settings = {
     infinite: true,
     speed: 5000,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 7,
+    slidesToScroll: 1,
     autoplay: true,
     responsive: [
       {
-        breakpoint: 700,
+        breakpoint: 1024,
         settings: {
-          infinite: true,
-          speed: 5000,
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          autoplay: true,
+          slidesToShow: 4,
         },
       },
       {
         breakpoint: 500,
         settings: {
-          infinite: true,
-          speed: 5000,
           slidesToShow: 2,
-          slidesToScroll: 2,
-          autoplay: true,
         },
       },
     ],
   };
 
   return (
-    <div className="w-11/12 m-auto">
+    <div>
       {vendorReducer.isLoading ? (
         <Loading />
       ) : (
@@ -53,7 +45,7 @@ const OurVendor = () => {
           {vendorReducer.allvendor.map((el) => (
             <Link
               to={`/shop/${el.author._id}`}
-              className="border py-2 px-5 flex justify-between items-center"
+              className="border py-2 px-5 flex justify-between items-center !mx-5"
               key={el._id}
             >
               <img

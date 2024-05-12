@@ -64,7 +64,7 @@ const Cart = () => {
       ) : (
         <div>
           {cart.length ? (
-            <div className="w-11/12 m-auto mt-10">
+            <div className="w-11/12 m-auto mt-10 container">
               <p className="text-xl mb-3">Your cart items</p>
               <div className="overflow-x-auto md:overflow-x-hidden">
                 <table className="border-collapse w-full text-left">

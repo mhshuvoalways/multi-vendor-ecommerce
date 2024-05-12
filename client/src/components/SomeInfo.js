@@ -6,7 +6,7 @@ import Off from "../assets/images/somedetails/off.png";
 
 const SomeInfo = () => {
   return (
-    <div className="w-11/12 m-auto mt-20 flex gap-3 flex-wrap justify-between">
+    <div className="w-11/12 m-auto mt-20 flex gap-3 flex-wrap justify-between container">
       <div className="flex gap-4 items-center">
         <img src={Bus} alt="" />
         <div>

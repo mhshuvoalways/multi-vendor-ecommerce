@@ -3,7 +3,7 @@ import React from "react";
 const AboutUs = () => {
   return (
     <div className="bg-gray-100">
-      <div className="w-11/12 m-auto h-screen">
+      <div className="w-11/12 m-auto h-screen container">
         <p className="pt-10">
           When you use our Website, we collect and store your personal
           information which is provided by you from time to time. Our primary

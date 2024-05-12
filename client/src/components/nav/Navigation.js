@@ -37,7 +37,7 @@ export default function Navigation() {
     <Disclosure as="nav" className="bg-white">
       {({ open }) => (
         <Fragment>
-          <div className="w-11/12 m-auto">
+          <div className="w-11/12 m-auto container">
             <div className="relative flex items-center justify-between h-16">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}

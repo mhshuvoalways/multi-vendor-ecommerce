@@ -45,7 +45,7 @@ const Details = () => {
       {!products ? (
         <Loading />
       ) : (
-        <div className="w-11/12 my-20 md:flex gap-20 m-auto">
+        <div className="w-11/12 my-20 md:flex gap-20 m-auto container">
           <div className="w-full md:w-2/5">
             <img
               src={products.image[0].url}

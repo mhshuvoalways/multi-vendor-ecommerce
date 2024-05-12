@@ -5,7 +5,7 @@ import PaymentFile from "../../assets/payment/payment-system.txt";
 
 const CheckoutMethod = () => {
   return (
-    <div className="w-11/12 m-auto ">
+    <div className="w-11/12 m-auto container">
       <p className="text-2xl text-center mb-5">Choose a method</p>
       <div className="flex flex-wrap justify-center gap-10 border p-5">
         <PayPal />

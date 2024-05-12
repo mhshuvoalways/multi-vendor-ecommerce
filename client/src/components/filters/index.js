@@ -108,7 +108,7 @@ const Index = () => {
           allProducts={productReducer.products}
         />
       </div>
-      <div className="hidden sm:flex w-11/12 m-auto">
+      <div className="hidden sm:flex w-11/12 mx-auto container">
         <FilterLeft
           productReducer={productReducer}
           categoryReducer={categoryReducer}
@@ -124,6 +124,7 @@ const Index = () => {
           <Products
             productReducer={productReducer}
             allProducts={productReducer.products}
+            shopPage
           />
         </div>
       </div>

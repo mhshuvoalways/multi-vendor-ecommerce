@@ -38,7 +38,7 @@ const Index = () => {
   }, [dispatch, params.id, productReducer.products]);
 
   return (
-    <div className="w-11/12 m-auto">
+    <div className="w-11/12 m-auto container">
       <Details />
       <TabRoute
         routeHandler={routeHandler}

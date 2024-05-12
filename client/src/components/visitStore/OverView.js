@@ -12,7 +12,7 @@ const OverView = ({
   const percents = (totalRating * 100) / (ratingProducts * 5);
   const avarageRating = totalRating / ratingProducts;
   return (
-    <div className="mt-5 flex justify-between gap-5 flex-wrap">
+    <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5">
       <div className="border p-5">
         <p>Products</p>
         <p className="text-xl">{products.length}</p>

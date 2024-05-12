@@ -54,7 +54,7 @@ const Index = () => {
   };
 
   return (
-    <div className="w-11/12 m-auto">
+    <div className="w-11/12 m-auto container">
       <Intro
         vendor={vendor}
         ratingProducts={ratingProducts}

@@ -71,7 +71,7 @@ const Checkout = () => {
   return (
     <form
       onSubmit={onSubmitHandler}
-      className="flex w-11/12 m-auto flex-wrap justify-between"
+      className="flex w-11/12 m-auto flex-wrap justify-between container"
     >
       <div className="mt-5">
         <p className="text-xl mb-5 font-semibold">Billing Details</p>
