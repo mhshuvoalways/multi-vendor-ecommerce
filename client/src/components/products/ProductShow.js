@@ -42,7 +42,7 @@ const ProductModal = ({ state, modalHandler, productReducer }) => {
       modalTitle={products && products.name}
     >
       {products && products ? (
-        <div className="w-11/12 my-20 md:flex gap-20 m-auto container">
+        <div className="w-11/12 my-20 md:flex gap-20 mx-auto container">
           <div className="w-full md:w-2/5">
             <img
               src={products.image[0].url}

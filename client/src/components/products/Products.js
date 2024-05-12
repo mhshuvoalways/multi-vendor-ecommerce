@@ -44,7 +44,7 @@ const Products = ({
           <Loading />
         ) : products.length ? (
           <div
-            className={`grid grid-cols-1 gap-3 justify-between ${
+            className={`grid grid-cols-1 gap-3 justify-between w-11/12 sm:w-full mx-auto container ${
               shopPage
                 ? "lg:grid-cols-2 xl:grid-cols-4"
                 : "sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"
@@ -53,7 +53,7 @@ const Products = ({
             {products.map((el) => (
               <LazyLoad
                 offset={-200}
-                className="w-full h-96 rounded shadow-md product__card relative border lazyload-placeholder"
+                className="h-96 rounded shadow-md product__card relative border lazyload-placeholder"
                 key={el._id}
                 data-aos={proFilter && "zoom-in"}
               >

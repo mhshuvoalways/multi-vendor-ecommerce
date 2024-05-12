@@ -22,6 +22,10 @@ body {
   }
 }
 
+.modal::-webkit-scrollbar {
+  display: none;
+}
+
 .lazyload-placeholder {
   animation: fade-in 1s ease-in-out forwards;
   opacity: 0;
