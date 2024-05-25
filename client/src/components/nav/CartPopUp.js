@@ -41,7 +41,7 @@ const CartPopUp = () => {
             >
               <div className="cursor-pointer w-20">
                 <Link to={`/details/${el.productId}`}>
-                  <img src={el.image} alt="" />
+                  <img src={el.image} alt="" className="object-cover" />
                 </Link>
               </div>
               <div className="w-6/12">

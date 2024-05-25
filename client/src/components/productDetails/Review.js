@@ -58,7 +58,7 @@ const Reviews = ({ reviewReducer }) => {
                   : Avatar
               }
               alt=""
-              className="w-24 h-24 bg-gray-200"
+              className="w-24 h-24 bg-gray-200 object-cover"
             />
             <div>
               <div className="flex gap-5 flex-wrap">

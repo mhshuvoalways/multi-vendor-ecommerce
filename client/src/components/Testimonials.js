@@ -52,7 +52,7 @@ const ClientFeedBack = () => {
                   <img
                     src={el.authorId.avatar.url}
                     alt=""
-                    className="w-28 h-28 m-auto rounded-full"
+                    className="w-28 h-28 m-auto rounded-full object-cover"
                   />
                   <p className="text-center text-xl mt-2 font-semibold">
                     {`${el.authorId.firstName} ${el.authorId.lastName}`}

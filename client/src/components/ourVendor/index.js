@@ -51,7 +51,7 @@ const OurVendor = () => {
               <img
                 src={el.image && el.image.url}
                 alt=""
-                className="w-14 h-14 mb-3"
+                className="w-14 h-14 mb-3 object-cover"
               />
               <p className="font-semibold">{el.author.storeName}</p>
             </Link>

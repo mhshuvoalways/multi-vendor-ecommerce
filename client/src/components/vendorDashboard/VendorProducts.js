@@ -48,7 +48,7 @@ const Products = () => {
         {reverseProduct.reverse().map((el) => (
           <tr className="border-gray-100 border-2" key={el._id}>
             <td className="p-2">
-              <img src={el.image[0].url} alt="" className="w-28" />
+              <img src={el.image[0].url} alt="" className="w-28 object-cover" />
             </td>
             <td className="p-2">
               <p>{el.name}</p>

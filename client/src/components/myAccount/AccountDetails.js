@@ -60,13 +60,13 @@ const AccoutDetails = () => {
                   <img
                     src={URL.createObjectURL(avatar)}
                     alt=""
-                    className="md:h-32 md:w-32 h-32 w-32 rounded-full border-4 border-gray-400 cursor-pointer"
+                    className="md:h-32 md:w-32 h-32 w-32 rounded-full border-4 border-gray-400 cursor-pointer object-cover"
                   />
                 ) : (
                   <img
                     src={userReducer.user.avatar.url}
                     alt=""
-                    className="md:h-32 md:w-32 h-32 w-32 rounded-full border-4 border-gray-400 cursor-pointer"
+                    className="md:h-32 md:w-32 h-32 w-32 rounded-full border-4 border-gray-400 cursor-pointer object-cover"
                   />
                 )}
                 <input

@@ -50,7 +50,7 @@ const Details = () => {
             <img
               src={products.image[0].url}
               alt=""
-              className="w-full border p-5"
+              className="w-full border p-5 object-cover"
             />
           </div>
           <div className="my-10 md:my-0 md:w-2/4 w-full">

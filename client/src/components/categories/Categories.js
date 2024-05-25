@@ -25,7 +25,7 @@ const Categories = () => {
               key={category._id}
             >
               <p>{category.name}</p>
-              <img src={category.icon.url} alt="" className="w-8" />
+              <img src={category.icon.url} alt="" className="w-8 object-cover" />
             </Link>
           ))}
         </div>

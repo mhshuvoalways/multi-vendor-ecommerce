@@ -52,7 +52,7 @@ const RatingReviews = ({ reviewReducer }) => {
                         review.productId.image[0].url
                       }
                       alt=""
-                      className="w-20 mb-2"
+                      className="w-20 mb-2 object-cover"
                     />
                     <p className="text-base mb-2">
                       {review.productId && review.productId.name}

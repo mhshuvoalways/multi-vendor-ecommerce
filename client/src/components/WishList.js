@@ -38,7 +38,7 @@ const InWishList = () => {
                     <tr className="border-gray-100 border-2">
                       <td className="p-2">
                         <Link to={`/details/${el.productId}`}>
-                          <img src={el.image} alt="" className="w-28" />
+                          <img src={el.image} alt="" className="w-28 object-cover" />
                         </Link>
                       </td>
                       <td className="p-2">
