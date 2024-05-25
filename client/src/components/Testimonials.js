@@ -45,9 +45,8 @@ const ClientFeedBack = () => {
       ) : (
         <Slider {...settings}>
           {reviewReducer.allreviews &&
-            reviewReducer.allreviews
+            [...reviewReducer.allreviews]
               .reverse()
-              .slice(0, 5)
               .map(
                 (el) =>
                   el.authorId.avatar &&
