@@ -30,3 +30,14 @@ body {
   animation: fade-in 1s ease-in-out forwards;
   opacity: 0;
 }
+
+.line-camp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.slick-slide {
+  padding: 0 10px !important;
+}
