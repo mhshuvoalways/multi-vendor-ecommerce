@@ -4,8 +4,8 @@
   "description": "A mern stack multi-vendor-ecommerce",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node api/index.js",
+    "dev": "nodemon api/index.js"
   },
   "keywords": [
     "ecommerce",
@@ -28,7 +28,8 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.3",
     "nodemailer": "^6.7.2",
-    "razorpay": "^2.8.1"
+    "razorpay": "^2.8.1",
+    "resend": "^4.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.13"
