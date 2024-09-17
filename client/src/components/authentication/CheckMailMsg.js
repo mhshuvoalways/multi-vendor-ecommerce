@@ -4,7 +4,7 @@ const CheckMainMsg = () => {
   return (
     <div className="mt-12 max-w-sm m-auto">
       <p className="shadow-md rounded-md p-10 text-center text-2xl">
-        Please check you mail
+        Please check your mail
       </p>
     </div>
   );

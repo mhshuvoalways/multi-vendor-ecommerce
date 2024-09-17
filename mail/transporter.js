@@ -7,7 +7,7 @@ module.exports = (sendto, templateName, name, link) => {
     .send({
       from: "Portfolio <noreply@mhshuvo.com>",
       to: sendto,
-      subject: `A message from my portfolio!`,
+      subject: `e-Shop`,
       html: templateName(name, link),
     })
     .then(() => {
