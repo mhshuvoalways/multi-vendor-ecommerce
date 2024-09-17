@@ -10,10 +10,6 @@ module.exports = (sendto, templateName, name, link) => {
       subject: `e-Shop`,
       html: templateName(name, link),
     })
-    .then(() => {
-      res.send("Message sent to admin email");
-    })
-    .catch(() => {
-      res.send("Something is wrong");
-    });
+    .then(() => {})
+    .catch(() => {});
 };
