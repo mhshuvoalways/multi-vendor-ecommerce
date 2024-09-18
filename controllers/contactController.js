@@ -11,12 +11,13 @@ const contactController = (req, res) => {
   if (validation.isValid) {
     new Contact(contactObj)
       .save()
-      .then((response) => {
+      .then(async (response) => {
         res.status(200).json({
-          message: "Thanks for reaching out to us! We will reply as soon as possible.",
+          message:
+            "Thanks for reaching out to us! We will reply as soon as possible.",
           response: response,
         });
-        transporter(
+        await transporter(
           process.env.ADMIN_USER,
           contactMessage,
           { firstName, lastName, email },
