@@ -90,7 +90,7 @@ const customerRegister = (req, res) => {
     User.findOne({ email })
       .then((response) => {
         if (!response) {
-          bcrypt.hash(password, 10, async function (err, hash) {
+          bcrypt.hash(password, 10, function (err, hash) {
             if (err) {
               serverError(res);
             } else {
@@ -102,7 +102,7 @@ const customerRegister = (req, res) => {
                 process.env.SECRET,
                 { expiresIn: "1h" }
               );
-              await transporter(email, activeAccount, username, token);
+              transporter(email, activeAccount, username, token);
               const curstomer = {
                 email,
                 username,
@@ -451,7 +451,7 @@ const findMail = (req, res) => {
   if (validation.isValid) {
     User.find()
       .select("-password")
-      .then(async (response) => {
+      .then((response) => {
         const findUser = response.find((el) => el.email === email);
         if (findUser) {
           const token = jwt.sign(
@@ -464,13 +464,13 @@ const findMail = (req, res) => {
             { expiresIn: "1h" }
           );
           if (findUser.strategy === "email") {
-            res.status(200).json(findUser);
-            await transporter(
+            transporter(
               email,
               recoverPass,
               findUser.firstName + " " + findUser.lastName || findUser.username,
               token
             );
+            res.status(200).json(findUser);
           } else {
             res.status(400).json({
               message: `No need to change your password because you logged in with ${findUser.strategy}`,
